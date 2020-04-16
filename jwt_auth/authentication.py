@@ -23,7 +23,7 @@ class JWTAuthentication(BasicAuthentication):
             user = User.objects.get(pk=payload.get('sub'))
         except jwt.exceptions.InvalidTokenError:
             raise PermissionDenied({'message': 'Invalid token'})
-        except User.DoesNot Exist:
+        except User.DoesNotExist:
             raise PermissionDenied({'message': 'No such subject'})
 
         return (user, token)
