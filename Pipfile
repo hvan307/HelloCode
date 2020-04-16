@@ -8,6 +8,9 @@ pylint = "*"
 
 [packages]
 django = "*"
+pyjwt = "*"
+djangorestframework = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"
