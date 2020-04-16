@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Language, CustomUser, UserHasLanguage
+
+admin.site.register(Language)
+admin.site.register(CustomUser)
+admin.site.register(UserHasLanguage)
