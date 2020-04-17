@@ -17,7 +17,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
+import SmsRoundedIcon from '@material-ui/icons/SmsRounded'
 import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -145,7 +145,7 @@ const DrawerMenu = () => {
           <IconButton aria-label="show 4 new mails" color="inherit">
             <Badge badgeContent={4} color="secondary">
               <Link to="/mychats" style={{ color: 'white' }}>
-                <MailIcon />
+                <SmsRoundedIcon />
               </Link>
             </Badge>
           </IconButton>
@@ -180,7 +180,7 @@ const DrawerMenu = () => {
           >
             <MenuItem onClick={handleClose}>
               <Link to="/myprofile">
-                My Account
+                My Profile
               </Link>
             </MenuItem>
             {/* change to handleLogout */}
@@ -211,7 +211,7 @@ const DrawerMenu = () => {
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <SmsRoundedIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -220,7 +220,7 @@ const DrawerMenu = () => {
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <SmsRoundedIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
