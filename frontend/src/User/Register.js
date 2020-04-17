@@ -10,13 +10,19 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import LockRoundedIcon from '@material-ui/icons/LockRounded'
 import IconButton from '@material-ui/core/IconButton'
+import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded'
+import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import Button from '@material-ui/core/Button'
 
 const Register = () => {
-  const [data, setData] = useState({ email: '', username: '', password: '', passwordConfirmation: '', showPassword: false, showPasswordConfirmation: false })
+  const [data, setData] = useState({ email: '', username: '', password: '', passConfirm: '', showPassword: false, showPassConfirm: false, languagesDb: [], userLanguages: [] })
 
   useEffect(() => {
-    axios.post('/api/codedb')
+    axios.get('/api/languages')
+      .then(resp => setData({ languagesDb: resp.data }))
+    axios.post('/api')
       .then(resp => setData(resp.data))
   }, [])
 
@@ -32,6 +38,18 @@ const Register = () => {
     event.preventDefault()
   }
 
+  const handleClickShowPassConfirm = () => {
+    setData({ ...data, showPassConfirm: !data.showPassConfirm })
+  }
+
+  const handleClickLang = () => {
+    // console.log(event.target.innerHTML)
+    setData({ ...data, userLanguages: event.target.innerHTML })
+  }
+
+  // const handleMouseDownPassConfirm = (event) => {
+  //   event.preventDefault()
+  // }
   const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1)
@@ -39,23 +57,13 @@ const Register = () => {
   }))
 
   const classes = useStyles()
-
+  
+  console.log(data.userLanguages)
   return <>
-    <div className="section">
-      <h1>Register</h1>
+    <div className="section register">
+      <h2>Register</h2>
       <form
         onSubmit={(event) => useEffect(event)}>
-        <div className={classes.margin}>
-          <Grid container spacing={1} alignItems="flex-end">
-            <Grid item>
-              <EmailRounded />
-            </Grid>
-            <Grid item>
-              <Input placeholder="E-mail" />
-            </Grid>
-          </Grid>
-        </div>
-
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems="flex-end">
             <Grid item>
@@ -63,6 +71,16 @@ const Register = () => {
             </Grid>
             <Grid item>
               <Input placeholder="Username" />
+            </Grid>
+          </Grid>
+        </div>
+        <div className={classes.margin}>
+          <Grid container spacing={1} alignItems="flex-end">
+            <Grid item>
+              <EmailRounded />
+            </Grid>
+            <Grid item>
+              <Input placeholder="E-mail" />
             </Grid>
           </Grid>
         </div>
@@ -99,18 +117,18 @@ const Register = () => {
             </Grid>
             <Grid item>
               <Input
-                type={data.showPasswordConfirmation ? 'text' : 'passwordConfimation'}
-                value={data.passwordConfirmation}
-                onChange={handleChange('passwordConfirmation')}
-                placeholder="Password Confirmation"
+                type={data.showPassConfirm ? 'text' : 'passConfirm'}
+                value={data.passConfirm}
+                onChange={handleChange('passConfirm')}
+                placeholder="Confirm password"
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
+                      onClick={handleClickShowPassConfirm}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {data.showPasswordConfirmation ? <Visibility /> : <VisibilityOff />}
+                      {data.showPassConfirm ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -118,7 +136,48 @@ const Register = () => {
             </Grid>
           </Grid>
         </div>
-        <div className="button">
+        <div className={classes.margin}>
+          <Grid container spacing={1} alignItems="flex-end">
+            <Grid item>
+              <LanguageRoundedIcon />
+            </Grid>
+            <Grid item>
+              <Input placeholder="Your timezone" />
+            </Grid>
+          </Grid>
+        </div>
+        <div className={classes.margin}>
+          <ComputerRoundedIcon />
+          <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
+            {data.languagesDb.map((language, id) => {
+              return <Button
+                key={id}
+                onClick={() => handleClickLang(event)}
+                value={language.name}
+              >
+                {language.name}
+              </Button>
+            }
+            )}
+          </ButtonGroup>
+        </div>
+        <div className={classes.margin}>
+          <Grid container spacing={1} alignItems="flex-end">
+            <Grid item>
+              <Button
+                variant="contained"
+                color="default"
+                className={classes.button}
+                startIcon={<CloudUploadIcon />}
+              >
+                Upload Photo
+              </Button>
+            </Grid>
+            <Grid item>
+            </Grid>
+          </Grid>
+        </div>
+        <div className="button-register">
           <Button variant="contained" color="primary">
             Register
           </Button>
