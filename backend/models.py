@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 class Language(models.Model):
     name = models.CharField(max_length=50)
@@ -7,16 +7,9 @@ class Language(models.Model):
     def __str__(self):
         return self.name
 
-class CustomUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+class User(AbstractUser):
     timezone = models.CharField(max_length=50)
-
-    language = models.ManyToManyField(Language, through='UserHasLanguage')
+    languages = models.ManyToManyField(Language, related_name='users', blank=True)
 
     def __str__(self):
-        return self.user.username
-
-class UserHasLanguage(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    language = models.ForeignKey(Language, on_delete=models.CASCADE)
-    proficiency = models.CharField(max_length=50)
+        return self.username

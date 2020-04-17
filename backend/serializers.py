@@ -1,45 +1,32 @@
 from rest_framework import serializers
-from .models import Language, CustomUser, UserHasLanguage
+from .models import Language
+from django.contrib.auth import get_user_model
 
-class CustomUserSerializer(serializers.ModelSerializer):
+User = get_user_model()
+
+class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = CustomUser
-        fields = ('id', 'user', 'timezone', 'language')
-
-class UserHasLanguageSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = UserHasLanguage
-        fields = ('id', 'user', 'language', 'proficiency')
+        model = User
+        fields = ('__all__')
 
 class LanguageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Language
-        fields = ('id', 'name')
+        fields = ('__all__')
 
 class PopulateLanguageSerializer(serializers.ModelSerializer):
 
-    # relationship with others?
-
     class Meta:
         model = Language
-        fields = ('id', 'name')
+        fields = ('__all__')
 
-class PopulateCustomUserSerializer(serializers.ModelSerializer):
+class PopulateUserSerializer(serializers.ModelSerializer):
 
-    # relationship with others?
+    languages = LanguageSerializer(many=True)
     
     class Meta:
-        model = CustomUser
-        fields = ('id', 'user', 'timezone', 'language')
-
-class PopulateUserHasLanguageSerializer(serializers.ModelSerializer):
-
-    # relationship with others?
-    
-    class Meta:
-         model = UserHasLanguage
-         fields = ('id', 'user', 'language', 'proficiency')
+        model = User
+        fields = ('__all__')
  

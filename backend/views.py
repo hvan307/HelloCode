@@ -2,21 +2,21 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView
 
-from .models import Language, CustomUser, UserHasLanguage
-from .serializers import LanguageSerializer, PopulateLanguageSerializer, CustomUserSerializer, PopulateCustomUserSerializer, UserHasLanguageSerializer, PopulateUserHasLanguageSerializer
+from .models import User, Language
+from .serializers import UserSerializer, PopulateUserSerializer, LanguageSerializer, PopulateLanguageSerializer
 
 class ListView(ListCreateAPIView):
 
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
     def get(self, _request):
-        customUsers = CustomUser.objects.all()
-        serializer = PopulateCustomUserSerializer(customUsers, many=True)
+        users = User.objects.all()
+        serializer = PopulateUserSerializer(users, many=True)
         return Response(serializer.data)
 
     def post(self, _request):
-        serializer = CustomUserSerializer(data=_request.data)
+        serializer = UserSerializer(data=_request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=HTTP_201_CREATED)
@@ -24,25 +24,66 @@ class ListView(ListCreateAPIView):
 
 class DetailView(RetrieveUpdateDestroyAPIView):
 
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
     def get(self, _request, pk):
-        customUser = CustomUser.objects.get(pk=pk)
-        self.check_object_permissions(_request, customUser)
-        serializer = PopulateCustomUserSerializer(customUser)
+        user = User.objects.get(pk=pk)
+        self.check_object_permissions(_request, user)
+        serializer = PopulateUserSerializer(User)
         return Response(serializer.data)
     
     def put(self, _request, pk):
-        customUser = CustomUser.objects.get(pk=pk)
-        serializer = CustomUserSerializer(customUser, data=_request.data)
+        user = User.objects.get(pk=pk)
+        serializer = UserSerializer(user, data=_request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=HTTP_202_ACCEPTED)
         return Response(status=HTTP_422_UNPROCESSABLE_ENTITY)
     
     def delete(self, _request, pk):
-        customUser = CustomUser.objects.get(pk=pk)
-        customUser.delete()
+        user = User.objects.get(pk=pk)
+        user.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
+
+class ListViewForLanguages(ListCreateAPIView):
+
+    queryset = Language.objects.all()
+    serializer_class = LanguageSerializer
+
+    def get(self, _request):
+        language = Language.objects.all()
+        serializer = PopulateLanguageSerializer(language, many=True)
+        return Response(serializer.data)
+
+    def post(self, _request):
+        serializer = LanguageSerializer(data=_request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_201_CREATED)
+        return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
+
+class DetailViewForLanguage(RetrieveUpdateDestroyAPIView):
+
+    queryset = Language.objects.all()
+    serializer_class = LanguageSerializer
+
+    def get(self, _request, pk):
+        language = Language.objects.get(pk=pk)
+        self.check_object_permissions(_request, language)
+        serializer = PopulateLanguageSerializer(language)
+        return Response(serializer.data)
+    
+    def put(self, _request, pk):
+        language = Language.objects.get(pk=pk)
+        serializer = LanguageSerializer(language, data=_request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_202_ACCEPTED)
+        return Response(status=HTTP_422_UNPROCESSABLE_ENTITY)
+    
+    def delete(self, _request, pk):
+        language = Language.objects.get(pk=pk)
+        language.delete()
         return Response(status=HTTP_204_NO_CONTENT)
 
