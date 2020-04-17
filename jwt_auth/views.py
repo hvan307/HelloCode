@@ -3,10 +3,12 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 # which user should be used here?
-from django.contrib.auth.models import User
 from django.conf import settings
 import jwt
 from .serializers import UserSerializer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class RegisterView(CreateAPIView):
     serializer_class = UserSerializer
@@ -22,18 +24,18 @@ class RegisterView(CreateAPIView):
 
 class LoginView(APIView):
 
-    def get_user(self, email):
+    def get_user(self, username):
         try:
-            return User.objects.get(email=email)
+            return User.objects.get(username=username)
         except User.DoesNotExist:
             raise PermissionDenied({'message': 'Invalid credentials'})
 
     def post(self, request):
 
-        email = request.data.get('email')
+        username = request.data.get('username')
         password = request.data.get('password')
 
-        user = self.get_user(email)
+        user = self.get_user(username)
         if not user.check_password(password):
             raise PermissionDenied({'message': 'Invalid credentials'})
 
