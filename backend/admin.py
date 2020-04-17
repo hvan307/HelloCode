@@ -1,7 +1,9 @@
 from django.contrib import admin
 
-from .models import Language, CustomUser, UserHasLanguage
+from django.contrib.auth import get_user_model
+from .models import Language
+
+User = get_user_model()
 
 admin.site.register(Language)
-admin.site.register(CustomUser)
-admin.site.register(UserHasLanguage)
+admin.site.register(User)
