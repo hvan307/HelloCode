@@ -10,8 +10,7 @@ User = get_user_model()
 
 # password verification for users
 class UserSerializer(serializers.ModelSerializer):
-    
-
+  
     password = serializers.CharField(write_only=True)
     password_confirmation = serializers.CharField(write_only=True)
 
@@ -33,7 +32,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'password_confirmation',)
+        fields = ('username', 'email', 'password', 'password_confirmation', 'languages')
 
     
-    
+class PopulateUserSerializer(serializers.ModelSerializer):
+    languages = LanguageSerializer(many=True)
+
+    class Meta:
+      model = User
+      fields = ('username', 'email', 'languages')
