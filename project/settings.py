@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'jwt_auth',
+    'rest_framework',
     'backend'
 ]
 
@@ -135,3 +136,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ],
 }
+
+AUTH_USER_MODEL = 'backend.User'
