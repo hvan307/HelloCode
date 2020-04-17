@@ -17,7 +17,6 @@ class LanguageSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 class PopulateLanguageSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Language
         fields = ('__all__')
