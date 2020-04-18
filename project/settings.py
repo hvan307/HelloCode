@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'jwt_auth',
     'rest_framework',
-    'backend'
+    'backend',
+    'channels',
+    'chat'
 ]
 
 MIDDLEWARE = [
@@ -71,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'project.wsgi.application'
+ASGI_APPLICATION = 'project.routing.application'
 
 
 # Database
@@ -135,6 +138,15 @@ REST_FRAMEWORK = {
         'jwt_auth.authentication.JWTAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
 }
 
 AUTH_USER_MODEL = 'backend.User'
