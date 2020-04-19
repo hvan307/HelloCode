@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'jwt_auth',
     'rest_framework',
     'backend',
+    'frontend',
     'channels',
     'chat'
 ]

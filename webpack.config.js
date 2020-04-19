@@ -37,5 +37,3 @@ module.exports = {
     })
   ]
 }
-
-console.log(`HI BEN ${module.exports.context}`)
