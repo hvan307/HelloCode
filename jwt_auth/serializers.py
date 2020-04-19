@@ -1,5 +1,10 @@
 from rest_framework import serializers
 # should we use our own user or the django user here?
+<<<<<<< HEAD
+=======
+from django.contrib.auth import get_user_model
+from backend.serializers import LanguageSerializer
+>>>>>>> development
 import django.contrib.auth.password_validation as validations
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
@@ -7,9 +12,11 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+User = get_user_model()
+
 # password verification for users
 class UserSerializer(serializers.ModelSerializer):
-
+  
     password = serializers.CharField(write_only=True)
     password_confirmation = serializers.CharField(write_only=True)
 
@@ -32,5 +39,17 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+<<<<<<< HEAD
         fields = ('username', 'email', 'password', 'password_confirmation', 'image')
 
+=======
+        fields = ('username', 'email', 'password', 'password_confirmation', 'languages')
+
+    
+class PopulateUserSerializer(serializers.ModelSerializer):
+    languages = LanguageSerializer(many=True)
+
+    class Meta:
+      model = User
+      fields = ('username', 'email', 'languages')
+>>>>>>> development

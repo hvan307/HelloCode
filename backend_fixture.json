@@ -1,0 +1,103 @@
+[
+{
+  "model": "backend.language",
+  "pk": 1,
+  "fields": {
+    "name": "python"
+  }
+},
+{
+  "model": "backend.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$180000$6Uooa2L69td5$xptqAPMyQ+xBsOFpbGf++AURA47mHVOd9bzMD98BC5Q=",
+    "last_login": "2020-04-18T00:16:18.767Z",
+    "is_superuser": true,
+    "username": "ben",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2020-04-18T00:10:09.837Z",
+    "timezone": "",
+    "groups": [],
+    "user_permissions": [],
+    "languages": [],
+    "contacts": []
+  }
+},
+{
+  "model": "backend.user",
+  "pk": 2,
+  "fields": {
+    "password": "testpass1",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "tom",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-04-18T00:16:23Z",
+    "timezone": "gmt",
+    "groups": [],
+    "user_permissions": [],
+    "languages": [
+      1
+    ],
+    "contacts": []
+  }
+},
+{
+  "model": "backend.user",
+  "pk": 3,
+  "fields": {
+    "password": "testpass1",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "Bob",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-04-18T00:39:22Z",
+    "timezone": "gmt",
+    "groups": [],
+    "user_permissions": [],
+    "languages": [
+      1
+    ],
+    "contacts": [
+      4
+    ]
+  }
+},
+{
+  "model": "backend.user",
+  "pk": 4,
+  "fields": {
+    "password": "testpass1",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "Bill",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-04-18T00:39:59Z",
+    "timezone": "gmt",
+    "groups": [],
+    "user_permissions": [],
+    "languages": [
+      1
+    ],
+    "contacts": [
+      3
+    ]
+  }
+}
+]

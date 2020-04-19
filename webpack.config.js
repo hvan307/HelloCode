@@ -3,12 +3,10 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './src/app.js',
-  context: path.resolve(__dirname, 'frontend'),
-
+  entry: './frontend/src/app.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'frontend/dist')
+    path: path.resolve('./frontend/dist')
   },
   devtool: 'source-maps',
   module: {
@@ -21,23 +19,19 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: 'src',
+    contentBase: './frontend/src',
     hot: true,
     open: true,
     port: 8001,
     watchContentBase: true,
-    historyApiFallback: true,
     proxy: {
-      '/api': {
-        target: 'http://localhost:8000',
-        secure: false
-      }
+      '/api': 'http://localhost:4000'
     }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: 'dist/index.html',
       filename: 'index.html',
       inject: 'body'
     })

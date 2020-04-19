@@ -9,6 +9,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('register/', RegisterView.as_view()), # sending requests to  '/register' to the register view(controller)
     path('login/', LoginView.as_view()), # and the same for login
+<<<<<<< HEAD
 ]
 if settings.DEBUG:
   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
+]
+>>>>>>> development
