@@ -13,18 +13,28 @@ import IconButton from '@material-ui/core/IconButton'
 import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded'
 import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
+import FormHelperText from '@material-ui/core/FormHelperText'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import Button from '@material-ui/core/Button'
 
+let selectedLangs = []
+
 const Register = () => {
-  const [data, setData] = useState({ email: '', username: '', password: '', passConfirm: '', showPassword: false, showPassConfirm: false, languagesDb: [], userLanguages: [] })
+  const [data, setData] = useState({ email: '', username: '', password: '', passConfirm: '', showPassword: false, showPassConfirm: false })
+  const [langData, setLangData] = useState({ languagesDb: [], userLanguages: [] })
 
   useEffect(() => {
     axios.get('/api/languages')
       .then(resp => setData({ languagesDb: resp.data }))
+    // axios.post('/api')
+    //   .then(resp => setData(resp.data))
+  }, [])
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
     axios.post('/api')
       .then(resp => setData(resp.data))
-  }, [])
+  }
 
   const handleChange = (prop) => (event) => {
     setData({ ...data, [prop]: event.target.value })
@@ -42,14 +52,27 @@ const Register = () => {
     setData({ ...data, showPassConfirm: !data.showPassConfirm })
   }
 
-  const handleClickLang = () => {
-    // console.log(event.target.innerHTML)
-    setData({ ...data, userLanguages: event.target.innerHTML })
+  const handleSelectLang = (event) => {
+    console.log(langData.userLanguages)
+    // if (langData.userLanguages.includes(event.target.innerHTML)) {
+    //   event.target.classList.remove('lang-selected')
+    //   const filteredLangs = selectedLangs.filter((selectedLang) => {
+    //     return selectedLang !== event.target.innerHTML
+    //   })
+    //   selectedLangs = filteredLangs
+    //   setLangData({ ...langData, userLanguages: selectedLangs })
+    // } else {
+    event.target.classList.add('lang-selected')
+    selectedLangs.push(event.target.innerHTML)
+    setLangData({ ...langData, userLanguages: selectedLangs })
+    // }
+
   }
 
   // const handleMouseDownPassConfirm = (event) => {
   //   event.preventDefault()
   // }
+
   const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1)
@@ -57,20 +80,19 @@ const Register = () => {
   }))
 
   const classes = useStyles()
-  
-  console.log(data.userLanguages)
+
   return <>
     <div className="section register">
       <h2>Register</h2>
-      <form
-        onSubmit={(event) => useEffect(event)}>
+      <form onSubmit={() => handleSubmit(event)}>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems="flex-end">
             <Grid item>
               <Face />
             </Grid>
             <Grid item>
-              <Input placeholder="Username" />
+              <Input
+                placeholder="Username" />
             </Grid>
           </Grid>
         </div>
@@ -80,7 +102,11 @@ const Register = () => {
               <EmailRounded />
             </Grid>
             <Grid item>
-              <Input placeholder="E-mail" />
+              <Input
+                type='text'
+                value='data.email'
+                placeholder='E-mail'
+              />
             </Grid>
           </Grid>
         </div>
@@ -117,14 +143,14 @@ const Register = () => {
             </Grid>
             <Grid item>
               <Input
-                type={data.showPassConfirm ? 'text' : 'passConfirm'}
+                type={data.showPassConfirm ? 'text' : 'password'}
                 value={data.passConfirm}
                 onChange={handleChange('passConfirm')}
                 placeholder="Confirm password"
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
-                      aria-label="toggle password visibility"
+                      aria-label="toggle passConfirm visibility"
                       onClick={handleClickShowPassConfirm}
                       onMouseDown={handleMouseDownPassword}
                     >
@@ -142,7 +168,9 @@ const Register = () => {
               <LanguageRoundedIcon />
             </Grid>
             <Grid item>
-              <Input placeholder="Your timezone" />
+              <Input
+                type='text'
+                placeholder="Your timezone (GMT)" />
             </Grid>
           </Grid>
         </div>
@@ -152,7 +180,7 @@ const Register = () => {
             {data.languagesDb.map((language, id) => {
               return <Button
                 key={id}
-                onClick={() => handleClickLang(event)}
+                onClick={() => handleSelectLang(event)}
                 value={language.name}
               >
                 {language.name}
@@ -160,25 +188,28 @@ const Register = () => {
             }
             )}
           </ButtonGroup>
+          <FormHelperText id="component-helper-text">{`You code in ${selectedLangs}`}</FormHelperText>
+
         </div>
-        <div className={classes.margin}>
-          <Grid container spacing={1} alignItems="flex-end">
-            <Grid item>
-              <Button
-                variant="contained"
-                color="default"
-                className={classes.button}
-                startIcon={<CloudUploadIcon />}
-              >
-                Upload Photo
-              </Button>
-            </Grid>
-            <Grid item>
-            </Grid>
-          </Grid>
-        </div>
+        <Input
+          accept="image/*"
+          className={classes.margin}
+          type="file"
+          startIcon={<CloudUploadIcon />}
+        />
+        {/* <Button
+          accept="image/*"
+          startIcon={<CloudUploadIcon />}
+          type="file"
+        >
+          Upload Photo
+        </Button> */}
         <div className="button-register">
-          <Button variant="contained" color="primary">
+          <Button
+            onClick={() => handleSubmit(event)}
+            variant="contained"
+            color="primary"
+          >
             Register
           </Button>
         </div>

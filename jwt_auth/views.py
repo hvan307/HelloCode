@@ -1,10 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 # which user should be used here?
 from django.conf import settings
 import jwt
+from rest_framework.parsers import FileUploadParser
 from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
 
@@ -41,3 +43,4 @@ class LoginView(APIView):
 
         token = jwt.encode({'sub': user.id}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}!'})
+
