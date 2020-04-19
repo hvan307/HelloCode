@@ -20,7 +20,7 @@ module.exports = {
     contentBase: path.resolve('src'),
     hot: true,
     open: true,
-    port: 8000,
+    port: 8001,
     watchContentBase: true,
     historyApiFallback: true,
     proxy: {

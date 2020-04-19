@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import NavbarDrawer from './Common/NavbarDrawer'
 import Register from './User/Register'
 import Login from './User/Login'
+import ChatRoom from './Common/ChatRoom'
 
 const App = () => {
   return <BrowserRouter>
@@ -12,8 +13,9 @@ const App = () => {
     <Switch>
       <Route path={'/register'} component={Register} />
       <Route path={'/login'} component={Login} />
-      {/* <Route path={'/myprofile'} component={MyProfile} /> */}
-      {/* <Route path={'/mychats'} component={MyChats} /> */}
+      {/* <Route path={'/myprofile'} component={MyProfile} />
+      <Route path={'/mychats'} component={MyChats} /> */}
+      <Route path={'/chatroom'} component={ChatRoom} />
     </Switch>
   </BrowserRouter>
 }

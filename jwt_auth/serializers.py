@@ -1,9 +1,11 @@
 from rest_framework import serializers
 # should we use our own user or the django user here?
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 import django.contrib.auth.password_validation as validations
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
+
+User = get_user_model()
 
 # password verification for users
 class UserSerializer(serializers.ModelSerializer):
