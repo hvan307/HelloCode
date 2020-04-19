@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 
+import auth from '../../lib/auth'
+
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
@@ -128,40 +130,54 @@ const DrawerMenu = () => {
     setAnchorEl(null)
   }
 
+  const handleLogout = () => {
+    auth.logOut()
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position='fixed'
         className={clsx(classes.appBar, {
           [classes.appBarShift]: openDrawer
         })}
       >
+        {/* Drawer left-hand side menu */}
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
+            color='inherit'
+            aria-label='open drawer'
             onClick={handleDrawerOpen}
-            edge="start"
+            edge='start'
             className={clsx(classes.menuButton, openDrawer && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            HelloCode!
-          </Typography>
+          <Link 
+            to='/' 
+            className={classes.title}
+            style={{ color: 'white', textDecoration: 'none' }}
+          >
+            <Typography
+              variant='h6'
+              id='app-title'
+            >
+              ('Hello Code!')
+            </Typography>
+          </Link>
           {/* {auth && ( */}
+          {/* Right-hand side Menu - Profile Menu */}
           <IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
+            aria-controls='menu-appbar'
+            aria-haspopup='true'
             onClick={handleProfileMenu}
-            color="inherit"
+            color='inherit'
           >
             <AccountCircle />
           </IconButton>
           <Menu
-            id="menu-profile"
+            id='menu-profile'
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: 'top',
@@ -176,27 +192,31 @@ const DrawerMenu = () => {
             onClose={handleProfileClose}
           >
             <MenuItem onClick={handleProfileClose}>
-              <Link to="/myprofile">
+              <Link to='/myprofile'>
                 My Profile
               </Link>
             </MenuItem>
             {/* change to handleLogout */}
             <MenuItem onClick={handleProfileClose}>
-              <Link to="/">
+              <Link 
+                to='/'  
+                onClick={handleLogout}
+              >
                 Logout
               </Link>
             </MenuItem>
           </Menu>
+          {/* Right-hand side menu - Notifications */}
           <IconButton
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
+            aria-controls='menu-appbar'
+            aria-haspopup='true'
             onClick={handleMenu}
-            color="inherit"
+            color='inherit'
           >
             <MoreVertIcon />
           </IconButton>
           <Menu
-            id="menu-appbar"
+            id='menu-appbar'
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: 'top',
@@ -212,21 +232,23 @@ const DrawerMenu = () => {
           >
             <IconButton
               onClick={handleMenuClose}
-              aria-label="show 4 new mails"
-              color="inherit"
+              aria-label='new chat notifications'
+              color='inherit'
             >
-              <Badge badgeContent={4} color="secondary">
-                <Link to="/mychats" style={{ color: 'white' }}>
+              {/* change badgeContent */}
+              <Badge badgeContent={4} color='secondary'> 
+                <Link to='/mychats' style={{ color: 'black' }}>
                   <SmsRoundedIcon />
                 </Link>
               </Badge>
             </IconButton>
             <IconButton
               onClick={handleMenuClose}
-              aria-label="show 17 new notifications"
-              color="inherit"
+              aria-label='invite notifications'
+              color='inherit'
             >
-              <Badge badgeContent={17} color="secondary">
+              {/* change badgeContent */}
+              <Badge badgeContent={17} color='secondary'>
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -235,8 +257,8 @@ const DrawerMenu = () => {
       </AppBar>
       <Drawer
         className={classes.drawer}
-        variant="persistent"
-        anchor="left"
+        variant='persistent'
+        anchor='left'
         open={openDrawer}
         classes={{
           paper: classes.drawerPaper
