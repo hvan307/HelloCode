@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import auth from '../../lib/auth'
 
@@ -27,6 +27,7 @@ import Menu from '@material-ui/core/Menu'
 import Badge from '@material-ui/core/Badge'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import { ProgressPlugin } from 'webpack'
 
 
 const DrawerMenu = () => {
@@ -96,13 +97,17 @@ const DrawerMenu = () => {
   const classes = useStyles()
   const theme = useTheme()
 
+  // State for the left-hand side drawer menu
   const [openDrawer, setOpenDrawer] = useState(false)
+  // State for the right-hand side icon menu
   const [anchorMenu, setAnchorMenu] = useState(null)
   const openMenu = Boolean(anchorMenu)
   // const [auth, setAuth] = useState(true)
+  // State for the logged in user profile menu
   const [anchorEl, setAnchorEl] = useState(null)
   const openIcon = Boolean(anchorEl)
 
+  // Handler functions
   const handleDrawerOpen = () => {
     setOpenDrawer(true)
   }
@@ -114,6 +119,7 @@ const DrawerMenu = () => {
   // const handleChange = (event) => {
   //   setAuth(event.target.checked);
   // };
+
   const handleMenu = (event) => {
     setAnchorMenu(event.currentTarget)
   }
@@ -133,6 +139,8 @@ const DrawerMenu = () => {
   const handleLogout = () => {
     auth.logOut()
   }
+
+  const isLoggedIn = auth.isLoggedIn()
 
   return (
     <div className={classes.root}>
@@ -154,8 +162,8 @@ const DrawerMenu = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Link 
-            to='/' 
+          <Link
+            to='/'
             className={classes.title}
             style={{ color: 'white', textDecoration: 'none' }}
           >
@@ -166,9 +174,10 @@ const DrawerMenu = () => {
               ('Hello Code!')
             </Typography>
           </Link>
-          {/* {auth && ( */}
           {/* Right-hand side Menu - Profile Menu */}
-          <IconButton
+          {/* {auth && ( */}
+          {isLoggedIn && (
+            <IconButton
             aria-controls='menu-appbar'
             aria-haspopup='true'
             onClick={handleProfileMenu}
@@ -198,14 +207,16 @@ const DrawerMenu = () => {
             </MenuItem>
             {/* change to handleLogout */}
             <MenuItem onClick={handleProfileClose}>
-              <Link 
-                to='/'  
+              <Link
+                to='/'
                 onClick={handleLogout}
               >
                 Logout
               </Link>
             </MenuItem>
           </Menu>
+          )}
+
           {/* Right-hand side menu - Notifications */}
           <IconButton
             aria-controls='menu-appbar'
@@ -236,7 +247,7 @@ const DrawerMenu = () => {
               color='inherit'
             >
               {/* change badgeContent */}
-              <Badge badgeContent={4} color='secondary'> 
+              <Badge badgeContent={4} color='secondary'>
                 <Link to='/mychats' style={{ color: 'black' }}>
                   <SmsRoundedIcon />
                 </Link>
@@ -300,4 +311,4 @@ const DrawerMenu = () => {
 }
 
 
-export default DrawerMenu
+export default withRouter(DrawerMenu)

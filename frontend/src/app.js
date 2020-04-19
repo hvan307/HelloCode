@@ -15,7 +15,7 @@ const App = () => {
       <Route path={'/register'} component={Register} />
       <Route path={'/login'} component={Login} />
       {/* <Route path={'/myprofile'} component={MyProfile} /> */}
-      <Route path={'/mychats'} component={PreChat} />
+      {/* <Route path={'/mychats'} component={PreChat} /> */}
     </Switch>
     <PreChat />
   </BrowserRouter>

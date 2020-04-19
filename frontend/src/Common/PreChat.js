@@ -23,7 +23,7 @@ class PreChat extends React.Component {
     this.setState({
       buttonPressed: true,
       userChoice: 'Hanna1',
-      chatChoice: 1
+      chatChoice: 2
     })
   }
 

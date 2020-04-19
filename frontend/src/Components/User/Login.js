@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+
+import auth from '../../lib/auth'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -10,29 +13,38 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import LockRoundedIcon from '@material-ui/icons/LockRounded'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
+import { FormHelperText } from '@material-ui/core'
 
 const Login = () => {
-  const [data, setData] = useState({ username: '', password: '', showPassword: false }, { error: '' })
+  const [form, setForm] = useState({ data: { username: '', password: '' }, showPassword: false, errors: '' })
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    axios.post('/api')
-      .then(resp => setData(resp.data))
-  }
-  
   const handleChange = (prop) => (event) => {
     console.log(prop)
     console.log(event.target.value)
-    setData({ ...data, [prop]: event.target.value })
+    setForm({ ...form, [prop]: event.target.value })
   }
 
   const handleClickShowPassword = () => {
-    setData({ ...data, showPassword: !data.showPassword })
+    setForm({ ...form, showPassword: !form.showPassword })
   }
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault()
   }
+
+  const handleSubmit = (props) => (event) => {
+    event.preventDefault()
+    axios.post('/api/auth/login',
+      form)
+      .then(resp => {
+        console.log(resp.data.token)
+        const token = resp.data.token
+        auth.setToken(token)
+        props.history.push('/')
+      })
+      .catch(err => setForm({ error: err.response.data.message }))
+  }
+
   // styling - move to scss?
   const useStyles = makeStyles((theme) => ({
     margin: {
@@ -55,11 +67,14 @@ const Login = () => {
               <Input
                 name='username'
                 type='text'
-                onChange={handleChange('username')}
+                onChange={handleChange('form.data.username')}
                 placeholder='username'
               />
             </Grid>
           </Grid>
+          {form.error && <FormHelperText>
+            {form.error}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems="flex-end">
@@ -69,8 +84,8 @@ const Login = () => {
             <Grid item>
               <Input
                 name='password'
-                type={data.showPassword ? 'text' : 'password'}
-                onChange={handleChange('password')}
+                type={form.showPassword ? 'text' : 'password'}
+                onChange={handleChange('form.data.password')}
                 placeholder="Password"
                 endAdornment={
                   <InputAdornment position="end">
@@ -79,13 +94,16 @@ const Login = () => {
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {data.showPassword ? <Visibility /> : <VisibilityOff />}
+                      {form.showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 }
               />
             </Grid>
           </Grid>
+          {form.error && <FormHelperText>
+            {form.error}
+          </FormHelperText>}
         </div>
         <div className="button">
           <Button
