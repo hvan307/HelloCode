@@ -6,6 +6,7 @@ import NavbarDrawer from './Common/NavbarDrawer'
 import Register from './User/Register'
 import Login from './User/Login'
 import ChatRoom from './Common/ChatRoom'
+import PreChat from './Common/PreChat'
 
 const App = () => {
   return <BrowserRouter>
@@ -17,6 +18,7 @@ const App = () => {
       <Route path={'/mychats'} component={MyChats} /> */}
       <Route path={'/chatroom'} component={ChatRoom} />
     </Switch>
+    <PreChat />
   </BrowserRouter>
 }
 

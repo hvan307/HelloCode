@@ -4,15 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "webpack-dev-server --mode=development"
+    "build": "webpack -p",
+    "serve:frontend": "webpack-dev-server",
+    "serve:backend": "python manage.py runserver 4000"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
     "html-webpack-plugin": "^3.2.0",
@@ -24,6 +25,7 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@material-ui/core": "^4.9.10",
     "@material-ui/icons": "^4.9.1",
     "axios": "^0.19.0",

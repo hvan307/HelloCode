@@ -1,23 +1,30 @@
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 # which user should be used here?
 from django.contrib.auth import get_user_model
 from django.conf import settings
 import jwt
-from .serializers import UserSerializer
+from .serializers import UserSerializer, PopulateUserSerializer
+from backend.serializers import PopulateLanguageSerializer
 
 User = get_user_model()
 
-class RegisterView(CreateAPIView):
+class RegisterView(ListCreateAPIView):
     serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    def get(self, _request):
+        users = User.objects.all()
+        serializer = PopulateUserSerializer(users, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'message': 'Registration successful'})
+            return Response({'message': 'Registration successful', "user":serializer.data})
 
         return Response(serializer.errors, status=422)
 

@@ -3,37 +3,35 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './src/app.js',
+  entry: './frontend/src/app.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve('dist'),
-    publicPath: '/'
+    path: path.resolve('./frontend/dist')
   },
+  devtool: 'source-maps',
   module: {
     rules: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.css$/, loader: ['style-loader', 'css-loader'] },
-      { test: /\.s(a|c)ss$/, loader: ['style-loader', 'css-loader', 'sass-loader'] }
+      { test: /\.s(a|c)ss$/, loader: ['style-loader', 'css-loader', 'sass-loader'] },
+      { test: /\.woff2?$/, loader: 'file-loader' },
+      { test: /\.(jpg|png|gif)$/, loader: 'file-loader' }
     ]
   },
   devServer: {
-    contentBase: path.resolve('src'),
+    contentBase: './frontend/src',
     hot: true,
     open: true,
     port: 8001,
     watchContentBase: true,
-    historyApiFallback: true,
     proxy: {
-      '/api': {
-        target: 'http://localhost:8000',
-        secure: false
-      }
+      '/api': 'http://localhost:4000'
     }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: 'dist/index.html',
       filename: 'index.html',
       inject: 'body'
     })
