@@ -4,21 +4,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 # which user should be used here?
-<<<<<<< HEAD
-from django.conf import settings
-import jwt
-from rest_framework.parsers import FileUploadParser
-from .serializers import UserSerializer
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
-=======
 from django.contrib.auth import get_user_model
 from django.conf import settings
 import jwt
 from .serializers import UserSerializer, PopulateUserSerializer
 from backend.serializers import PopulateLanguageSerializer
->>>>>>> development
 
 User = get_user_model()
 
