@@ -9,11 +9,11 @@ class Chat extends React.Component {
     this.waitForSocketConnection(() => {
       WebSocketInstance.addCallbacks(this.setMessages.bind(this), this.addMessage.bind(this))
       WebSocketInstance.fetchMessages(
-        this.state.currentUser,
-        this.state.currentChat
+        this.props.userChoice,
+        this.props.chatChoice
       );
     });
-    WebSocketInstance.connect(this.state.currentChat);
+    WebSocketInstance.connect(this.props.chatChoice);
     //the 1 in connect(1) is the chatId for the backend. 
     //this will be changed to be the chatId of the chat the user clicked on
     //and the chat list will have been gotten from an api call
@@ -23,8 +23,8 @@ class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: 'tom',
-      currentChat: '1'
+      currentUser: this.props.userChoice,
+      currentChat: this.props.chatChoice
     }
     this.initialiseChat();
   }
