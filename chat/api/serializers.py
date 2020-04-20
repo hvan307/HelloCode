@@ -1,9 +1,38 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
+from chat.models import Chat, Message
 
-from chat.models import Chat
+User = get_user_model()
 
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'username')
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ('__all__')
+
+
+class PopulateMessageSerializer(serializers.ModelSerializer):
+    author = UserSerializer(many=False)
+
+    class Meta:
+        model = Message
+        fields = ('__all__')
 
 class ChatSerializer(serializers.ModelSerializer):
   class Meta:
     model = Chat
     fields = ('__all__')
+
+class PopulateChatSerializer(serializers.ModelSerializer):
+    participants = UserSerializer(many=True)
+    messages = MessageSerializer(many=True)
+
+    class Meta:
+        model = Chat
+        fields = ('__all__')
