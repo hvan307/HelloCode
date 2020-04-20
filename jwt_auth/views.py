@@ -1,39 +1,48 @@
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 # which user should be used here?
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.conf import settings
 import jwt
-from .serializers import UserSerializer
+from .serializers import UserSerializer, PopulateUserSerializer
+from backend.serializers import PopulateLanguageSerializer
 
-class RegisterView(CreateAPIView):
+User = get_user_model()
+
+class RegisterView(ListCreateAPIView):
     serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    def get(self, _request):
+        users = User.objects.all()
+        serializer = PopulateUserSerializer(users, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'message': 'Registration successful'})
+            return Response({'message': 'Registration successful', "user":serializer.data})
 
         return Response(serializer.errors, status=422)
 
 
 class LoginView(APIView):
 
-    def get_user(self, email):
+    def get_user(self, username):
         try:
-            return User.objects.get(email=email)
+            return User.objects.get(username=username)
         except User.DoesNotExist:
             raise PermissionDenied({'message': 'Invalid credentials'})
 
     def post(self, request):
 
-        email = request.data.get('email')
+        username = request.data.get('username')
         password = request.data.get('password')
 
-        user = self.get_user(email)
+        user = self.get_user(username)
         if not user.check_password(password):
             raise PermissionDenied({'message': 'Invalid credentials'})
 
