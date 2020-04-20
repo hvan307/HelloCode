@@ -6,11 +6,12 @@ import './styling/style.scss'
 import NavbarDrawer from './Components/Common/NavbarDrawer'
 import Register from './Components/User/Register'
 import Login from './Components/User/Login'
-import ChatRoom from './Common/ChatRoom'
-import PreChat from './Common/PreChat'
-import Home from './Common/Home'
-import MyProfile from './User/MyProfile'
-import NewChat from './User/NewChat'
+import ChatRoom from './Components/Chat/ChatRoom'
+import PreChat from './Components/Chat/PreChat'
+import Home from './Components/Common/Home'
+import MyProfile from './Components/User/MyProfile'
+import NewChat from './Components/User/NewChat'
+import MyChats from './Components/User/MyChats'
 
 const App = () => {
   return <HashRouter>
@@ -20,7 +21,7 @@ const App = () => {
       <Route path={'/login'} component={Login} />
       <Route path={'/myprofile'} component={MyProfile} />
       <Route path={'/newchat'} component={NewChat} />
-      {/* <Route path={'/mychats'} component={MyChats} /> */}
+      <Route path={'/mychats'} component={MyChats} />
       <Route path={'/chatroom'} component={ChatRoom} />
       <Route path={'/'} component={Home} />
     </Switch>

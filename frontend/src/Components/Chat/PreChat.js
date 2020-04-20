@@ -3,7 +3,7 @@ import Chat from './Chat'
 
 class PreChat extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
       buttonPressed: false,
       userChoice: '',

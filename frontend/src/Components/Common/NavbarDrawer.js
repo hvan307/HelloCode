@@ -176,7 +176,7 @@ const DrawerMenu = () => {
           {/* Right-hand side Menu - Profile Menu */}
           {/* {auth && ( */}
           {/* {isLoggedIn &&  */}
-            <IconButton
+          <IconButton
             aria-controls='menu-appbar'
             aria-haspopup='true'
             onClick={handleProfileMenu}
@@ -217,14 +217,16 @@ const DrawerMenu = () => {
           {/* } */}
 
           {/* Right-hand side menu - Notifications */}
-          <IconButton
-            aria-controls='menu-appbar'
-            aria-haspopup='true'
-            onClick={handleMenu}
-            color='inherit'
-          >
-            <MoreVertIcon />
-          </IconButton>
+          <Badge badgeContent={1} color='secondary'>
+            <IconButton
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
+              onClick={handleMenu}
+              color='inherit'
+            >
+              <MoreVertIcon margin='0' padding='0'/>
+            </IconButton>
+          </Badge>
           <Menu
             id='menu-appbar'
             anchorEl={anchorEl}

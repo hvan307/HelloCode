@@ -1,5 +1,5 @@
 import React from 'react'
-import WebSocketInstance from '../websocket'
+import WebSocketInstance from '../../websocket'
 
 class Chat extends React.Component {
 
@@ -11,9 +11,9 @@ class Chat extends React.Component {
       WebSocketInstance.fetchMessages(
         this.props.userChoice,
         this.props.chatChoice
-      );
-    });
-    WebSocketInstance.connect(this.props.chatChoice);
+      )
+    })
+    WebSocketInstance.connect(this.props.chatChoice)
     //the 1 in connect(1) is the chatId for the backend. 
     //this will be changed to be the chatId of the chat the user clicked on
     //and the chat list will have been gotten from an api call
@@ -21,26 +21,26 @@ class Chat extends React.Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       currentUser: this.props.userChoice,
       currentChat: this.props.chatChoice
     }
-    this.initialiseChat();
+    this.initialiseChat()
   }
 
   waitForSocketConnection(callback) {
-    const component = this;
+    const component = this
     setTimeout(
       function () {
         if (WebSocketInstance.state() === 1) {
-          console.log('connection is secure');
+          console.log('connection is secure')
           //if the connection is ready and there are callback functions to do then start on the callback functions
-          callback();
-          return;
+          callback()
+          return
         } else {
-          console.log('waiting for connection...');
-          component.waitForSocketConnection(callback);
+          console.log('waiting for connection...')
+          component.waitForSocketConnection(callback)
         }
       }, 100)
   }
@@ -53,7 +53,7 @@ class Chat extends React.Component {
   }
 
   renderMessages = (messages) => {
-    const currentUser = 'admin';
+    const currentUser = 'admin'
     console.log(messages)
     return messages.map(message => (
       <p key={message.id}>
@@ -75,7 +75,7 @@ class Chat extends React.Component {
   }
 
   sendMessageHandler(e) {
-    e.preventDefault();
+    e.preventDefault()
     const messageObject = {
       from: this.state.currentUser, //this will be changed to be the user from the current token
       content: this.state.message,
@@ -84,7 +84,7 @@ class Chat extends React.Component {
     WebSocketInstance.newChatMessage(messageObject);
     this.setState({
       message: ''
-    });
+    })
     setTimeout(() => {
       this.setState({ messages: WebSocketInstance.fetchMessages(this.state.currentUser, this.state.currentChat) })
     }, 50)
@@ -92,7 +92,7 @@ class Chat extends React.Component {
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(newProps) {
-    this.initialiseChat();
+    this.initialiseChat()
   }
 
   render() {
