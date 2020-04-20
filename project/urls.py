@@ -21,11 +21,12 @@ from django.urls import include, path
 
 
 urlpatterns = [
+    path('', include('frontend.urls')),
     path('admin/', admin.site.urls),
     path('api/', include('backend.urls')),
     path('api/auth/', include('jwt_auth.urls')),
-    path('api/chat/', include('chat.api.urls')),
-    path('', include('frontend.urls'))
+    path('api/chat/', include('chat.api.urls'))
+    
 ]
 
 # if settings.DEBUG:

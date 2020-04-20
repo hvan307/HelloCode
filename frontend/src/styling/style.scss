@@ -1,3 +1,40 @@
+h3 {
+  font-family: 'Cutive Mono', monospace;
+  text-align: center;
+}
+
+.chat {
+  padding: 20px;
+  margin: 20px;
+
+  .messages {
+    margin: 5px 0;
+
+    .speech-bubble {
+      padding: 5px;
+      width: 50%;
+    }
+  }
+}
+
+.chat-input {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+
+  input {
+    width: 70%;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10.5px;
+    border-radius: 7px;
+    border: 1px solid grey;
+  }
+
+  button {
+    margin: 0 10px;
+  }
+}
 // NavbarDrawer
 #app-title {
   // font-family: 'Source Code Pro', monospace;

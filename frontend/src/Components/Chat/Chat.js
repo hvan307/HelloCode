@@ -1,6 +1,12 @@
 import React from 'react'
 import WebSocketInstance from '../../websocket'
 
+import Button from '@material-ui/core/Button'
+import Icon from '@material-ui/core/Icon'
+import Paper from '@material-ui/core/Paper'
+
+
+
 class Chat extends React.Component {
 
   initialiseChat() {
@@ -55,9 +61,15 @@ class Chat extends React.Component {
   renderMessages = (messages) => {
     console.log(messages)
     return messages.map(message => (
-      <p key={message.id}>
-        <p>{message.content}  <br />User: {message.author}</p>
-      </p>
+      <div className="messages" key={message.id}>
+        <Paper 
+          className="speech-bubble"
+          variant="outlined"
+          elevation={2}
+        >
+          {message.content}  <br />User: {message.author}
+        </Paper>
+      </div>
     ))
   }
 
@@ -80,7 +92,7 @@ class Chat extends React.Component {
       content: this.state.message,
       chatId: this.state.currentChat //this will also be changed to match the current chatid see at top for more info / ask ben
     }
-    WebSocketInstance.newChatMessage(messageObject);
+    WebSocketInstance.newChatMessage(messageObject)
     this.setState({
       message: ''
     })
@@ -95,19 +107,31 @@ class Chat extends React.Component {
   }
 
   render() {
-    const {messages, currentChat, currentUser} = this.state
+
+    const { messages, currentChat, currentUser } = this.state
     console.log(messages)
+
     return <>
-      <h1>Messages, Chatroom: {currentChat}, User: {currentUser}</h1>
-      {messages &&
-        this.renderMessages(messages)
-      }
-      <input
-        type="text"
-        onChange={(event) => this.messageChangeHandler(event)}
-        value={this.state.message}
-      />
-      <button onClick={(e) => this.sendMessageHandler(e)}>Submit</button>
+      <h3>Chatroom: {currentChat}, User: {currentUser}</h3>
+      <div className="chat">
+        {messages && this.renderMessages(messages)}
+      </div>
+      <div className="chat-input">
+        <input
+          type="text"
+          onChange={(event) => this.messageChangeHandler(event)}
+          value={this.state.message}
+        />
+        <Button
+          onClick={(e) => this.sendMessageHandler(e)}
+          variant="contained"
+          color="primary"
+          className="button"
+          endIcon={<Icon>send</Icon>}
+        >
+          Send
+        </Button>
+      </div>
     </>
   }
 }
