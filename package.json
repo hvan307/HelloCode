@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack -p",
     "serve:frontend": "webpack-dev-server",
-    "serve:backend": "python manage.py runserver 4000"
+    "serve:backend": "python manage.py runserver 4000",
+    "migrate":"python manage.py makemigrations && python manage.py migrate",
+    "fixtures":"python manage.py loaddata backend_fixture.json && python manage.py loaddata chat_fixture.json"
   },
   "author": "",
   "license": "ISC",

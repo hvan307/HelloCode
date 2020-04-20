@@ -53,7 +53,6 @@ class Chat extends React.Component {
   }
 
   renderMessages = (messages) => {
-    const currentUser = 'admin'
     console.log(messages)
     return messages.map(message => (
       <p key={message.id}>

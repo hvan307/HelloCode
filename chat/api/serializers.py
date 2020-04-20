@@ -31,8 +31,7 @@ class ChatSerializer(serializers.ModelSerializer):
 
 class PopulateChatSerializer(serializers.ModelSerializer):
     participants = UserSerializer(many=True)
-    messages = MessageSerializer(many=True)
 
     class Meta:
         model = Chat
-        fields = ('__all__')
+        fields = ('id', 'participants', )
