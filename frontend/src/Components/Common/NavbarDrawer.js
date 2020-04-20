@@ -139,7 +139,7 @@ const DrawerMenu = () => {
     auth.logOut()
   }
 
-  // const isLoggedIn = auth.isLoggedIn()
+  const isLoggedIn = auth.isLoggedIn()
 
   return (
     <div className={classes.root}>
@@ -175,47 +175,47 @@ const DrawerMenu = () => {
           </Link>
           {/* Right-hand side Menu - Profile Menu */}
           {/* {auth && ( */}
-          {/* {isLoggedIn &&  */}
-          <IconButton
-            aria-controls='menu-appbar'
-            aria-haspopup='true'
-            onClick={handleProfileMenu}
-            color='inherit'
-          >
-            <AccountCircle />
-          </IconButton>
-          <Menu
-            id='menu-profile'
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            open={openIcon}
-            onClose={handleProfileClose}
-          >
-            <MenuItem onClick={handleProfileClose}>
-              <Link to='/myprofile'>
-                My Profile
-              </Link>
-            </MenuItem>
-            {/* change to handleLogout */}
-            <MenuItem onClick={handleProfileClose}>
-              <Link
-                to='/'
-                onClick={handleLogout}
-              >
-                Logout
-              </Link>
-            </MenuItem>
-          </Menu>
-          {/* } */}
-
+          {isLoggedIn && <div>
+            <IconButton
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
+              onClick={handleProfileMenu}
+              color='inherit'
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id='menu-profile'
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              open={openIcon}
+              onClose={handleProfileClose}
+            >
+              <MenuItem onClick={handleProfileClose}>
+                <Link to='/myprofile'>
+                  My Profile
+                </Link>
+              </MenuItem>
+              {/* change to handleLogout */}
+              <MenuItem onClick={handleProfileClose}>
+                <Link
+                  to='/'
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Link>
+              </MenuItem>
+            </Menu>
+          </div>
+          }
           {/* Right-hand side menu - Notifications */}
           <Badge badgeContent={1} color='secondary'>
             <IconButton

@@ -36,7 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'password_confirmation', 'languages')
+        fields = ('username', 'email', 'password', 'password_confirmation', 'timezone', 'languages')
 
     
 class PopulateUserSerializer(serializers.ModelSerializer):
@@ -44,4 +44,4 @@ class PopulateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
       model = User
-      fields = ('username', 'email', 'languages')
+      fields = ('username', 'email', 'timezone', 'languages')

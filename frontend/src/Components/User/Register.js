@@ -14,26 +14,25 @@ import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded'
 import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import FormHelperText from '@material-ui/core/FormHelperText'
-import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+// import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import Button from '@material-ui/core/Button'
 
 let selectedLangs = []
 
 const Register = () => {
-  const [data, setData] = useState({ email: '', username: '', password: '', passConfirm: '', showPassword: false, showPassConfirm: false })
-  const [langData, setLangData] = useState({ languagesDb: [], userLanguages: [] })
+  const [data, setData] = useState({ email: '', username: '', password: '', password_confirmation: '', timezone: '', languages: [] })
+  const [password, setPassword] = useState({ showPassword: false, showPassConfirm: false })
+  const [langData, setLangData] = useState({ languagesDb: [] })
 
   useEffect(() => {
     axios.get('/api/languages/')
       .then(resp => setLangData({ languagesDb: resp.data }))
-    // axios.post('/api/')
-    //   .then(resp => setData(resp.data))
   }, [])
 
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    axios.post('/api', data)
+    axios.post('/api/auth/register/', data)
       .then(resp => {
         console.log(resp.data)
         resp.data
@@ -45,7 +44,7 @@ const Register = () => {
   }
 
   const handleClickShowPassword = () => {
-    setData({ ...data, showPassword: !data.showPassword })
+    setPassword({ ...password, showPassword: !password.showPassword })
   }
 
   const handleMouseDownPassword = (event) => {
@@ -53,29 +52,26 @@ const Register = () => {
   }
 
   const handleClickShowPassConfirm = () => {
-    setData({ ...data, showPassConfirm: !data.showPassConfirm })
+    setPassword({ ...password, showPassConfirm: !password.showPassConfirm })
   }
 
   const handleSelectLang = (event) => {
-    console.log(langData.userLanguages)
-    // if (langData.userLanguages.includes(event.target.innerHTML)) {
+    event.preventDefault()
+    console.log(data.languages)
+    // if (data.languages.includes(event.target.innerHTML)) {
     //   event.target.classList.remove('lang-selected')
     //   const filteredLangs = selectedLangs.filter((selectedLang) => {
     //     return selectedLang !== event.target.innerHTML
     //   })
     //   selectedLangs = filteredLangs
-    //   setLangData({ ...langData, userLanguages: selectedLangs })
+    //   setLangData({ ...data, languages: selectedLangs })
     // } else {
     event.target.classList.add('lang-selected')
-    selectedLangs.push(event.target.innerHTML)
-    setLangData({ ...langData, userLanguages: selectedLangs })
+    console.log(event.target)
+    selectedLangs.push(parseInt(event.target.value))
+    setData({ ...data, languages: selectedLangs })
     // }
-
   }
-
-  // const handleMouseDownPassConfirm = (event) => {
-  //   event.preventDefault()
-  // }
 
   const useStyles = makeStyles((theme) => ({
     margin: {
@@ -96,6 +92,9 @@ const Register = () => {
             </Grid>
             <Grid item>
               <Input
+                type='text'
+                value={data.username}
+                onChange={handleChange('username')}
                 placeholder="Username" />
             </Grid>
           </Grid>
@@ -108,6 +107,8 @@ const Register = () => {
             <Grid item>
               <Input
                 type='text'
+                value={data.email}
+                onChange={handleChange('email')}
                 placeholder='E-mail'
               />
             </Grid>
@@ -120,8 +121,8 @@ const Register = () => {
             </Grid>
             <Grid item>
               <Input
-                type={data.showPassword ? 'text' : 'password'}
-                value={data.password}
+                type={password.showPassword ? 'text' : 'password'}
+                value={password.password}
                 onChange={handleChange('password')}
                 placeholder="Password"
                 endAdornment={
@@ -131,7 +132,7 @@ const Register = () => {
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {data.showPassword ? <Visibility /> : <VisibilityOff />}
+                      {password.showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -146,9 +147,9 @@ const Register = () => {
             </Grid>
             <Grid item>
               <Input
-                type={data.showPassConfirm ? 'text' : 'password'}
-                value={data.passConfirm}
-                onChange={handleChange('passConfirm')}
+                type={password.showPassConfirm ? 'text' : 'password'}
+                value={data.password_confirmation}
+                onChange={handleChange('password_confirmation')}
                 placeholder="Confirm password"
                 endAdornment={
                   <InputAdornment position="end">
@@ -157,7 +158,7 @@ const Register = () => {
                       onClick={handleClickShowPassConfirm}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {data.showPassConfirm ? <Visibility /> : <VisibilityOff />}
+                      {password.showPassConfirm ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -173,6 +174,8 @@ const Register = () => {
             <Grid item>
               <Input
                 type='text'
+                value={data.timezone}
+                onChange={handleChange('timezone')}
                 placeholder="Your timezone (GMT)" />
             </Grid>
           </Grid>
@@ -181,40 +184,33 @@ const Register = () => {
           <ComputerRoundedIcon />
           <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
             {langData.languagesDb.map((language, id) => {
-              return <Button
+              return <button
                 key={id}
-                onClick={() => handleSelectLang(event)}
-                value={language.name}
+                onClick={(event) => handleSelectLang(event)}
+                value={id}
               >
                 {language.name}
-              </Button>
+              </button>
             }
             )}
           </ButtonGroup>
           <FormHelperText id="component-helper-text">{`You code in ${selectedLangs}`}</FormHelperText>
 
         </div>
-        <Input
+        {/* <Input
           accept="image/*"
           className={classes.margin}
           type="file"
-          startIcon={<CloudUploadIcon />}
-        />
-        {/* <Button
-          accept="image/*"
-          startIcon={<CloudUploadIcon />}
-          type="file"
-        >
-          Upload Photo
-        </Button> */}
+          // value={data.image}
+          // startIcon={<CloudUploadIcon />}
+        /> */}
         <div className="button-register">
-          <Button
-            onClick={() => handleSubmit(event)}
+          <button
             variant="contained"
             color="primary"
           >
             Register
-          </Button>
+          </button>
         </div>
       </form>
     </div>
