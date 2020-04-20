@@ -13,14 +13,12 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import LockRoundedIcon from '@material-ui/icons/LockRounded'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
-import { FormHelperText } from '@material-ui/core'
+// import { FormHelperText } from '@material-ui/core'
 
 const Login = () => {
-  const [form, setForm] = useState({ data: { username: '', password: '' }, showPassword: false, errors: '' })
+  const [form, setForm] = useState({ showPassword: false, errors: '' })
 
   const handleChange = (prop) => (event) => {
-    console.log(prop)
-    console.log(event.target.value)
     setForm({ ...form, [prop]: event.target.value })
   }
 
@@ -32,17 +30,18 @@ const Login = () => {
     event.preventDefault()
   }
 
-  const handleSubmit = (props) => (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    axios.post('/api/auth/login',
+    console.log(props)
+    axios.post('/api/auth/login/',
       form)
       .then(resp => {
         console.log(resp.data.token)
         const token = resp.data.token
         auth.setToken(token)
-        props.history.push('/')
+        // prop.history.push('/myprofile')
       })
-      .catch(err => setForm({ error: err.response.data.message }))
+      .catch(err => console.log(err))
   }
 
   // styling - move to scss?
@@ -57,7 +56,7 @@ const Login = () => {
   return <>
     <div className="section">
       <h1>Login</h1>
-      <form onSubmit={() => handleSubmit(event)}>
+      <form onSubmit={(event) => handleSubmit(event)}>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems="flex-end">
             <Grid item>
@@ -72,9 +71,9 @@ const Login = () => {
               />
             </Grid>
           </Grid>
-          {form.error && <FormHelperText>
-            {form.error}
-          </FormHelperText>}
+          {/* {form.error && <FormHelperText>
+            {form.error} */}
+          {/* </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems="flex-end">
@@ -101,14 +100,14 @@ const Login = () => {
               />
             </Grid>
           </Grid>
-          {form.error && <FormHelperText>
+          {/* {form.error && <FormHelperText>
             {form.error}
-          </FormHelperText>}
+          </FormHelperText>} */}
         </div>
         <div className="button">
           <Button
             type='submit'
-            onClick={() => handleSubmit(event)}
+            // onClick={() => handleSubmit(event)}
             variant="contained"
             color="primary"
           >
