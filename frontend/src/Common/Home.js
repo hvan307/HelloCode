@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
@@ -25,20 +26,24 @@ const Home = () => {
       <h1>Welcome to HelloCode!</h1>
       <h2>Join millions of coders helping each other!</h2>
       <h3>We'll match you with someone so you can start chatting!</h3>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.button}
-      >
-        Log In
-      </Button>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.button}
-      >
-        Sign Up
-      </Button>
+      <Link to={'/login'}>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+        >
+          Log In
+        </Button>
+      </Link>
+      <Link to={'/register'}>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+        >
+          Sign Up
+        </Button>
+      </Link>
     </div >
   </>
 }

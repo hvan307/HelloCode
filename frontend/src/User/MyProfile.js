@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
@@ -40,9 +41,11 @@ const MyProfile = () => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Start new chat!
-        </Button>
+        <Link to={'/newchat'}>
+          <Button size="small" color="primary">
+            Start new chat!
+          </Button>
+        </Link>
         {/* <Button size="small" color="primary">
           Something else?
         </Button> */}
