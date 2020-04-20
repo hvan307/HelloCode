@@ -15,8 +15,8 @@ class Chat extends React.Component {
     this.waitForSocketConnection(() => {
       WebSocketInstance.addCallbacks(this.setMessages.bind(this), this.addMessage.bind(this))
       WebSocketInstance.fetchMessages(
-        this.props.userChoice,
-        this.props.chatChoice
+        this.props.location.state.currentUser,
+        this.props.location.state.currentChat
       )
     })
     WebSocketInstance.connect(this.props.chatChoice)
@@ -28,9 +28,10 @@ class Chat extends React.Component {
 
   constructor(props) {
     super(props)
+    console.log(this.props.location)
     this.state = {
-      currentUser: this.props.userChoice,
-      currentChat: this.props.chatChoice
+      currentUser: this.props.location.state.currentUser,
+      currentChat: this.props.location.state.currentChat
     }
     this.initialiseChat()
   }
