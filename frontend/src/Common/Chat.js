@@ -1,6 +1,12 @@
 import React from 'react'
 import WebSocketInstance from '../websocket'
 
+import Button from '@material-ui/core/Button'
+import Icon from '@material-ui/core/Icon'
+import Paper from '@material-ui/core/Paper'
+
+
+
 class Chat extends React.Component {
 
   initialiseChat() {
@@ -11,9 +17,9 @@ class Chat extends React.Component {
       WebSocketInstance.fetchMessages(
         this.props.userChoice,
         this.props.chatChoice
-      );
-    });
-    WebSocketInstance.connect(this.props.chatChoice);
+      )
+    })
+    WebSocketInstance.connect(this.props.chatChoice)
     //the 1 in connect(1) is the chatId for the backend. 
     //this will be changed to be the chatId of the chat the user clicked on
     //and the chat list will have been gotten from an api call
@@ -21,26 +27,26 @@ class Chat extends React.Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       currentUser: this.props.userChoice,
       currentChat: this.props.chatChoice
     }
-    this.initialiseChat();
+    this.initialiseChat()
   }
 
   waitForSocketConnection(callback) {
-    const component = this;
+    const component = this
     setTimeout(
       function () {
         if (WebSocketInstance.state() === 1) {
-          console.log('connection is secure');
+          console.log('connection is secure')
           //if the connection is ready and there are callback functions to do then start on the callback functions
-          callback();
-          return;
+          callback()
+          return
         } else {
-          console.log('waiting for connection...');
-          component.waitForSocketConnection(callback);
+          console.log('waiting for connection...')
+          component.waitForSocketConnection(callback)
         }
       }, 100)
   }
@@ -53,12 +59,18 @@ class Chat extends React.Component {
   }
 
   renderMessages = (messages) => {
-    const currentUser = 'admin';
+    const currentUser = 'admin'
     console.log(messages)
     return messages.map(message => (
-      <p key={message.id}>
-        <p>{message.content}  <br />User: {message.author}</p>
-      </p>
+      <div className="messages" key={message.id}>
+        <Paper 
+          className="speech-bubble"
+          variant="outlined"
+          elevation={2}
+        >
+          {message.content}  <br />User: {message.author}
+        </Paper>
+      </div>
     ))
   }
 
@@ -75,16 +87,16 @@ class Chat extends React.Component {
   }
 
   sendMessageHandler(e) {
-    e.preventDefault();
+    e.preventDefault()
     const messageObject = {
       from: this.state.currentUser, //this will be changed to be the user from the current token
       content: this.state.message,
       chatId: this.state.currentChat //this will also be changed to match the current chatid see at top for more info / ask ben
     }
-    WebSocketInstance.newChatMessage(messageObject);
+    WebSocketInstance.newChatMessage(messageObject)
     this.setState({
       message: ''
-    });
+    })
     setTimeout(() => {
       this.setState({ messages: WebSocketInstance.fetchMessages(this.state.currentUser, this.state.currentChat) })
     }, 50)
@@ -92,23 +104,35 @@ class Chat extends React.Component {
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(newProps) {
-    this.initialiseChat();
+    this.initialiseChat()
   }
 
   render() {
-    const {messages, currentChat, currentUser} = this.state
+
+    const { messages, currentChat, currentUser } = this.state
     console.log(messages)
+
     return <>
-      <h1>Messages, Chatroom: {currentChat}, User: {currentUser}</h1>
-      {messages &&
-        this.renderMessages(messages)
-      }
-      <input
-        type="text"
-        onChange={(event) => this.messageChangeHandler(event)}
-        value={this.state.message}
-      />
-      <button onClick={(e) => this.sendMessageHandler(e)}>Submit</button>
+      <h3>Chatroom: {currentChat}, User: {currentUser}</h3>
+      <div className="chat">
+        {messages && this.renderMessages(messages)}
+      </div>
+      <div className="chat-input">
+        <input
+          type="text"
+          onChange={(event) => this.messageChangeHandler(event)}
+          value={this.state.message}
+        />
+        <Button
+          onClick={(e) => this.sendMessageHandler(e)}
+          variant="contained"
+          color="primary"
+          className="button"
+          endIcon={<Icon>send</Icon>}
+        >
+          Send
+        </Button>
+      </div>
     </>
   }
 }
