@@ -18,6 +18,7 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 import Button from '@material-ui/core/Button'
 
 let selectedLangs = []
+let displayLangs = []
 
 const Register = () => {
   const [data, setData] = useState({ email: '', username: '', password: '', password_confirmation: '', timezone: '', languages: [] })
@@ -69,6 +70,7 @@ const Register = () => {
     event.target.classList.add('lang-selected')
     console.log(event.target)
     selectedLangs.push(parseInt(event.target.value))
+    displayLangs.push(event.target.innerHTML)
     setData({ ...data, languages: selectedLangs })
     // }
   }
@@ -182,19 +184,24 @@ const Register = () => {
         </div>
         <div className={classes.margin}>
           <ComputerRoundedIcon />
-          <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
+          <ButtonGroup
+            variant="text"
+            color="primary"
+            aria-label="text primary button group"
+          >
             {langData.languagesDb.map((language, id) => {
               return <button
+                className='language'
                 key={id}
-                onClick={(event) => handleSelectLang(event)}
-                value={id}
+                value={language.id}
+                onClick={() => handleSelectLang(event)}
               >
                 {language.name}
               </button>
             }
             )}
           </ButtonGroup>
-          <FormHelperText id="component-helper-text">{`You code in ${selectedLangs}`}</FormHelperText>
+          <FormHelperText id="component-helper-text">{`You code in ${displayLangs}`}</FormHelperText>
 
         </div>
         {/* <Input
@@ -206,6 +213,8 @@ const Register = () => {
         /> */}
         <div className="button-register">
           <button
+            type='submit'
+            className='register'
             variant="contained"
             color="primary"
           >

@@ -54,7 +54,7 @@ const Login = () => {
   const classes = useStyles()
 
   return <>
-    <div className="section">
+    <div className="section login">
       <h1>Login</h1>
       <form onSubmit={(event) => handleSubmit(event)}>
         <div className={classes.margin}>

@@ -99,11 +99,11 @@ const DrawerMenu = () => {
   // State for the left-hand side drawer menu
   const [openDrawer, setOpenDrawer] = useState(false)
   // State for the right-hand side icon menu
-  const [anchorMenu, setAnchorMenu] = useState(null)
+  const [anchorMenu, setAnchorMenu] = useState(false)
   const openMenu = Boolean(anchorMenu)
   // const [auth, setAuth] = useState(true)
   // State for the logged in user profile menu
-  const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorEl, setAnchorEl] = useState(false)
   const openIcon = Boolean(anchorEl)
 
   // Handler functions
@@ -124,7 +124,7 @@ const DrawerMenu = () => {
   }
 
   const handleMenuClose = () => {
-    setAnchorMenu(null)
+    setAnchorMenu(false)
   }
 
   const handleProfileMenu = (event) => {
@@ -132,7 +132,7 @@ const DrawerMenu = () => {
   }
 
   const handleProfileClose = () => {
-    setAnchorEl(null)
+    setAnchorEl(false)
   }
 
   const handleLogout = () => {
@@ -260,7 +260,7 @@ const DrawerMenu = () => {
               color='inherit'
             >
               {/* change badgeContent */}
-              <Badge badgeContent={17} color='secondary'>
+              <Badge badgeContent='' color='secondary'>
                 <NotificationsIcon />
               </Badge>
             </IconButton>
