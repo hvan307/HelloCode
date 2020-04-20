@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { HashRouter, Switch, Route } from 'react-router-dom'
 
 import './styling/style.scss'
 import NavbarDrawer from './Components/Common/NavbarDrawer'
@@ -9,7 +9,7 @@ import Login from './Components/User/Login'
 import PreChat from './Common/PreChat'
 
 const App = () => {
-  return <BrowserRouter>
+  return <HashRouter>
     <NavbarDrawer />
     <Switch>
       <Route path={'/register'} component={Register} />
@@ -18,7 +18,7 @@ const App = () => {
       {/* <Route path={'/mychats'} component={PreChat} /> */}
     </Switch>
     <PreChat />
-  </BrowserRouter>
+  </HashRouter>
 }
 
 

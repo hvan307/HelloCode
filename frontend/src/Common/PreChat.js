@@ -14,7 +14,7 @@ class PreChat extends React.Component {
   onPressBen() {
     this.setState({
       buttonPressed: true,
-      userChoice: 'hanna',
+      userChoice: 'ben',
       chatChoice: 1
     })
   }
@@ -22,8 +22,8 @@ class PreChat extends React.Component {
   onPressTom() {
     this.setState({
       buttonPressed: true,
-      userChoice: 'Hanna1',
-      chatChoice: 2
+      userChoice: 'tom',
+      chatChoice: 1
     })
   }
 

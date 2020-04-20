@@ -27,7 +27,6 @@ import Menu from '@material-ui/core/Menu'
 import Badge from '@material-ui/core/Badge'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import { ProgressPlugin } from 'webpack'
 
 
 const DrawerMenu = () => {
@@ -140,7 +139,7 @@ const DrawerMenu = () => {
     auth.logOut()
   }
 
-  const isLoggedIn = auth.isLoggedIn()
+  // const isLoggedIn = auth.isLoggedIn()
 
   return (
     <div className={classes.root}>
@@ -176,7 +175,7 @@ const DrawerMenu = () => {
           </Link>
           {/* Right-hand side Menu - Profile Menu */}
           {/* {auth && ( */}
-          {isLoggedIn && (
+          {/* {isLoggedIn &&  */}
             <IconButton
             aria-controls='menu-appbar'
             aria-haspopup='true'
@@ -215,7 +214,7 @@ const DrawerMenu = () => {
               </Link>
             </MenuItem>
           </Menu>
-          )}
+          {/* } */}
 
           {/* Right-hand side menu - Notifications */}
           <IconButton
