@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
+
+import auth from '../../lib/auth'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -10,26 +13,37 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import LockRoundedIcon from '@material-ui/icons/LockRounded'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
+// import { FormHelperText } from '@material-ui/core'
 
 const Login = () => {
-  const [data, setData] = useState({ username: '', password: '', showPassword: false }, { error: '' })
-
-  useEffect(() => {
-    axios.post('/api/codedb')
-      .then(resp => setData(resp.data))
-  }, [])
+  const [form, setForm] = useState({ showPassword: false, errors: '' })
 
   const handleChange = (prop) => (event) => {
-    setData({ ...data, [prop]: event.target.value })
+    setForm({ ...form, [prop]: event.target.value })
   }
 
   const handleClickShowPassword = () => {
-    setData({ ...data, showPassword: !data.showPassword })
+    setForm({ ...form, showPassword: !form.showPassword })
   }
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault()
   }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    // console.log(props)
+    axios.post('/api/auth/login/',
+      form)
+      .then(resp => {
+        console.log(resp.data.token)
+        const token = resp.data.token
+        auth.setToken(token)
+        // prop.history.push('/myprofile')
+      })
+      .catch(err => console.log(err))
+  }
+
   // styling - move to scss?
   const useStyles = makeStyles((theme) => ({
     margin: {
@@ -42,17 +56,24 @@ const Login = () => {
   return <>
     <div className="section">
       <h1>Login</h1>
-      <form
-        onSubmit={(event) => useEffect(event)}>
+      <form onSubmit={(event) => handleSubmit(event)}>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems="flex-end">
             <Grid item>
               <Face />
             </Grid>
             <Grid item>
-              <Input placeholder="Username" />
+              <Input
+                name='username'
+                type='text'
+                onChange={handleChange('form.data.username')}
+                placeholder='username'
+              />
             </Grid>
           </Grid>
+          {/* {form.error && <FormHelperText>
+            {form.error} */}
+          {/* </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems="flex-end">
@@ -61,9 +82,9 @@ const Login = () => {
             </Grid>
             <Grid item>
               <Input
-                type={data.showPassword ? 'text' : 'password'}
-                value={data.password}
-                onChange={handleChange('password')}
+                name='password'
+                type={form.showPassword ? 'text' : 'password'}
+                onChange={handleChange('form.data.password')}
                 placeholder="Password"
                 endAdornment={
                   <InputAdornment position="end">
@@ -72,16 +93,24 @@ const Login = () => {
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {data.showPassword ? <Visibility /> : <VisibilityOff />}
+                      {form.showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 }
               />
             </Grid>
           </Grid>
+          {/* {form.error && <FormHelperText>
+            {form.error}
+          </FormHelperText>} */}
         </div>
         <div className="button">
-          <Button variant="contained" color="primary">
+          <Button
+            type='submit'
+            // onClick={() => handleSubmit(event)}
+            variant="contained"
+            color="primary"
+          >
             Login
           </Button>
         </div>

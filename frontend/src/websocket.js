@@ -31,22 +31,22 @@ class WebSocketService {
     };
     this.socketRef.onclose = () => {
       console.log("WebSocket closed let's reopen");
-      this.connect();
+      this.connect()
     };
   }
 
   socketNewMessage(data) {
-    const parsedData = JSON.parse(data);
-    const command = parsedData.command;
+    const parsedData = JSON.parse(data)
+    const command = parsedData.command
     console.log(`COMMAND ${command}`)
     if (Object.keys(this.callbacks).length === 0) {
-      return;
+      return
     }
     if (command === 'messages') {
-      this.callbacks[command](parsedData.messages);
+      this.callbacks[command](parsedData.messages)
     }
     if (command === 'new_message') {
-      this.callbacks[command](parsedData.message);
+      this.callbacks[command](parsedData.message)
     }
   }
 
@@ -56,7 +56,7 @@ class WebSocketService {
       command: 'fetch_messages',
       username: username,
       chatId: chatId
-    });
+    })
   }
 
   newChatMessage(message) {
@@ -70,25 +70,25 @@ class WebSocketService {
   }
 
   addCallbacks(messagesCallback, newMessageCallback) {
-    this.callbacks['messages'] = messagesCallback;
-    this.callbacks['new_message'] = newMessageCallback;
+    this.callbacks['messages'] = messagesCallback
+    this.callbacks['new_message'] = newMessageCallback
     console.log(this.callbacks)
   }
   
   sendMessage(data) {
     try {
-      this.socketRef.send(JSON.stringify({ ...data }));
+      this.socketRef.send(JSON.stringify({ ...data }))
     } catch (err) {
-      console.log(err.message);
+      console.log(err.message)
     }  
   }
 
   state() {
-    return this.socketRef.readyState;
+    return this.socketRef.readyState
   }
 
 }
 
-const WebSocketInstance = WebSocketService.getInstance();
+const WebSocketInstance = WebSocketService.getInstance()
 
-export default WebSocketInstance;
+export default WebSocketInstance

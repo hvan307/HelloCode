@@ -1,0 +1,33 @@
+// NavbarDrawer
+#app-title {
+  // font-family: 'Source Code Pro', monospace;
+  // font-family: 'VT323', monospace;
+  font-family: 'Cutive Mono', monospace;
+}
+
+// Register
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+}
+
+.lang-selected {
+  color: red;
+}
+
+// Home
+
+.home-main {
+  height: 100vh;
+  background-image: url(https://img5.goodfon.com/wallpaper/nbig/4/f6/markus-spiske-temporausch-by-markus-spiske-temporausch-mar-2.jpg);
+  background-size: cover;
+  color: white;
+  text-align: center;
+}
+
