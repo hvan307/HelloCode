@@ -13,10 +13,10 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import LockRoundedIcon from '@material-ui/icons/LockRounded'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
-// import { FormHelperText } from '@material-ui/core'
+import { FormHelperText } from '@material-ui/core'
 
 const Login = () => {
-  const [form, setForm] = useState({ showPassword: false, errors: '' })
+  const [form, setForm] = useState({ showPassword: false, error: '' })
 
   const handleChange = (prop) => (event) => {
     setForm({ ...form, [prop]: event.target.value })
@@ -41,7 +41,7 @@ const Login = () => {
         auth.setToken(token)
         // prop.history.push('/myprofile')
       })
-      .catch(err => console.log(err))
+      .catch(err => setForm({ error: err.response.data.message }))
   }
 
   // styling - move to scss?
@@ -71,9 +71,9 @@ const Login = () => {
               />
             </Grid>
           </Grid>
-          {/* {form.error && <FormHelperText>
-            {form.error} */}
-          {/* </FormHelperText>} */}
+          {form.error && <FormHelperText error>
+            {form.error}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems="flex-end">
@@ -100,14 +100,13 @@ const Login = () => {
               />
             </Grid>
           </Grid>
-          {/* {form.error && <FormHelperText>
+          {form.error && <FormHelperText error>
             {form.error}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className="button">
           <Button
             type='submit'
-            // onClick={() => handleSubmit(event)}
             variant="contained"
             color="primary"
           >

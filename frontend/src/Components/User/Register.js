@@ -14,7 +14,6 @@ import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded'
 import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import FormHelperText from '@material-ui/core/FormHelperText'
-// import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import Button from '@material-ui/core/Button'
 
 let selectedLangs = []
@@ -34,10 +33,8 @@ const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     axios.post('/api/auth/register/', data)
-      .then(resp => {
-        console.log(resp.data)
-        resp.data
-      })
+      .then(resp => setData({ data: resp.data }))
+    // .catch(err => console.error(err.response.data.serializer.errors))
   }
 
   const handleChange = (prop) => (event) => {
@@ -58,56 +55,68 @@ const Register = () => {
 
   const handleSelectLang = (event) => {
     event.preventDefault()
-    console.log(data.languages)
-    // if (data.languages.includes(event.target.innerHTML)) {
-    //   event.target.classList.remove('lang-selected')
-    //   const filteredLangs = selectedLangs.filter((selectedLang) => {
-    //     return selectedLang !== event.target.innerHTML
-    //   })
-    //   selectedLangs = filteredLangs
-    //   setLangData({ ...data, languages: selectedLangs })
-    // } else {
-    event.target.classList.add('lang-selected')
-    console.log(event.target)
-    selectedLangs.push(parseInt(event.target.value))
-    displayLangs.push(event.target.innerHTML)
-    setData({ ...data, languages: selectedLangs })
-    // }
+    console.log('languages', selectedLangs)
+    console.log('value', event.target.value)
+    if (selectedLangs.includes(event.target.value)) {
+      event.target.classList.remove('lang-selected')
+      const filteredLangs = selectedLangs.filter((selectedLang) => {
+        return selectedLang !== event.target.value
+      })
+      selectedLangs = filteredLangs
+      setLangData({ ...data, languages: selectedLangs })
+    } else {
+      event.target.classList.add('lang-selected')
+      console.log(event.target)
+      selectedLangs.push(parseInt(event.target.value))
+      displayLangs.push(event.target.innerHTML)
+      setData({ ...data, languages: selectedLangs })
+    }
   }
 
   const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1)
+    },
+    input: {
+      width: 'fullwidth'
     }
   }))
 
   const classes = useStyles()
 
   return <>
-    <div className="section register">
+    <div className='section register'>
       <h2>Register</h2>
-      <form onSubmit={() => handleSubmit(event)}>
+      <form
+        className='classes.form'
+        onSubmit={() => handleSubmit(event)}
+      >
         <div className={classes.margin}>
-          <Grid container spacing={1} alignItems="flex-end">
+          <Grid container spacing={1} alignItems='flex-end'>
             <Grid item>
               <Face />
             </Grid>
             <Grid item>
               <Input
+                className='classes.input'
                 type='text'
                 value={data.username}
                 onChange={handleChange('username')}
-                placeholder="Username" />
+                placeholder='Username' />
             </Grid>
           </Grid>
+          {/* {data.error.username && <FormHelperText error>
+            {data.error.username}
+          </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
-          <Grid container spacing={1} alignItems="flex-end">
+          <Grid container spacing={1} alignItems='flex-end'>
             <Grid item>
               <EmailRounded />
             </Grid>
             <Grid item>
               <Input
+                className='classes.input'
                 type='text'
                 value={data.email}
                 onChange={handleChange('email')}
@@ -115,22 +124,27 @@ const Register = () => {
               />
             </Grid>
           </Grid>
+          {/* {data.error.email && <FormHelperText error>
+            {data.error.email}
+          </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
-          <Grid container spacing={1} alignItems="flex-end">
+          <Grid container spacing={1} alignItems='flex-end'>
             <Grid item>
               <LockRoundedIcon />
             </Grid>
             <Grid item>
               <Input
+                className='classes.input'
+
                 type={password.showPassword ? 'text' : 'password'}
                 value={password.password}
                 onChange={handleChange('password')}
-                placeholder="Password"
+                placeholder='Password'
                 endAdornment={
-                  <InputAdornment position="end">
+                  <InputAdornment position='end'>
                     <IconButton
-                      aria-label="toggle password visibility"
+                      aria-label='toggle password visibility'
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
@@ -141,22 +155,27 @@ const Register = () => {
               />
             </Grid>
           </Grid>
+          {/* {data.error.password && <FormHelperText error>
+            {data.error.password}
+          </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
-          <Grid container spacing={1} alignItems="flex-end">
+          <Grid container spacing={1} alignItems='flex-end'>
             <Grid item>
               <LockRoundedIcon />
             </Grid>
             <Grid item>
               <Input
+                className='classes.input'
+
                 type={password.showPassConfirm ? 'text' : 'password'}
                 value={data.password_confirmation}
                 onChange={handleChange('password_confirmation')}
-                placeholder="Confirm password"
+                placeholder='Confirm password'
                 endAdornment={
-                  <InputAdornment position="end">
+                  <InputAdornment position='end'>
                     <IconButton
-                      aria-label="toggle passConfirm visibility"
+                      aria-label='toggle passConfirm visibility'
                       onClick={handleClickShowPassConfirm}
                       onMouseDown={handleMouseDownPassword}
                     >
@@ -167,27 +186,34 @@ const Register = () => {
               />
             </Grid>
           </Grid>
+          {/* {data.error.password_confirmation && <FormHelperText error>
+            {data.error.password_confirmation}
+          </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
-          <Grid container spacing={1} alignItems="flex-end">
+          <Grid container spacing={1} alignItems='flex-end'>
             <Grid item>
               <LanguageRoundedIcon />
             </Grid>
             <Grid item>
               <Input
+                className='classes.input'
                 type='text'
                 value={data.timezone}
                 onChange={handleChange('timezone')}
-                placeholder="Your timezone (GMT)" />
+                placeholder='Your timezone (GMT)' />
             </Grid>
           </Grid>
+          {/* {data.error.timezone && <FormHelperText error>
+            {data.error.timezone}
+          </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
           <ComputerRoundedIcon />
           <ButtonGroup
-            variant="text"
-            color="primary"
-            aria-label="text primary button group"
+            variant='text'
+            color='primary'
+            aria-label='text primary button group'
           >
             {langData.languagesDb.map((language, id) => {
               return <button
@@ -201,22 +227,22 @@ const Register = () => {
             }
             )}
           </ButtonGroup>
-          <FormHelperText id="component-helper-text">{`You code in ${displayLangs}`}</FormHelperText>
+          <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
 
         </div>
         {/* <Input
-          accept="image/*"
+          accept='image/*'
           className={classes.margin}
-          type="file"
+          type='file'
           // value={data.image}
           // startIcon={<CloudUploadIcon />}
         /> */}
-        <div className="button-register">
+        <div className='button-register'>
           <button
             type='submit'
             className='register'
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
           >
             Register
           </button>

@@ -31,7 +31,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 const DrawerMenu = () => {
   const drawerWidth = 240
-  // styling - move to scss
+  // Styling
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
@@ -101,7 +101,6 @@ const DrawerMenu = () => {
   // State for the right-hand side icon menu
   const [anchorMenu, setAnchorMenu] = useState(false)
   const openMenu = Boolean(anchorMenu)
-  // const [auth, setAuth] = useState(true)
   // State for the logged in user profile menu
   const [anchorEl, setAnchorEl] = useState(false)
   const openIcon = Boolean(anchorEl)
@@ -114,10 +113,6 @@ const DrawerMenu = () => {
   const handleDrawerClose = () => {
     setOpenDrawer(false)
   }
-
-  // const handleChange = (event) => {
-  //   setAuth(event.target.checked);
-  // };
 
   const handleMenu = (event) => {
     setAnchorMenu(event.currentTarget)
@@ -174,7 +169,6 @@ const DrawerMenu = () => {
             </Typography>
           </Link>
           {/* Right-hand side Menu - Profile Menu */}
-          {/* {auth && ( */}
           {isLoggedIn && <div>
             <IconButton
               aria-controls='menu-appbar'
@@ -204,7 +198,6 @@ const DrawerMenu = () => {
                   My Profile
                 </Link>
               </MenuItem>
-              {/* change to handleLogout */}
               <MenuItem onClick={handleProfileClose}>
                 <Link
                   to='/'
