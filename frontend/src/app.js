@@ -1,15 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { HashRouter, Switch, Route } from 'react-router-dom'
 
 import NavbarDrawer from './Common/NavbarDrawer'
 import Register from './User/Register'
 import Login from './User/Login'
 import ChatRoom from './Common/ChatRoom'
 import PreChat from './Common/PreChat'
+import Home from './Common/Home'
 
 const App = () => {
-  return <BrowserRouter>
+  return <HashRouter>
     <NavbarDrawer />
     <Switch>
       <Route path={'/register'} component={Register} />
@@ -17,9 +18,10 @@ const App = () => {
       {/* <Route path={'/myprofile'} component={MyProfile} />
       <Route path={'/mychats'} component={MyChats} /> */}
       <Route path={'/chatroom'} component={ChatRoom} />
+      <Route path={'/'} component={Home} />
     </Switch>
     <PreChat />
-  </BrowserRouter>
+  </HashRouter>
 }
 
 
