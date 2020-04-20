@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import clsx from 'clsx'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+
+import auth from '../../lib/auth'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -17,13 +19,14 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
+import SmsRoundedIcon from '@material-ui/icons/SmsRounded'
 import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import Badge from '@material-ui/core/Badge'
 import NotificationsIcon from '@material-ui/icons/Notifications'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 
 const DrawerMenu = () => {
@@ -92,8 +95,18 @@ const DrawerMenu = () => {
 
   const classes = useStyles()
   const theme = useTheme()
-  const [openDrawer, setOpenDrawer] = useState(false)
 
+  // State for the left-hand side drawer menu
+  const [openDrawer, setOpenDrawer] = useState(false)
+  // State for the right-hand side icon menu
+  const [anchorMenu, setAnchorMenu] = useState(null)
+  const openMenu = Boolean(anchorMenu)
+  // const [auth, setAuth] = useState(true)
+  // State for the logged in user profile menu
+  const [anchorEl, setAnchorEl] = useState(null)
+  const openIcon = Boolean(anchorEl)
+
+  // Handler functions
   const handleDrawerOpen = () => {
     setOpenDrawer(true)
   }
@@ -102,69 +115,77 @@ const DrawerMenu = () => {
     setOpenDrawer(false)
   }
 
-  // const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const openIcon = Boolean(anchorEl)
-
-
   // const handleChange = (event) => {
   //   setAuth(event.target.checked);
   // };
 
   const handleMenu = (event) => {
+    setAnchorMenu(event.currentTarget)
+  }
+
+  const handleMenuClose = () => {
+    setAnchorMenu(null)
+  }
+
+  const handleProfileMenu = (event) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleClose = () => {
+  const handleProfileClose = () => {
     setAnchorEl(null)
   }
+
+  const handleLogout = () => {
+    auth.logOut()
+  }
+
+  // const isLoggedIn = auth.isLoggedIn()
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position='fixed'
         className={clsx(classes.appBar, {
           [classes.appBarShift]: openDrawer
         })}
       >
+        {/* Drawer left-hand side menu */}
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
+            color='inherit'
+            aria-label='open drawer'
             onClick={handleDrawerOpen}
-            edge="start"
+            edge='start'
             className={clsx(classes.menuButton, openDrawer && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            HelloCode!
-          </Typography>
+          <Link
+            to='/'
+            className={classes.title}
+            style={{ color: 'white', textDecoration: 'none' }}
+          >
+            <Typography
+              variant='h6'
+              id='app-title'
+            >
+              ('Hello Code!')
+            </Typography>
+          </Link>
+          {/* Right-hand side Menu - Profile Menu */}
           {/* {auth && ( */}
-          <IconButton aria-label="show 4 new mails" color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <Link to="/mychats" style={{ color: 'white' }}>
-                <MailIcon />
-              </Link>
-            </Badge>
-          </IconButton>
-          <IconButton aria-label="show 17 new notifications" color="inherit">
-            <Badge badgeContent={17} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
+          {/* {isLoggedIn &&  */}
+            <IconButton
+            aria-controls='menu-appbar'
+            aria-haspopup='true'
+            onClick={handleProfileMenu}
+            color='inherit'
           >
             <AccountCircle />
           </IconButton>
           <Menu
-            id="menu-appbar"
+            id='menu-profile'
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: 'top',
@@ -176,27 +197,78 @@ const DrawerMenu = () => {
               horizontal: 'right'
             }}
             open={openIcon}
-            onClose={handleClose}
+            onClose={handleProfileClose}
           >
-            <MenuItem onClick={handleClose}>
-              <Link to="/myprofile">
-                My Account
+            <MenuItem onClick={handleProfileClose}>
+              <Link to='/myprofile'>
+                My Profile
               </Link>
             </MenuItem>
             {/* change to handleLogout */}
-            <MenuItem onClick={handleClose}>
-              <Link to="/">
+            <MenuItem onClick={handleProfileClose}>
+              <Link
+                to='/'
+                onClick={handleLogout}
+              >
                 Logout
               </Link>
             </MenuItem>
           </Menu>
+          {/* } */}
+
+          {/* Right-hand side menu - Notifications */}
+          <IconButton
+            aria-controls='menu-appbar'
+            aria-haspopup='true'
+            onClick={handleMenu}
+            color='inherit'
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id='menu-appbar'
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            open={openMenu}
+            onClose={handleMenuClose}
+          >
+            <IconButton
+              onClick={handleMenuClose}
+              aria-label='new chat notifications'
+              color='inherit'
+            >
+              {/* change badgeContent */}
+              <Badge badgeContent={4} color='secondary'>
+                <Link to='/mychats' style={{ color: 'black' }}>
+                  <SmsRoundedIcon />
+                </Link>
+              </Badge>
+            </IconButton>
+            <IconButton
+              onClick={handleMenuClose}
+              aria-label='invite notifications'
+              color='inherit'
+            >
+              {/* change badgeContent */}
+              <Badge badgeContent={17} color='secondary'>
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Menu>
         </Toolbar>
       </AppBar>
-      {/* Drawer */}
       <Drawer
         className={classes.drawer}
-        variant="persistent"
-        anchor="left"
+        variant='persistent'
+        anchor='left'
         open={openDrawer}
         classes={{
           paper: classes.drawerPaper
@@ -211,7 +283,7 @@ const DrawerMenu = () => {
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <SmsRoundedIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -220,7 +292,7 @@ const DrawerMenu = () => {
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <SmsRoundedIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -238,4 +310,4 @@ const DrawerMenu = () => {
 }
 
 
-export default DrawerMenu
+export default withRouter(DrawerMenu)

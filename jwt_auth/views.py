@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 # which user should be used here?
 from django.contrib.auth import get_user_model
@@ -38,9 +39,12 @@ class LoginView(APIView):
             raise PermissionDenied({'message': 'Invalid credentials'})
 
     def post(self, request):
-
-        username = request.data.get('username')
-        password = request.data.get('password')
+      
+        print(request.data)
+        username = request.data.get('form.data.username')
+        password = request.data.get('form.data.password')
+        print(username)
+        print(password)
 
         user = self.get_user(username)
         if not user.check_password(password):
@@ -48,3 +52,4 @@ class LoginView(APIView):
 
         token = jwt.encode({'sub': user.id}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}!'})
+

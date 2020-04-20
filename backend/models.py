@@ -9,8 +9,10 @@ class Language(models.Model):
 
 class User(AbstractUser):
     timezone = models.CharField(max_length=50)
-    languages = models.ManyToManyField(Language, related_name='users', blank=True)
     contacts = models.ManyToManyField('self', blank=True)
+    languages = models.ManyToManyField(Language, related_name='users', blank=True)
+    image = models.ImageField(blank=True)
+
 
     def __str__(self):
         return self.username

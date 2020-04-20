@@ -1,0 +1,23 @@
+// NavbarDrawer
+#app-title {
+  // font-family: 'Source Code Pro', monospace;
+  // font-family: 'VT323', monospace;
+  font-family: 'Cutive Mono', monospace;
+}
+
+// Register
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+}
+
+.lang-selected {
+  color: red;
+}
+

@@ -5,6 +5,9 @@ from backend.serializers import LanguageSerializer
 import django.contrib.auth.password_validation as validations
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 User = get_user_model()
 
@@ -18,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         password = data.pop('password')
         password_confirmation = data.pop('password_confirmation')
+        
 
         if password != password_confirmation:
             raise serializers.ValidationError({'password_confirmation': 'Passwords do not match'})
