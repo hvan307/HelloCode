@@ -13,6 +13,9 @@ import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
 import WorkIcon from '@material-ui/icons/Work';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+
+import Chat from '../Chat/Chat'
 
 
 const testLink = (username, chatId) => {
@@ -47,21 +50,11 @@ const useStyles = makeStyles((theme) => ({
 
 const MyChats = () => {
   const classes = useStyles();
-  // const useStyles = makeStyles((theme) => ({
-  //   root: {
-  //     flexGrow: 1,
-  //     overflow: 'hidden',
-  //     padding: theme.spacing(0)
-  //   },
-  //   button: {
-  //     margin: theme.spacing(1)
-  //   }
-  // }))
-
-
 
   const [user, setUser] = useState(auth.getUserName())
   const [chats, setChats] = useState([])
+  const [openChat, setOpenChat] = useState(false)
+  const [currentChat, setCurrentChat] = useState(null)
 
   useEffect(() => {
     axios.get(`api/chat/user/${user}/`)
@@ -71,18 +64,24 @@ const MyChats = () => {
       .catch(err => console.log(err))
   }, [])
 
-  console.log(chats)
+  const openChatHandler = (event, chatId) => {
+    event.preventDefault()
+    setOpenChat(true)
+    setCurrentChat(chatId)
+  }
+
+  const closeChatHandler = () => {
+    setOpenChat(false)
+    setCurrentChat(null)
+  }
+
   return <div className={classes.root}>
-    <List className={classes.root}>
+    {!openChat && <List className={classes.root}>
       {chats.map(chat => {
         console.log(`User ${user} chatId ${chat.id}`)
-        return <Link key={chat.id} to={{
-          pathname: '/chat',
-          state: {
-            currentUser: user,
-            currentChat: chat.id
-          }
-        }}>
+        return <a key={chat.id}
+          onClick={(event) => openChatHandler(event, chat.id)}
+        >
           <ListItem>
             <Avatar className={classes.avatar} />
             {chat.participants.map((participant, key) => {
@@ -96,19 +95,16 @@ const MyChats = () => {
               }
             })}
           </ListItem>
-        </Link>
+        </a>
       })}
-    </List>
+    </List>}
+    {openChat && 
+    <div>
+      <ArrowBackIcon onClick={() => closeChatHandler()} />
+      <Chat chatChoice={currentChat} userChoice={user} />
+    </div>
+    }
   </div >
-  // return <div>
-  //   {chats.map(chat => {
-  //     return <p key={chat.id}>
-  //       {chat.participants.map((user, key) => {
-  //         return <p key={key}>{user.username}</p>
-  //       })}
-  //     </p>
-  //   })}
-  // </div>
 }
 
 export default withRouter(MyChats)
