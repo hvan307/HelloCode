@@ -24,17 +24,20 @@ const Register = () => {
   const [langData, setLangData] = useState({ languagesDb: [], userLanguages: [] })
 
   useEffect(() => {
-    axios.get('/api/languages')
-      .then(resp => setData({ languagesDb: resp.data }))
-    // axios.post('/api')
+    axios.get('/api/languages/')
+      .then(resp => setLangData({ languagesDb: resp.data }))
+    // axios.post('/api/')
     //   .then(resp => setData(resp.data))
   }, [])
 
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    axios.post('/api')
-      .then(resp => setData(resp.data))
+    axios.post('/api', data)
+      .then(resp => {
+        console.log(resp.data)
+        resp.data
+      })
   }
 
   const handleChange = (prop) => (event) => {
@@ -105,7 +108,6 @@ const Register = () => {
             <Grid item>
               <Input
                 type='text'
-                value='data.email'
                 placeholder='E-mail'
               />
             </Grid>
@@ -178,7 +180,7 @@ const Register = () => {
         <div className={classes.margin}>
           <ComputerRoundedIcon />
           <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
-            {data.languagesDb.map((language, id) => {
+            {langData.languagesDb.map((language, id) => {
               return <Button
                 key={id}
                 onClick={() => handleSelectLang(event)}
