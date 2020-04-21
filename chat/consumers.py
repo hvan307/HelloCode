@@ -49,7 +49,7 @@ class ChatConsumer(WebsocketConsumer):
         'command':'new_message',
         'message': self.message_to_json(message)
       }
-      return self.send_chat_message(message.content)
+      return self.send_chat_message(content)
 
     def messages_to_json(self, messages):
       #turns the messages from the db to json
