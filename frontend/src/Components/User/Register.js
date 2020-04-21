@@ -59,10 +59,6 @@ const Register = (props) => {
     //   .catch(err => setData({ error: err.response.data }))
   }
 
-  // const handleImageChange = (image) => {
-      // axios.put('/api/')
-  // }
-
   const handleChange = (prop) => (event) => {
     setData({ ...data, [prop]: event.target.value })
   }
