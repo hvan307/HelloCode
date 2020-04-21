@@ -53,21 +53,22 @@ class Chat extends React.Component {
   }
 
   setMessages(messages) {
-    console.log(messages)
+    console.log('STATE Before setState', this.state)
+    this.setState({ messages: this.state.oldMessages })
     this.setState({
       messages: messages.reverse()
     })
+    console.log('MESSAGES After setState', this.state.messages)
   }
 
   // {"messages-" + ('ben' === message.author ? '-owner' : 'messages')}
 
   renderMessages = (messages) => {
     const userName = auth.getUserName()
-    console.log(messages.author)
     return messages.map(message => (
       <div key={message.id} className={"messages" + ('ben' === message.author ? '-owner' : '')}>
         <div className="message-flex">
-          <Avatar alt="avatar" src="https://ca.slack-edge.com/T0351JZQ0-URKKHET55-ffb227b3fadb-512" /> 
+          <Avatar alt="avatar" src="https://ca.slack-edge.com/T0351JZQ0-URKKHET55-ffb227b3fadb-512" />
           <div className="message-content">{message.content}</div>
         </div>
       </div>
@@ -75,6 +76,8 @@ class Chat extends React.Component {
   }
 
   addMessage(message) {
+    this.setState({ messages: this.state.oldMessages })
+
     this.setState({
       messages: [...this.state.messages, message]
     })
@@ -97,9 +100,10 @@ class Chat extends React.Component {
     this.setState({
       message: ''
     })
-    setTimeout(() => {
-      this.setState({ messages: WebSocketInstance.fetchMessages(this.state.currentUser, this.state.currentChat) })
-    }, 50)
+    this.setState({ oldMessages: this.state.messages })
+    // setTimeout(() => {
+    //   this.setState({ messages: WebSocketInstance.fetchMessages(this.state.currentUser, this.state.currentChat) })
+    // }, 50)
   }
 
   // eslint-disable-next-line camelcase
@@ -110,7 +114,6 @@ class Chat extends React.Component {
   render() {
 
     const { messages, currentChat, currentUser, closeHandler } = this.state
-    console.log(messages)
 
     return <>
       <h3>Chatroom: {currentChat}, User: {currentUser}</h3>

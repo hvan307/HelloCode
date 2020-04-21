@@ -4,15 +4,15 @@ import auth from '../../lib/auth'
 import axios from 'axios'
 import { Link, withRouter } from 'react-router-dom'
 
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import { makeStyles } from '@material-ui/core/styles'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import Avatar from '@material-ui/core/Avatar'
+import ImageIcon from '@material-ui/icons/Image'
+import WorkIcon from '@material-ui/icons/Work'
+import BeachAccessIcon from '@material-ui/icons/BeachAccess'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 import Chat from '../Chat/Chat'
@@ -39,13 +39,13 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     display: 'flex',
     '& > *': {
-      margin: theme.spacing(1),
-    },
+      margin: theme.spacing(1)
+    }
   },
   contactUsername: {
-    paddingLeft: '20px',
-  },
-}));
+    paddingLeft: '20px'
+  }
+}))
 
 
 const MyChats = () => {

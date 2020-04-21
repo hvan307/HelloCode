@@ -52,6 +52,6 @@ class LoginView(APIView):
             print('bad password')
             raise PermissionDenied({'message': 'Invalid credentials'})
 
-        token = jwt.encode({'sub': user.username}, settings.SECRET_KEY, algorithm='HS256')
+        token = jwt.encode({'sub': user.username, 'aud': user.id}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}!'})
 
