@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
+// import { useHistory } from 'react-router-dom'
+
 import axios from 'axios'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -14,28 +17,38 @@ import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded'
 import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import FormHelperText from '@material-ui/core/FormHelperText'
-import Button from '@material-ui/core/Button'
+// import Button from '@material-ui/core/Button'
 
 let selectedLangs = []
 let displayLangs = []
 
-const Register = () => {
-  const [data, setData] = useState({ email: '', username: '', password: '', password_confirmation: '', timezone: '', languages: [], error: '' })
+const Register = (props) => {
+  const [data, setData] = useState({ email: '', username: '', password: '', password_confirmation: '', timezone: '', languages: [] })
+  // , error: '' 
   const [password, setPassword] = useState({ showPassword: false, showPassConfirm: false })
-  const [langData, setLangData] = useState([])
+  const [langData, setLangData] = useState({ languagesDb: [] })
 
   useEffect(() => {
+    console.log('hello')
     axios.get('/api/languages/')
-      .then(resp => setLangData(resp.data))
+      .then(resp => setLangData({ languagesDb: resp.data }))
   }, [])
 
+  // const history = useHistory()
 
   const handleSubmit = (event) => {
     event.preventDefault()
     axios.post('/api/auth/register/', data)
-      .then(resp => setData({ data: resp.data }))
+      .then(resp => {
+        setData({ data: resp.data })
+        props.history.push('/login')
+      })
       .catch(err => setData({ error: err.response.data }))
   }
+
+  // const handleImageChange = (image) => {
+
+  // }
 
   const handleChange = (prop) => (event) => {
     setData({ ...data, [prop]: event.target.value })
@@ -86,12 +99,14 @@ const Register = () => {
 
   const classes = useStyles()
 
+  console.log(langData)
   return <>
     <div className='section register'>
       <h2>Register</h2>
       <form
         className='classes.form'
         onSubmit={() => handleSubmit(event)}
+        encType='multipart/form-data'
       >
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -107,9 +122,9 @@ const Register = () => {
                 placeholder='Username' />
             </Grid>
           </Grid>
-          {data.error && <FormHelperText error>
+          {/* {data.error && <FormHelperText error>
             {data.error.username[0]}
-          </FormHelperText>}
+          </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -127,7 +142,7 @@ const Register = () => {
             </Grid>
           </Grid>
           {/* {data.error && <FormHelperText error>
-            {data.error.email[0]}
+            {data.error.email}
           </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
@@ -157,9 +172,9 @@ const Register = () => {
               />
             </Grid>
           </Grid>
-          {data.error && <FormHelperText error>
+          {/* {data.error && <FormHelperText error>
             {data.error.password[0]}
-          </FormHelperText>}
+          </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -188,9 +203,9 @@ const Register = () => {
               />
             </Grid>
           </Grid>
-          {data.error && <FormHelperText error>
+          {/* {data.error && <FormHelperText error>
             {data.error.password_confirmation[0]}
-          </FormHelperText>}
+          </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -206,9 +221,9 @@ const Register = () => {
                 placeholder='Your timezone (GMT)' />
             </Grid>
           </Grid>
-          {data.error && <FormHelperText error>
+          {/* {data.error && <FormHelperText error>
             {data.error.timezone[0]}
-          </FormHelperText>}
+          </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
           <ComputerRoundedIcon />
@@ -217,7 +232,7 @@ const Register = () => {
             color='primary'
             aria-label='text primary button group'
           >
-            {langData.map((language, id) => {
+            {langData.languagesDb.map((language, id) => {
               return <button
                 className='language'
                 key={id}
@@ -234,6 +249,9 @@ const Register = () => {
         </div>
         {/* <Input
           accept='image/*'
+          id="image"
+          // accept="image/png, image/jpeg" 
+          // onChange={(image) => handleImageChange(image)}
           className={classes.margin}
           type='file'
           // value={data.image}

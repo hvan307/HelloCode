@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 import auth from '../../lib/auth'
@@ -19,6 +20,7 @@ const Login = () => {
   const [form, setForm] = useState({ showPassword: false, error: '' })
 
   const handleChange = (prop) => (event) => {
+    console.log(prop, 'handle change prop')
     setForm({ ...form, [prop]: event.target.value })
   }
 
@@ -30,16 +32,16 @@ const Login = () => {
     event.preventDefault()
   }
 
+  const history = useHistory()
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    // console.log(props)
     axios.post('/api/auth/login/',
       form)
       .then(resp => {
-        console.log(resp.data.token)
         const token = resp.data.token
         auth.setToken(token)
-        // prop.history.push('/myprofile')
+        history.push('/myprofile')   
       })
       .catch(err => setForm({ error: err.response.data.message }))
   }
@@ -49,6 +51,9 @@ const Login = () => {
     margin: {
       margin: theme.spacing(1)
     }
+    // MuiInputBase-input: {
+    //   width: 'fullwidth'
+    // }
   }))
 
   const classes = useStyles()
@@ -64,6 +69,7 @@ const Login = () => {
             </Grid>
             <Grid item>
               <Input
+                className='classes.MuiInputBase-input'
                 name='username'
                 type='text'
                 onChange={handleChange('form.data.username')}
