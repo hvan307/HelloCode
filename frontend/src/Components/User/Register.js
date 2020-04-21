@@ -46,10 +46,6 @@ const Register = (props) => {
       .catch(err => setData({ error: err.response.data }))
   }
 
-  // const handleImageChange = (image) => {
-
-  // }
-
   const handleChange = (prop) => (event) => {
     setData({ ...data, [prop]: event.target.value })
   }
