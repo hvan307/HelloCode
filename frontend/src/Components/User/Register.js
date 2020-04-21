@@ -34,7 +34,7 @@ const Register = () => {
     event.preventDefault()
     axios.post('/api/auth/register/', data)
       .then(resp => setData({ data: resp.data }))
-    // .catch(err => console.error(err.response.data.serializer.errors))
+      .catch(err => setData({ error: err.response.data }))
   }
 
   const handleChange = (prop) => (event) => {
@@ -55,18 +55,20 @@ const Register = () => {
 
   const handleSelectLang = (event) => {
     event.preventDefault()
-    console.log('languages', selectedLangs)
-    console.log('value', event.target.value)
-    if (selectedLangs.includes(event.target.value)) {
+    // This checks the array of selected langs and filters out the duplicates
+    if (selectedLangs.includes(parseInt(event.target.value))) {
       event.target.classList.remove('lang-selected')
       const filteredLangs = selectedLangs.filter((selectedLang) => {
-        return selectedLang !== event.target.value
+        return selectedLang !== parseInt(event.target.value)
       })
+      const filterDisplayLangs = displayLangs.filter((displayLang) => {
+        return displayLang !== event.target.innerHTML
+      })
+      displayLangs = filterDisplayLangs
       selectedLangs = filteredLangs
-      setLangData({ ...data, languages: selectedLangs })
+      setData({ ...data, languages: selectedLangs })
     } else {
       event.target.classList.add('lang-selected')
-      console.log(event.target)
       selectedLangs.push(parseInt(event.target.value))
       displayLangs.push(event.target.innerHTML)
       setData({ ...data, languages: selectedLangs })
@@ -105,9 +107,9 @@ const Register = () => {
                 placeholder='Username' />
             </Grid>
           </Grid>
-          {/* {data.error.username && <FormHelperText error>
-            {data.error.username}
-          </FormHelperText>} */}
+          {data.error && <FormHelperText error>
+            {data.error.username[0]}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -124,8 +126,8 @@ const Register = () => {
               />
             </Grid>
           </Grid>
-          {/* {data.error.email && <FormHelperText error>
-            {data.error.email}
+          {/* {data.error && <FormHelperText error>
+            {data.error.email[0]}
           </FormHelperText>} */}
         </div>
         <div className={classes.margin}>
@@ -155,9 +157,9 @@ const Register = () => {
               />
             </Grid>
           </Grid>
-          {/* {data.error.password && <FormHelperText error>
-            {data.error.password}
-          </FormHelperText>} */}
+          {data.error && <FormHelperText error>
+            {data.error.password[0]}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -186,9 +188,9 @@ const Register = () => {
               />
             </Grid>
           </Grid>
-          {/* {data.error.password_confirmation && <FormHelperText error>
-            {data.error.password_confirmation}
-          </FormHelperText>} */}
+          {data.error && <FormHelperText error>
+            {data.error.password_confirmation[0]}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -204,9 +206,9 @@ const Register = () => {
                 placeholder='Your timezone (GMT)' />
             </Grid>
           </Grid>
-          {/* {data.error.timezone && <FormHelperText error>
-            {data.error.timezone}
-          </FormHelperText>} */}
+          {data.error && <FormHelperText error>
+            {data.error.timezone[0]}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <ComputerRoundedIcon />
