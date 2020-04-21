@@ -14,6 +14,7 @@ psycopg2-binary = "*"
 channels = "*"
 channels-redis = "*"
 pillow = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

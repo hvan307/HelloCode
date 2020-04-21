@@ -1,9 +1,10 @@
 import React from 'react'
 import WebSocketInstance from '../../websocket'
+import auth from '../../lib/auth'
 
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
-import Paper from '@material-ui/core/Paper'
+import Avatar from '@material-ui/core/Avatar'
 
 
 
@@ -58,17 +59,17 @@ class Chat extends React.Component {
     })
   }
 
+  // {"messages-" + ('ben' === message.author ? '-owner' : 'messages')}
+
   renderMessages = (messages) => {
-    console.log(messages)
+    const userName = auth.getUserName()
+    console.log(messages.author)
     return messages.map(message => (
-      <div className="messages" key={message.id}>
-        <Paper 
-          className="speech-bubble"
-          variant="outlined"
-          elevation={2}
-        >
-          {message.content}  <br />User: {message.author}
-        </Paper>
+      <div key={message.id} className={"messages" + ('ben' === message.author ? '-owner' : '')}>
+        <div className="message-flex">
+          <Avatar alt="avatar" src="https://ca.slack-edge.com/T0351JZQ0-URKKHET55-ffb227b3fadb-512" /> 
+          <div className="message-content">{message.content}</div>
+        </div>
       </div>
     ))
   }

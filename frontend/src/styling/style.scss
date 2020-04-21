@@ -5,14 +5,41 @@ h3 {
 
 .chat {
   padding: 20px;
-  margin: 20px;
+  margin: 0 15%;
 
+  .messages-owner {
+    margin: 10px;
+    color:white;
+
+    .message-flex {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+    
+      .message-content {
+        background-color: darkblue;
+        border-radius: 10px;
+        padding: 5px;
+        margin: 10px;
+      }
+    } 
+  }
+  
   .messages {
-    margin: 5px 0;
+    margin: 10px;
+    color:white;
 
-    .speech-bubble {
-      padding: 5px;
-      width: 50%;
+    .message-flex {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    
+      .message-content {
+        background-color: black;
+        border-radius: 10px;
+        padding: 5px;
+        margin: 10px;
+      }
     }
   }
 }
