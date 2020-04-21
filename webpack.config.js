@@ -25,7 +25,7 @@ module.exports = {
     port: 8001,
     watchContentBase: true,
     proxy: {
-      '/api': 'https://hellocode46.herokuapp.com'
+      '/api': 'http://localhost:4000'
     }
   },
   plugins: [
