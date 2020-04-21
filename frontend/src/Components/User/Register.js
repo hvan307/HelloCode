@@ -88,12 +88,14 @@ const Register = (props) => {
     }
   }
 
+  const inputWidth = 225
+
   const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1)
     },
-    input: {
-      width: 'fullwidth'
+    inputField: {
+      width: inputWidth
     }
   }))
 
@@ -115,7 +117,7 @@ const Register = (props) => {
             </Grid>
             <Grid item>
               <Input
-                className='classes.input'
+                className={classes.inputField}
                 type='text'
                 value={data.username}
                 onChange={handleChange('username')}
@@ -133,7 +135,7 @@ const Register = (props) => {
             </Grid>
             <Grid item>
               <Input
-                className='classes.input'
+                className={classes.inputField}
                 type='text'
                 value={data.email}
                 onChange={handleChange('email')}
@@ -183,8 +185,6 @@ const Register = (props) => {
             </Grid>
             <Grid item>
               <Input
-                className='classes.input'
-
                 type={password.showPassConfirm ? 'text' : 'password'}
                 value={data.password_confirmation}
                 onChange={handleChange('password_confirmation')}
@@ -214,7 +214,7 @@ const Register = (props) => {
             </Grid>
             <Grid item>
               <Input
-                className='classes.input'
+                className={classes.inputField}
                 type='text'
                 value={data.timezone}
                 onChange={handleChange('timezone')}
