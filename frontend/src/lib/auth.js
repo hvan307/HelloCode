@@ -14,7 +14,7 @@ function logOut() {
   localStorage.removeItem('token')
 }
 
-function getUserId() {
+function getUserName() {
   const token = getToken()
   if (!token) return false
   const parts = token.split('.')
@@ -26,5 +26,5 @@ export default {
   isLoggedIn, 
   getToken,
   logOut,
-  getUserId
+  getUserName
 }

@@ -187,7 +187,7 @@ const Register = () => {
               return <button
                 key={id}
                 onClick={(event) => handleSelectLang(event)}
-                value={id}
+                value={language.id}
               >
                 {language.name}
               </button>

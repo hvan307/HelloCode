@@ -9,8 +9,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-User = get_user_model()
-
 # password verification for users
 class UserSerializer(serializers.ModelSerializer):
   
