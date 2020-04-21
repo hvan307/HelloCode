@@ -1,3 +1,8 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 h3 {
   font-family: 'Cutive Mono', monospace;
   text-align: center;
@@ -67,6 +72,7 @@ h3 {
   // font-family: 'Source Code Pro', monospace;
   // font-family: 'VT323', monospace;
   font-family: 'Cutive Mono', monospace;
+  text-align: center;
 }
 
 // Register
@@ -87,11 +93,26 @@ h3 {
 
 // Home
 
-.home-main {
+.home-main-container {
   height: 100vh;
   background-image: url(https://img5.goodfon.com/wallpaper/nbig/4/f6/markus-spiske-temporausch-by-markus-spiske-temporausch-mar-2.jpg);
   background-size: cover;
   color: white;
   text-align: center;
+  .home-main {
+    h1 {
+      margin-top: 0;
+      padding-top: 40px;
+    }
+    height: 100vh;
+    background-color: rgba(19, 17, 17, 0.7);
+  }
 }
 
+// MyProfile
+
+.profile-main {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}

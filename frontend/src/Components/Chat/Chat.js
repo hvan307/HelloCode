@@ -109,7 +109,7 @@ class Chat extends React.Component {
 
   render() {
 
-    const { messages, currentChat, currentUser } = this.state
+    const { messages, currentChat, currentUser, closeHandler } = this.state
     console.log(messages)
 
     return <>
