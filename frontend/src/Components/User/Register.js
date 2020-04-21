@@ -221,8 +221,8 @@ const Register = () => {
               return <button
                 className='language'
                 key={id}
+                onClick={(event) => handleSelectLang(event)}
                 value={language.id}
-                onClick={() => handleSelectLang(event)}
               >
                 {language.name}
               </button>

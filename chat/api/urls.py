@@ -17,7 +17,7 @@ app_name = 'chat'
 urlpatterns = [
     path('', ChatListView.as_view()),
     path('newchat/', ChatCreateViewWithPk.as_view()),
-    path('<username>/', ChatListViewByUser.as_view()),
+    path('user/<username>/', ChatListViewByUser.as_view()),
     path('messages/', MessageListView.as_view()),
     path('create/', ChatCreateViewWithUsername.as_view()),
     path('<pk>/', ChatDetailView.as_view()),

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { HashRouter, Switch, Route } from 'react-router-dom'
 
 import './styling/style.scss'
+
 import NavbarDrawer from './Components/Common/NavbarDrawer'
 import Register from './Components/User/Register'
 import Login from './Components/User/Login'
@@ -24,10 +25,10 @@ const App = () => {
       <Route path={'/myprofile'} component={MyProfile} />
       <Route path={'/newchat'} component={NewChat} />
       <Route path={'/mychats'} component={MyChats} />
+      <Route path={'/prechat'} component={PreChat} />
       <Route path={'/chat'} component={Chat} />
       <Route path={'/'} component={Home} />
     </Switch>
-    <PreChat />
   </HashRouter>
 }
 

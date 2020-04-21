@@ -14,43 +14,46 @@ const MyProfile = () => {
 
   const useStyles = makeStyles({
     root: {
-      maxWidth: 500
+      maxWidth: 800
     },
     media: {
-      height: 300
+      height: 300,
+      width: 250
     }
   })
 
   const classes = useStyles()
 
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="#"
-          title="User Profile Picture"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Username
+    <div className="profile-main">
+      <Card className={classes.root}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image="https://www.vippng.com/png/detail/363-3631798_profile-placeholder-woman-720-profile-image-placeholder-png.png"
+            title="User Profile Picture"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              Username
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Timezone
+            <Typography variant="body2" color="textSecondary" component="p">
+              Timezone
           </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Link to={'/newchat'}>
-          <Button size="small" color="primary">
-            Start new chat!
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Link to={'/newchat'}>
+            <Button size="small" color="primary">
+              Start new chat!
           </Button>
-        </Link>
-        {/* <Button size="small" color="primary">
+          </Link>
+          {/* <Button size="small" color="primary">
           Something else?
         </Button> */}
-      </CardActions>
-    </Card>
+        </CardActions>
+      </Card>
+    </div>
   )
 }
 

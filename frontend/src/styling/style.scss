@@ -1,3 +1,8 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 h3 {
   font-family: 'Cutive Mono', monospace;
   text-align: center;
@@ -5,14 +10,41 @@ h3 {
 
 .chat {
   padding: 20px;
-  margin: 20px;
+  margin: 0 15%;
 
+  .messages-owner {
+    margin: 10px;
+    color:white;
+
+    .message-flex {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+    
+      .message-content {
+        background-color: darkblue;
+        border-radius: 10px;
+        padding: 5px;
+        margin: 10px;
+      }
+    } 
+  }
+  
   .messages {
-    margin: 5px 0;
+    margin: 10px;
+    color:white;
 
-    .speech-bubble {
-      padding: 5px;
-      width: 50%;
+    .message-flex {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    
+      .message-content {
+        background-color: black;
+        border-radius: 10px;
+        padding: 5px;
+        margin: 10px;
+      }
     }
   }
 }
@@ -40,6 +72,7 @@ h3 {
   // font-family: 'Source Code Pro', monospace;
   // font-family: 'VT323', monospace;
   font-family: 'Cutive Mono', monospace;
+  text-align: center;
 }
 
 // Register
@@ -88,11 +121,26 @@ button.register {
 
 // Home
 
-.home-main {
+.home-main-container {
   height: 100vh;
   background-image: url(https://img5.goodfon.com/wallpaper/nbig/4/f6/markus-spiske-temporausch-by-markus-spiske-temporausch-mar-2.jpg);
   background-size: cover;
   color: white;
   text-align: center;
+  .home-main {
+    h1 {
+      margin-top: 0;
+      padding-top: 150px;
+    }
+    height: 100vh;
+    background-color: rgba(19, 17, 17, 0.75);
+  }
 }
 
+// MyProfile
+
+.profile-main {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}

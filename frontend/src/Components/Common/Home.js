@@ -22,29 +22,31 @@ const Home = () => {
   const classes = useStyles()
 
   return <>
-    <div className="home-main">
-      <h1>Welcome to HelloCode!</h1>
-      <h2>Join millions of coders helping each other!</h2>
-      <h3>We'll match you with someone so you can start chatting!</h3>
-      <Link to={'/login'}>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
-        >
-          Log In
-        </Button>
-      </Link>
-      <Link to={'/register'}>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
-        >
-          Sign Up
-        </Button>
-      </Link>
-    </div >
+    <div className="home-main-container">
+      <div className="home-main">
+        <h1>Welcome to HelloCode!</h1>
+        <h2>Join millions of coders helping each other!</h2>
+        <h3>We'll match you with someone so you can start chatting!</h3>
+        <Link to={'/login'}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
+            Log In
+          </Button>
+        </Link>
+        <Link to={'/register'}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
+            Sign Up
+          </Button>
+        </Link>
+      </div>
+    </div>
   </>
 }
 

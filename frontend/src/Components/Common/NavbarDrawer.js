@@ -18,15 +18,17 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
+// import InboxIcon from '@material-ui/icons/MoveToInbox'
 import SmsRoundedIcon from '@material-ui/icons/SmsRounded'
 import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import MenuItem from '@material-ui/core/MenuItem'
-import Menu from '@material-ui/core/Menu'
+// import MenuItem from '@material-ui/core/MenuItem'
+// import Menu from '@material-ui/core/Menu'
 import Badge from '@material-ui/core/Badge'
 import NotificationsIcon from '@material-ui/icons/Notifications'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
+// import MoreVertIcon from '@material-ui/icons/MoreVert'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 
 const DrawerMenu = () => {
@@ -82,6 +84,9 @@ const DrawerMenu = () => {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
       }),
+      marginBottom: 0,
+      paddingBottom: 0,
+      paddingTop: 0,
       marginLeft: -drawerWidth
     },
     contentShift: {
@@ -89,7 +94,11 @@ const DrawerMenu = () => {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen
       }),
+      marginBottom: 0,
+      paddingBottom: 0,
+      paddingTop: 0,
       marginLeft: 0
+
     }
   }))
 
@@ -114,21 +123,25 @@ const DrawerMenu = () => {
     setOpenDrawer(false)
   }
 
-  const handleMenu = (event) => {
-    setAnchorMenu(event.currentTarget)
-  }
+  // const handleChange = (event) => {
+  //   setAuth(event.target.checked);
+  // };
 
-  const handleMenuClose = () => {
-    setAnchorMenu(false)
-  }
+  // const handleMenu = (event) => {
+  //   setAnchorMenu(event.currentTarget)
+  // }
 
-  const handleProfileMenu = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
+  // const handleMenuClose = () => {
+  //   setAnchorMenu(null)
+  // }
 
-  const handleProfileClose = () => {
-    setAnchorEl(false)
-  }
+  // const handleProfileMenu = (event) => {
+  //   setAnchorEl(event.currentTarget)
+  // }
+
+  // const handleProfileClose = () => {
+  //   setAnchorEl(null)
+  // }
 
   const handleLogout = () => {
     auth.logOut()
@@ -154,12 +167,16 @@ const DrawerMenu = () => {
             edge='start'
             className={clsx(classes.menuButton, openDrawer && classes.hide)}
           >
-            <MenuIcon />
+            <Badge badgeContent='•' color='secondary'>
+              <MenuIcon />
+            </Badge>
           </IconButton>
+
           <Link
             to='/'
             className={classes.title}
             style={{ color: 'white', textDecoration: 'none' }}
+            onClick={handleDrawerClose}
           >
             <Typography
               variant='h6'
@@ -169,8 +186,9 @@ const DrawerMenu = () => {
             </Typography>
           </Link>
           {/* Right-hand side Menu - Profile Menu */}
-          {isLoggedIn && <div>
-            <IconButton
+          {/* {auth && ( */}
+          {/* {isLoggedIn && <div> */}
+          {/* <IconButton
               aria-controls='menu-appbar'
               aria-haspopup='true'
               onClick={handleProfileMenu}
@@ -198,7 +216,8 @@ const DrawerMenu = () => {
                   My Profile
                 </Link>
               </MenuItem>
-              <MenuItem onClick={handleProfileClose}>
+              {/* change to handleLogout */}
+          {/* <MenuItem onClick={handleProfileClose}>
                 <Link
                   to='/'
                   onClick={handleLogout}
@@ -206,18 +225,17 @@ const DrawerMenu = () => {
                   Logout
                 </Link>
               </MenuItem>
-            </Menu>
-          </div>
-          }
+            </Menu> */}
+          {/* </div> */}
           {/* Right-hand side menu - Notifications */}
-          <Badge badgeContent={1} color='secondary'>
+          {/* <Badge badgeContent={1} color='secondary'>
             <IconButton
               aria-controls='menu-appbar'
               aria-haspopup='true'
               onClick={handleMenu}
               color='inherit'
             >
-              <MoreVertIcon margin='0' padding='0'/>
+              <MoreVertIcon margin='0' padding='0' />
             </IconButton>
           </Badge>
           <Menu
@@ -241,7 +259,7 @@ const DrawerMenu = () => {
               color='inherit'
             >
               {/* change badgeContent */}
-              <Badge badgeContent={4} color='secondary'>
+          {/* <Badge badgeContent={4} color='secondary'>
                 <Link to='/mychats' style={{ color: 'black' }}>
                   <SmsRoundedIcon />
                 </Link>
@@ -253,11 +271,11 @@ const DrawerMenu = () => {
               color='inherit'
             >
               {/* change badgeContent */}
-              <Badge badgeContent='' color='secondary'>
+          {/* <Badge badgeContent={17} color='secondary'>
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-          </Menu>
+          </Menu> */}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -276,18 +294,19 @@ const DrawerMenu = () => {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <SmsRoundedIcon />}</ListItemIcon>
+          {[<Link to={'/myprofile'} onClick={handleDrawerClose}>My Profile</Link>, <Link to={'/mychats'} onClick={handleDrawerClose}>My Chats</Link>, <Link to={'/newchat'} onClick={handleDrawerClose}>New Chat</Link>].map((text, i) => (
+            <ListItem button key={i}>
+              <ListItemIcon>{i === 0 ? <AccountCircle /> : i === 1 ? <Badge badgeContent={1} color='secondary'><SmsRoundedIcon /></Badge> : <AddBoxIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
         </List>
         <Divider />
+        {/* {isLoggedIn && } ?? */}
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <SmsRoundedIcon />}</ListItemIcon>
+          {[<Link to={'/'} onClick={handleDrawerClose}>Log Out</Link>].map((text, i) => (
+            <ListItem button key={i}>
+              <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
