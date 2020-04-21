@@ -5,10 +5,10 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
-    
+    exclude = ('password',)
     class Meta:
         model = User
-        fields = ('__all__')
+        fields = ('id', 'languages', 'username', 'first_name', 'timezone', )
 
 class LanguageSerializer(serializers.ModelSerializer):
 
@@ -27,5 +27,5 @@ class PopulateUserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ('__all__')
+        fields = ('id', 'languages', 'username', 'first_name', 'timezone', )
  

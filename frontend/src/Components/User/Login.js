@@ -33,6 +33,8 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     // console.log(props)
+
+    console.log(form)
     axios.post('/api/auth/login/',
       form)
       .then(resp => {
