@@ -27,7 +27,7 @@ class RegisterView(ListCreateAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response({'message': 'Registration successful', "user":serializer.data})
-        print(serializer.errors)
+        print(serializer)
         return Response(serializer.errors, status=422)
 
 
@@ -52,6 +52,6 @@ class LoginView(APIView):
             print('bad password')
             raise PermissionDenied({'message': 'Invalid credentials'})
 
-        token = jwt.encode({'sub': user.username}, settings.SECRET_KEY, algorithm='HS256')
+        token = jwt.encode({'sub': user.username, 'aud': user.id}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}!'})
 

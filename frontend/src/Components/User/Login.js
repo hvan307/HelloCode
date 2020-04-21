@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 import auth from '../../lib/auth'
@@ -13,12 +14,13 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import LockRoundedIcon from '@material-ui/icons/LockRounded'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
-// import { FormHelperText } from '@material-ui/core'
+import { FormHelperText } from '@material-ui/core'
 
 const Login = () => {
-  const [form, setForm] = useState({ showPassword: false, errors: '' })
+  const [form, setForm] = useState({ showPassword: false, error: '' })
 
   const handleChange = (prop) => (event) => {
+    console.log(prop, 'handle change prop')
     setForm({ ...form, [prop]: event.target.value })
   }
 
@@ -30,18 +32,18 @@ const Login = () => {
     event.preventDefault()
   }
 
+  const history = useHistory()
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    // console.log(props)
     axios.post('/api/auth/login/',
       form)
       .then(resp => {
-        console.log(resp.data.token)
         const token = resp.data.token
         auth.setToken(token)
-        // prop.history.push('/myprofile')
+        history.push('/myprofile')   
       })
-      .catch(err => console.log(err))
+      .catch(err => setForm({ error: err.response.data.message }))
   }
 
   // styling - move to scss?
@@ -49,12 +51,15 @@ const Login = () => {
     margin: {
       margin: theme.spacing(1)
     }
+    // MuiInputBase-input: {
+    //   width: 'fullwidth'
+    // }
   }))
 
   const classes = useStyles()
 
   return <>
-    <div className="section">
+    <div className="section login">
       <h1>Login</h1>
       <form onSubmit={(event) => handleSubmit(event)}>
         <div className={classes.margin}>
@@ -64,6 +69,7 @@ const Login = () => {
             </Grid>
             <Grid item>
               <Input
+                className='classes.MuiInputBase-input'
                 name='username'
                 type='text'
                 onChange={handleChange('form.data.username')}
@@ -71,9 +77,9 @@ const Login = () => {
               />
             </Grid>
           </Grid>
-          {/* {form.error && <FormHelperText>
-            {form.error} */}
-          {/* </FormHelperText>} */}
+          {form.error && <FormHelperText error>
+            {form.error}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems="flex-end">
@@ -100,14 +106,13 @@ const Login = () => {
               />
             </Grid>
           </Grid>
-          {/* {form.error && <FormHelperText>
+          {form.error && <FormHelperText error>
             {form.error}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className="button">
           <Button
             type='submit'
-            // onClick={() => handleSubmit(event)}
             variant="contained"
             color="primary"
           >

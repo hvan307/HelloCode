@@ -54,10 +54,12 @@ class Chat extends React.Component {
   }
 
   setMessages(messages) {
-    console.log(messages)
+    console.log('STATE Before setState', this.state)
+    this.setState({ messages: this.state.oldMessages })
     this.setState({
       messages: messages.reverse()
     })
+    console.log('MESSAGES After setState', this.state.messages)
   }
 
   renderMessages = (messages) => {
@@ -72,6 +74,8 @@ class Chat extends React.Component {
   }
 
   addMessage(message) {
+    this.setState({ messages: this.state.oldMessages })
+
     this.setState({
       messages: [...this.state.messages, message]
     })
@@ -94,9 +98,10 @@ class Chat extends React.Component {
     this.setState({
       message: ''
     })
-    setTimeout(() => {
-      this.setState({ messages: WebSocketInstance.fetchMessages(this.state.currentUser, this.state.currentChat) })
-    }, 50)
+    this.setState({ oldMessages: this.state.messages })
+    // setTimeout(() => {
+    //   this.setState({ messages: WebSocketInstance.fetchMessages(this.state.currentUser, this.state.currentChat) })
+    // }, 50)
   }
 
   // eslint-disable-next-line camelcase
@@ -107,7 +112,6 @@ class Chat extends React.Component {
   render() {
 
     const { messages, currentChat, currentUser, closeHandler } = this.state
-    console.log(messages)
 
     return <>
       <h3>Chatroom: {currentChat}, User: {currentUser}</h3>
