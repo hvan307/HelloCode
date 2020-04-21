@@ -2,8 +2,11 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView
 
-from .models import User, Language
+from .models import Language
+from django.contrib.auth import get_user_model
 from .serializers import UserSerializer, PopulateUserSerializer, LanguageSerializer, PopulateLanguageSerializer
+
+User = get_user_model()
 
 class ListView(ListCreateAPIView):
 
@@ -30,7 +33,7 @@ class DetailView(RetrieveUpdateDestroyAPIView):
     def get(self, _request, pk):
         user = User.objects.get(pk=pk)
         self.check_object_permissions(_request, user)
-        serializer = PopulateUserSerializer(User)
+        serializer = PopulateUserSerializer(user)
         return Response(serializer.data)
     
     def put(self, _request, pk):

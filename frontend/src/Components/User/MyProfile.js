@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import auth from '../../lib/auth'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
@@ -11,6 +13,16 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 
 const MyProfile = () => {
+
+  const [data, setData] = useState({ image: '', username: '', timezone: '', languages: [] })
+
+  const id = auth.getUserId()
+
+  useEffect(() => {
+    console.log(id)
+    axios.get(`/api/user/${id}/`)
+      .then(resp => setData(resp.data))
+  }, [])
 
   const useStyles = makeStyles({
     root: {
@@ -30,15 +42,19 @@ const MyProfile = () => {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image="https://www.vippng.com/png/detail/363-3631798_profile-placeholder-woman-720-profile-image-placeholder-png.png"
+            image={data.image}
+            // image="#"
             title="User Profile Picture"
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              Username
+              Username: {data.username}
           </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Timezone
+              Timezone: {data.timezone}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+              Languages: {data.languages.map((language) => (<p key={language.id}>{language.name}</p>))}
           </Typography>
           </CardContent>
         </CardActionArea>

@@ -21,10 +21,18 @@ function getUserName() {
   return JSON.parse(atob(parts[1])).sub
 }
 
+function getUserId() {
+  const token = getToken()
+  if (!token) return false
+  const parts = token.split('.')
+  return JSON.parse(atob(parts[1])).aud
+}
+
 export default {
   setToken,
   isLoggedIn, 
   getToken,
   logOut,
-  getUserName
+  getUserName,
+  getUserId
 }
