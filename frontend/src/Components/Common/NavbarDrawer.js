@@ -33,7 +33,7 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 
 const DrawerMenu = () => {
   const drawerWidth = 240
-  // styling - move to scss
+  // Styling
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
@@ -108,11 +108,10 @@ const DrawerMenu = () => {
   // State for the left-hand side drawer menu
   const [openDrawer, setOpenDrawer] = useState(false)
   // State for the right-hand side icon menu
-  const [anchorMenu, setAnchorMenu] = useState(null)
+  const [anchorMenu, setAnchorMenu] = useState(false)
   const openMenu = Boolean(anchorMenu)
-  // const [auth, setAuth] = useState(true)
   // State for the logged in user profile menu
-  const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorEl, setAnchorEl] = useState(false)
   const openIcon = Boolean(anchorEl)
 
   // Handler functions
