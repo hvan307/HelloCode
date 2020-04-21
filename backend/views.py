@@ -25,6 +25,15 @@ class ListView(ListCreateAPIView):
             return Response(serializer.data, status=HTTP_201_CREATED)
         return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
+class ListLanguageByUserView(ListCreateAPIView):
+
+    serializer_class = UserSerializer
+    def get_queryset(self):
+        langId = self.kwargs.get('langId')
+        queryset = User.objects.filter(languages__in=[langId])
+        return queryset
+
+
 class DetailView(RetrieveUpdateDestroyAPIView):
 
     queryset = User.objects.all()

@@ -22,13 +22,12 @@ let displayLangs = []
 const Register = () => {
   const [data, setData] = useState({ email: '', username: '', password: '', password_confirmation: '', timezone: '', languages: [], error: '' })
   const [password, setPassword] = useState({ showPassword: false, showPassConfirm: false })
-  const [langData, setLangData] = useState([])
+  const [langData, setLangData] = useState({ languageDb: [] })
 
   useEffect(() => {
     axios.get('/api/languages/')
-      .then(resp => setLangData(resp.data))
+      .then(resp => setLangData({ languageDb: resp.data }))
   }, [])
-
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -217,7 +216,7 @@ const Register = () => {
             color='primary'
             aria-label='text primary button group'
           >
-            {langData.map((language, id) => {
+            {langData.languageDb.map((language, id) => {
               return <button
                 className='language'
                 key={id}
