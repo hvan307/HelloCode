@@ -7,7 +7,7 @@ verify_ssl = true
 pylint = "*"
 
 [packages]
-django = "*"
+django = "==2.2.12"
 pyjwt = "*"
 djangorestframework = "*"
 psycopg2-binary = "*"
@@ -16,6 +16,8 @@ channels-redis = "*"
 pillow = "*"
 requests = "*"
 django-cors-headers = "*"
+django-heroku = "*"
+django-redis-cache = "*"
 
 [requires]
 python_version = "3.7"

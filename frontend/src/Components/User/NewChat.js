@@ -47,7 +47,7 @@ const NewChat = () => {
     Axios.get('/api/languages/')
       .then(res => setLanguages(res.data))
       .catch(err => console.log(err.response.data))
-    Axios.get('/api')
+    Axios.get('/api/')
       .then(res => {
         setUsers(res.data)
       })
