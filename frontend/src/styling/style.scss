@@ -10,14 +10,41 @@ h3 {
 
 .chat {
   padding: 20px;
-  margin: 20px;
+  margin: 0 15%;
 
+  .messages-owner {
+    margin: 10px;
+    color:white;
+
+    .message-flex {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+    
+      .message-content {
+        background-color: darkblue;
+        border-radius: 10px;
+        padding: 5px;
+        margin: 10px;
+      }
+    } 
+  }
+  
   .messages {
-    margin: 5px 0;
+    margin: 10px;
+    color:white;
 
-    .speech-bubble {
-      padding: 5px;
-      width: 50%;
+    .message-flex {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    
+      .message-content {
+        background-color: black;
+        border-radius: 10px;
+        padding: 5px;
+        margin: 10px;
+      }
     }
   }
 }
@@ -49,7 +76,8 @@ h3 {
 }
 
 // Register
-.register {
+.register, 
+.login {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,6 +87,33 @@ h3 {
       align-items: center;
   }
 }
+
+// Buttons
+button.language {
+  font-family: Arial;
+  border: none;
+  background-color: transparent;
+  text-transform: uppercase;
+}
+
+button.register {
+  font-family: Arial;
+  font-size: 1em;
+  background-color: transparent;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  background-color: rgba(12, 44, 150, 0.836);
+}
+
+.button.register:hover {
+  background-color: white;
+  text-decoration: none;
+  box-shadow:0px 5px 5px rgba(0,0,0,0.2);
+  transform : translateY(-1px);
+} 
 
 .lang-selected {
   color: red;
