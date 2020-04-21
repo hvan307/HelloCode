@@ -22,12 +22,12 @@ class RegisterView(ListCreateAPIView):
         return Response(serializer.data)
 
     def post(self, request):
-        print(request.data)
+        print(request)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({'message': 'Registration successful', "user":serializer.data})
-        print(serializer)
+        # print(serializer)
         return Response(serializer.errors, status=422)
 
 
@@ -41,11 +41,11 @@ class LoginView(APIView):
 
     def post(self, request):
       
-        print(request.data)
+        # print(request.data)
         username = request.data.get('form.data.username')
         password = request.data.get('form.data.password')
-        print(username)
-        print(password)
+        # print(username)
+        # print(password)
 
         user = self.get_user(username)
         if not user.check_password(password):

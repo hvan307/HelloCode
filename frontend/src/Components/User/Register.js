@@ -23,7 +23,7 @@ let selectedLangs = []
 let displayLangs = []
 
 const Register = (props) => {
-  const [data, setData] = useState({ email: '', username: '', password: '', password_confirmation: '', timezone: '', languages: [] })
+  const [data, setData] = useState({ email: '', username: '', password: '', password_confirmation: '', timezone: '', languages: [], image: '' })
   // , error: '' 
   const [password, setPassword] = useState({ showPassword: false, showPassConfirm: false })
   const [langData, setLangData] = useState({ languagesDb: [] })
@@ -38,16 +38,29 @@ const Register = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    axios.post('/api/auth/register/', data)
+    const imageInput = document.querySelector('.image-input')
+    // console.log(imageInput)
+    const image = imageInput.files
+    const form = new FormData()
+    console.log(image[0])
+    form.append('username', data.username)
+    form.append('email', data.email)
+    form.append('password', data.password)
+    form.append('password_confirmation', data.password_confirmation)
+    form.append('timezone', data.timezone)
+    form.append('languages', data.languages)
+    form.append('image', image[0], image[0].name)
+
+    axios.post('/api/auth/register/', form)
       .then(resp => {
         setData({ data: resp.data })
         props.history.push('/login')
       })
-      .catch(err => setData({ error: err.response.data }))
+    //   .catch(err => setData({ error: err.response.data }))
   }
 
   // const handleImageChange = (image) => {
-
+      // axios.put('/api/')
   // }
 
   const handleChange = (prop) => (event) => {
@@ -101,7 +114,7 @@ const Register = (props) => {
 
   const classes = useStyles()
 
-  console.log(langData)
+  // console.log(langData)
   return <>
     <div className='section register'>
       <h2>Register</h2>
@@ -247,16 +260,14 @@ const Register = (props) => {
           <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
 
         </div>
-        {/* <Input
-          accept='image/*'
-          id="image"
-          // accept="image/png, image/jpeg" 
+        <input
+          accept='image/png, image/jpeg'
           // onChange={(image) => handleImageChange(image)}
-          className={classes.margin}
+          className='image-input'
           type='file'
           // value={data.image}
           // startIcon={<CloudUploadIcon />}
-        /> */}
+        />
         <div className='button-register'>
           <button
             type='submit'

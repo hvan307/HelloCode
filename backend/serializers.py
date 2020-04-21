@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
     exclude = ('password',)
     class Meta:
         model = User
-        fields = ('id', 'languages', 'username', 'first_name', 'timezone', )
+        fields = ('id', 'languages', 'username', 'first_name', 'timezone', 'image')
 
 class LanguageSerializer(serializers.ModelSerializer):
 
@@ -27,5 +27,5 @@ class PopulateUserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ('id', 'languages', 'username', 'first_name', 'timezone', )
+        fields = ('id', 'languages', 'username', 'first_name', 'timezone', 'image')
  

@@ -42,10 +42,11 @@ const MyProfile = () => {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image={data.image}
+            image={`http://localhost:4000${data.image}`}
             // image="#"
             title="User Profile Picture"
           />
+          
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
               Username: {data.username}
