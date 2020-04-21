@@ -33,7 +33,6 @@ const testLink = (username, chatId) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
   avatar: {
@@ -100,7 +99,10 @@ const MyChats = () => {
     </List>}
     {openChat && 
     <div>
-      <ArrowBackIcon onClick={() => closeChatHandler()} />
+      <ArrowBackIcon
+        className="arrow-back" 
+        onClick={() => closeChatHandler()} 
+      />
       <Chat chatChoice={currentChat} userChoice={user} />
     </div>
     }

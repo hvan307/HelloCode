@@ -4,6 +4,7 @@ import auth from '../../lib/auth'
 
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
+// import AccountCircleIcon from '@material-ui/icons/Icons/AccountCircleRounded'
 import Avatar from '@material-ui/core/Avatar'
 
 
@@ -59,15 +60,11 @@ class Chat extends React.Component {
     })
   }
 
-  // {"messages-" + ('ben' === message.author ? '-owner' : 'messages')}
-
   renderMessages = (messages) => {
-    const userName = auth.getUserName()
-    console.log(messages.author)
     return messages.map(message => (
-      <div key={message.id} className={"messages" + ('ben' === message.author ? '-owner' : '')}>
+      <div key={message.id} className={"messages" + (this.state.currentUser === message.author ? '-owner' : '')}>
         <div className="message-flex">
-          <Avatar alt="avatar" src="https://ca.slack-edge.com/T0351JZQ0-URKKHET55-ffb227b3fadb-512" /> 
+          <Avatar src="/broken-image.jpg" /> 
           <div className="message-content">{message.content}</div>
         </div>
       </div>

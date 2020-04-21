@@ -6,11 +6,11 @@ a {
 h3 {
   font-family: 'Cutive Mono', monospace;
   text-align: center;
+  margin: 5px 15%;
 }
 
 .chat {
   padding: 20px;
-  margin: 0 15%;
 
   .messages-owner {
     margin: 10px;
@@ -22,7 +22,7 @@ h3 {
       justify-content: flex-start;
     
       .message-content {
-        background-color: darkblue;
+        background-color: #3f51b5;
         border-radius: 10px;
         padding: 5px;
         margin: 10px;
@@ -32,7 +32,7 @@ h3 {
   
   .messages {
     margin: 10px;
-    color:white;
+    color:#3f51b5;
 
     .message-flex {
       display: flex;
@@ -40,8 +40,9 @@ h3 {
       justify-content: flex-start;
     
       .message-content {
-        background-color: black;
+        background-color: white;
         border-radius: 10px;
+        border: 1px solid #3f51b5;
         padding: 5px;
         margin: 10px;
       }
@@ -67,6 +68,18 @@ h3 {
     margin: 0 10px;
   }
 }
+
+.arrow-back {
+  margin: 15px;
+}
+
+.new-chat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
 // NavbarDrawer
 #app-title {
   // font-family: 'Source Code Pro', monospace;
