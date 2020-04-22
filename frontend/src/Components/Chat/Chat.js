@@ -1,7 +1,7 @@
 import React from 'react'
 import WebSocketInstance from '../../websocket'
 import auth from '../../lib/auth'
-
+import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
 // import AccountCircleIcon from '@material-ui/icons/Icons/AccountCircleRounded'
@@ -66,7 +66,7 @@ class Chat extends React.Component {
     return messages.map(message => (
       <div key={message.id} className={"messages" + (this.state.currentUser === message.author ? '-owner' : '')}>
         <div className="message-flex">
-          <Avatar src={`http://localhost:4000${message.author.image}`} /> 
+          <Avatar src={`http://localhost:4000${this.state.currentUser.image}`} /> 
           <div className="message-content">{message.content}</div>
         </div>
       </div>
@@ -112,6 +112,7 @@ class Chat extends React.Component {
     const chatBar = document.getElementById('chat-input-bar')
     chatBar.focus()
     this.scrollToBottom()
+    axios.get(`localhost:4000/user/${auth.getUserId}`)
   }
 
   componentDidUpdate(){
