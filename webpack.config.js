@@ -25,7 +25,8 @@ module.exports = {
     port: 8001,
     watchContentBase: true,
     proxy: {
-      '/api': 'http://localhost:4000'
+      '/api': 'http://0.0.0.0:4000',
+      '/media': 'http://0.0.0.0:4000'
     }
   },
   plugins: [

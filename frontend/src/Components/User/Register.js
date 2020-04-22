@@ -113,11 +113,6 @@ const Register = (props) => {
     inputEl.current.click()
   }
 
-  const inputEl = useRef(null)
-  const onButtonClick = () => {
-    inputEl.current.click()
-  }
-
   return <>
     <div className='section register'>
       <h2>Register</h2>
@@ -263,23 +258,13 @@ const Register = (props) => {
           <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
         </div>
         <div className='classes.inputField'>
-<<<<<<< HEAD
-          <label htmlFor="input-image" className="input-form-custom"><PhotoLibraryRoundedIcon /></label>
-=======
           <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon /></label>
->>>>>>> development
           <input
             ref={inputEl}
             accept='image/png, image/jpeg'
             className='input-image'
             type='file'
           />
-<<<<<<< HEAD
-          <button type='input-button' onClick={onButtonClick}>
-            Upload
-          </button>
-        </div>
-=======
           <button 
             className='input-image-button'
             type='button' 
@@ -288,7 +273,6 @@ const Register = (props) => {
           </button>
         </div>
 
->>>>>>> development
         <div className='button-register'>
           <button
             type='submit'
@@ -304,12 +288,3 @@ const Register = (props) => {
   </>
 }
 export default withRouter(Register)
-
-
-
-
-
-<<<<<<< HEAD
-=======
-export default withRouter(Register)
->>>>>>> development
