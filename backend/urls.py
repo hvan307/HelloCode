@@ -3,7 +3,7 @@ from .views import ListView, DetailView, ListViewForLanguages, DetailViewForLang
 
 urlpatterns = [
     path('', ListView.as_view()),
-    path('user/username=<str:username>', UserByUsernameListView.as_view()),
+    path('user/username/<str:username>', UserByUsernameListView.as_view()),
     path('user/<int:pk>/', DetailView.as_view()),
     path('languages/', ListViewForLanguages.as_view()),
     path('user/language/<int:langId>/', ListLanguageByUserView.as_view()),
