@@ -99,9 +99,10 @@ class Chat extends React.Component {
       message: ''
     })
     this.setState({ oldMessages: this.state.messages })
-    // setTimeout(() => {
-    //   this.setState({ messages: WebSocketInstance.fetchMessages(this.state.currentUser, this.state.currentChat) })
-    // }, 50)
+  }
+
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   // eslint-disable-next-line camelcase
@@ -109,6 +110,16 @@ class Chat extends React.Component {
     this.initialiseChat()
   }
 
+  componentDidMount(){
+    const chatBar = document.getElementById('chat-input-bar')
+    chatBar.focus()
+    this.scrollToBottom()
+  }
+
+  componentDidUpdate(){
+    this.scrollToBottom()
+  }
+  
   render() {
 
     const { messages, currentChat, currentUser, closeHandler } = this.state
@@ -118,22 +129,28 @@ class Chat extends React.Component {
       <div className="chat">
         {messages && this.renderMessages(messages)}
       </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          onChange={(event) => this.messageChangeHandler(event)}
-          value={this.state.message}
-        />
-        <Button
-          onClick={(e) => this.sendMessageHandler(e)}
-          variant="contained"
-          color="primary"
-          className="button"
-          endIcon={<Icon>send</Icon>}
-        >
-          Send
-        </Button>
-      </div>
+      <form 
+        onSubmit={(e) => this.sendMessageHandler(e)}
+        ref={el => this.messagesEnd = el}
+      >
+        <div className="chat-input">
+          <input
+            type="text"
+            id="chat-input-bar"
+            onChange={(event) => this.messageChangeHandler(event)}
+            value={this.state.message}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className="button"
+            endIcon={<Icon>send</Icon>}
+          >
+            Send
+          </Button>
+        </div>
+      </form>
     </>
   }
 }
