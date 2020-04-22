@@ -119,10 +119,34 @@ h3 {
     border-radius: 5px;
     padding: 5px 8px;
     // white-space: nowrap;
+
+  .inputField {
+    margin: 5px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  
+  svg.MuiSvgIcon-root,
+  path {
+    margin-top: 5px;
+  }
+
+  .input-image {
+    width: 10px;
+    visibility: hidden;
+  }
+
+  .input-image-button {
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding: 5px 8px;
     cursor: pointer;
     font-weight: 600;
     font-size: 1em;
+    margin-top: -5px;
   }
+  
   .input-image:hover::before {
     border-color: rgba(0, 0, 0, 0.63)
   }
@@ -133,7 +157,7 @@ h3 {
 // Buttons
 
 .buttons-languages {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 button.language {
   font-family: Arial;

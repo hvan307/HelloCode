@@ -25,10 +25,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 // import MenuItem from '@material-ui/core/MenuItem'
 // import Menu from '@material-ui/core/Menu'
 import Badge from '@material-ui/core/Badge'
-import NotificationsIcon from '@material-ui/icons/Notifications'
+// import NotificationsIcon from '@material-ui/icons/Notifications'
 // import MoreVertIcon from '@material-ui/icons/MoreVert'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddBoxIcon from '@material-ui/icons/AddBox'
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded'
 
 
 const DrawerMenu = () => {
@@ -294,6 +295,30 @@ const DrawerMenu = () => {
           </IconButton>
         </div>
         <Divider />
+
+        {/* Visitor's view */}
+        {!isLoggedIn && 
+        <List>
+      {[<Link to={'/register'} onClick={handleDrawerClose}>Register</Link>, <Link to={'/login'} onClick={handleDrawerClose}>Login</Link>].map((text, i) => (
+            <ListItem button key={i}>
+              <ListItemIcon>{<AccountCircle />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>}
+        <Divider />
+        {!isLoggedIn && 
+        <List>
+          {[<Link to={'/'} onClick={handleDrawerClose}>Home</Link>].map((text, i) => (
+            <ListItem button key={i}>
+              <ListItemIcon>{<HomeRoundedIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>}
+
+        {/* LoggedIn User View */}
+        {isLoggedIn && 
         <List>
           {[<Link to={'/myprofile'} onClick={handleDrawerClose}>My Profile</Link>, <Link to={'/mychats'} onClick={handleDrawerClose}>My Chats</Link>, <Link to={'/newchat'} onClick={handleDrawerClose}>New Chat</Link>].map((text, i) => (
             <ListItem button key={i}>
@@ -301,7 +326,7 @@ const DrawerMenu = () => {
               <ListItemText primary={text} />
             </ListItem>
           ))}
-        </List>
+        </List>}
         <Divider />
         {isLoggedIn && 
         <List

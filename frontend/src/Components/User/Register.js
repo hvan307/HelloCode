@@ -37,10 +37,8 @@ const Register = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     const imageInput = document.querySelector('.input-image')
-    // console.log(imageInput)
     const image = imageInput.files
     const form = new FormData()
-    console.log(image[0])
     form.append('username', data.username)
     form.append('email', data.email)
     form.append('password', data.password)
@@ -54,6 +52,7 @@ const Register = (props) => {
       .then(resp => {
         setData({ data: resp.data })
         props.history.push('/login')
+
       })
     // .catch(err => setData({ error: err.response.data }))
   }
@@ -109,6 +108,11 @@ const Register = (props) => {
 
   const classes = useStyles()
   
+  const inputEl = useRef(null)
+  const onButtonClick = () => {
+    inputEl.current.click()
+  }
+
   const inputEl = useRef(null)
   const onButtonClick = () => {
     inputEl.current.click()
@@ -259,17 +263,32 @@ const Register = (props) => {
           <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
         </div>
         <div className='classes.inputField'>
+<<<<<<< HEAD
           <label htmlFor="input-image" className="input-form-custom"><PhotoLibraryRoundedIcon /></label>
+=======
+          <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon /></label>
+>>>>>>> development
           <input
             ref={inputEl}
             accept='image/png, image/jpeg'
             className='input-image'
             type='file'
           />
+<<<<<<< HEAD
           <button type='input-button' onClick={onButtonClick}>
             Upload
           </button>
         </div>
+=======
+          <button 
+            className='input-image-button'
+            type='button' 
+            onClick={onButtonClick}>
+            Upload photo
+          </button>
+        </div>
+
+>>>>>>> development
         <div className='button-register'>
           <button
             type='submit'
@@ -290,3 +309,7 @@ export default withRouter(Register)
 
 
 
+<<<<<<< HEAD
+=======
+export default withRouter(Register)
+>>>>>>> development
