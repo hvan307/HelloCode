@@ -63,10 +63,10 @@ const MyChats = () => {
       .catch(err => console.log(err))
   }, [])
 
-  const openChatHandler = (event, chatId) => {
+  const openChatHandler = (event, chat) => {
     event.preventDefault()
     setOpenChat(true)
-    setCurrentChat(chatId)
+    setCurrentChat(chat)
   }
 
   const closeChatHandler = () => {
@@ -74,12 +74,21 @@ const MyChats = () => {
     setCurrentChat(null)
   }
 
+  const getParticipant = (participants) => {
+    console.log(participants)
+    let participantUserName
+    participants.forEach(participant => {
+      if (participant.username !== auth.getUserName()) participantUserName = participant.username
+    })
+    return participantUserName
+  }
+
   return <div className={classes.root}>
     {!openChat && <List className={classes.root}>
       {chats.map(chat => {
         console.log(`User ${user} chatId ${chat.id}`)
         return <a key={chat.id}
-          onClick={(event) => openChatHandler(event, chat.id)}
+          onClick={(event) => openChatHandler(event, chat)}
         >
           <ListItem>
             <Avatar className={classes.avatar} />
@@ -103,7 +112,7 @@ const MyChats = () => {
         className="arrow-back" 
         onClick={() => closeChatHandler()} 
       />
-      <Chat chatChoice={currentChat} userChoice={user} />
+      <Chat chatChoice={currentChat.id} userChoice={user} participant={getParticipant(currentChat.participants)} />
     </div>
     }
   </div >

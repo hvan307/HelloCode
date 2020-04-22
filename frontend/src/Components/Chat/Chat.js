@@ -4,7 +4,6 @@ import auth from '../../lib/auth'
 import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
-// import AccountCircleIcon from '@material-ui/icons/Icons/AccountCircleRounded'
 import Avatar from '@material-ui/core/Avatar'
 
 
@@ -32,7 +31,9 @@ class Chat extends React.Component {
     super(props)
     this.state = {
       currentUser: this.props.userChoice,
-      currentChat: this.props.chatChoice
+      currentChat: this.props.chatChoice,
+      userOwner: [],
+      userRecipient: []
     }
     this.initialiseChat()
   }
@@ -62,12 +63,38 @@ class Chat extends React.Component {
     console.log('MESSAGES After setState', this.state.messages)
   }
 
+  renderTimestamp = timestamp => {
+    let prefix = "";
+    const timeDiff = Math.round(
+      (new Date().getTime() - new Date(timestamp).getTime()) / 60000
+    )
+    if (timeDiff < 1) {
+      // less than one minute ago
+      prefix = "just now..."
+    } else if (timeDiff < 60 && timeDiff > 1) {
+      // less than sixty minutes ago
+      prefix = `${timeDiff} minutes ago`
+    } else if (timeDiff < 24 * 60 && timeDiff > 60) {
+      // less than 24 hours ago
+      prefix = `${Math.round(timeDiff / 60)} hours ago`
+    } else if (timeDiff < 31 * 24 * 60 && timeDiff > 24 * 60) {
+      // less than 7 days ago
+      prefix = `${Math.round(timeDiff / (60 * 24))} days ago`
+    } else {
+      prefix = `${new Date(timestamp)}`
+    }
+    return prefix
+  }
+
   renderMessages = (messages) => {
-    return messages.map(message => (
+    return messages.map(message => (  
       <div key={message.id} className={"messages" + (this.state.currentUser === message.author ? '-owner' : '')}>
+        {console.log(message.timestamp)}
         <div className="message-flex">
-          <Avatar src={`http://localhost:4000${this.state.currentUser.image}`} /> 
-          <div className="message-content">{message.content}</div>
+          <Avatar src={this.state.currentUser === message.author ? this.state.userOwner.image : this.state.userRecipient.image}/> 
+          <div className="message-content">{message.content} <br />
+            <small>{this.renderTimestamp(message.timestamp)}</small>
+          </div>
         </div>
       </div>
     ))
@@ -100,7 +127,7 @@ class Chat extends React.Component {
   }
 
   scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" })
   }
 
   // eslint-disable-next-line camelcase
@@ -112,10 +139,17 @@ class Chat extends React.Component {
     const chatBar = document.getElementById('chat-input-bar')
     chatBar.focus()
     this.scrollToBottom()
-    axios.get(`localhost:4000/user/${auth.getUserId}`)
+    axios.get(`/api/user/username/${auth.getUserName()}`)
+      .then(resp => this.setState({ userOwner: resp.data }))
+    axios.get(`/api/user/username/${this.props.participant}`)
+      .then(resp => {
+        this.setState({ userRecipient: resp.data })
+        console.log(resp.data)
+      })
+      .catch(err => console.log(err)) 
   }
 
-  componentDidUpdate(){
+  componentDidUpdate(){ 
     this.scrollToBottom()
   }
   
