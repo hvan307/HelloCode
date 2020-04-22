@@ -44,6 +44,7 @@ const NewChat = () => {
   const [languages, setLanguages] = useState([])
   const [users, setUsers] = useState([])
   const [openChats, setOpenChats] = useState([])
+  const [filter, setFilter] = useState(null)
 
   useEffect(() => {
     Axios.get('/api/languages/')
@@ -79,21 +80,45 @@ const NewChat = () => {
     Axios.post('/api/chat/create/', form)
   }
 
+  const handleFilter = (event, id) => {
+    event.preventDefault()
+    console.log(id)
+    if (filter === id) return setFilter(null)
+    setFilter(id)
+  }
+
+  const checkLang = (user) => {
+    console.log(user.languages)
+    const userLang = user.languages.map(lang => {
+      return lang.id
+    })
+    if (!filter) return true
+    console.log(user.username, ' HALP ')
+    return (userLang.includes(filter) ? true : false) 
+  }
+
   return (
     <div className={classes.main}>
       <h3>Want to get a private lesson in a language or library? Need help debugging a problem? Click on the corresponding button below to start a conversation with our experienced community members:</h3>
       <ButtonGroup className="button-group" variant="text" color="primary" aria-label="text primary button group">
         {languages.map(language => {
-          return <Button key={language.id}>
+          return <Button
+            key={language.id}
+            onClick={(event) => handleFilter(event, language.id)}
+            className={language.id === filter ? 'lang-selected' : ''}
+          >
+            {console.log(language.id, filter)}
             {language.name}
           </Button>
         })}
       </ButtonGroup>
       <List>
         {users.map(user => (
-          !openChats.includes(user.username) && user.username !== auth.getUserName() &&
+          !openChats.includes(user.username) && 
+          user.username !== auth.getUserName() &&
+          checkLang(user) &&
           <ListItem key={user.id} className={classes.root}>
-            {console.log(user.username)}
+            {console.log(user)}
             <ListItemText className="list-item">
               <Link
                 to={{
