@@ -106,6 +106,13 @@ h3 {
     align-items: center;
   }
 
+  .input-image {
+    margin: 5px auto;
+    // padding: 10px;
+    text-align: right;
+    visibility: hidden;
+  }
+
   .input-button {
     content: "Upload photo";
     display: inline-block;
@@ -115,7 +122,7 @@ h3 {
     padding: 5px 8px;
     // white-space: nowrap;
   }
-
+  
   .inputField {
     margin: 5px auto;
     display: flex;
@@ -147,7 +154,6 @@ h3 {
     border-color: rgba(0, 0, 0, 0.63)
   }
 }
-
 
 
 // Buttons
@@ -182,7 +188,7 @@ button.register {
 }
 
 .lang-selected {
-  color: red;
+  color: red !important;
 }
 
 // Home
