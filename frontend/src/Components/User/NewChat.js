@@ -62,6 +62,7 @@ const NewChat = () => {
       'user2': username
     }
     Axios.post('/api/chat/create/', form)
+      .catch(error => console.log(error.response))
   }
 
   return (
