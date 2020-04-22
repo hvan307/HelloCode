@@ -15,7 +15,7 @@ import FaceIcon from '@material-ui/icons/Face'
 import PublicIcon from '@material-ui/icons/Public'
 import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
 
-const MyProfile = () => {
+const MyProfile = (props) => {
 
   const [data, setData] = useState({ image: '', username: '', timezone: '', languages: [] })
 
@@ -39,11 +39,8 @@ const MyProfile = () => {
 
   const classes = useStyles()
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    axios.put(`/api/user/${id}`, data)
-      .then(resp => setData({ data: resp.data }))
-      .catch(err => setData({ error: err.response.data }))
+  const handleEdit = (event) => {
+    props.history.push('/edit-profile')
   }
 
   return (
@@ -59,13 +56,14 @@ const MyProfile = () => {
           
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              <FaceIcon className="face-icon"/> <span>Username: {data.username}</span> <button>Edit</button>
+              <FaceIcon className="face-icon"/> <span>Username: {data.username}</span>
+            </Typography>
+            {/* Bio? */}
+            <Typography variant="body2" color="textSecondary" component="p">
+              <PublicIcon className="world-icon"/> <span>Timezone: {data.timezone}</span>
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              <PublicIcon className="world-icon"/> <span>Timezone: {data.timezone}</span> <button>Edit</button>
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              <ComputerRoundedIcon className="computer-icon"/> <span className="languages-after-icon">Languages: {data.languages.map((language) => (<p key={language.id}>{language.name}</p>))}</span> <button>Edit</button>
+              <ComputerRoundedIcon className="computer-icon"/> <span className="languages-after-icon">Languages: {data.languages.map((language) => (<p key={language.id}>{language.name}</p>))}</span>
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -75,9 +73,9 @@ const MyProfile = () => {
               Start new chat!
             </Button>
           </Link>
-          {/* <Button size="small" color="primary">
-          Something else?
-        </Button> */}
+          <Button size="small" color="primary" onClick={handleEdit}>
+          Edit Profile
+          </Button>
         </CardActions>
       </Card>
     </div>
