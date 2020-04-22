@@ -40,7 +40,7 @@ const EditProfile = (props) => {
     form.append('timezone', data.timezone)
     form.append('languages', data.languages)
 
-    axios.put(`/api/user/${id}`, form)
+    axios.put(`/api/user/${id}/`, form)
       .then(resp => {
         setData({ data: resp.data })
         props.history.push('/myprofile')
