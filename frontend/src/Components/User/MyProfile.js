@@ -56,6 +56,7 @@ const MyProfile = () => {
             // image={`http://localhost:4000${data.image}`}
             title="User Profile Picture"
           />
+          
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
               <FaceIcon className="face-icon"/> <span>Username: {data.username}</span> <button>Edit</button>

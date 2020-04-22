@@ -4,6 +4,7 @@ import auth from '../../lib/auth'
 
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
+// import AccountCircleIcon from '@material-ui/icons/Icons/AccountCircleRounded'
 import Avatar from '@material-ui/core/Avatar'
 
 
@@ -61,14 +62,11 @@ class Chat extends React.Component {
     console.log('MESSAGES After setState', this.state.messages)
   }
 
-  // {"messages-" + ('ben' === message.author ? '-owner' : 'messages')}
-
   renderMessages = (messages) => {
-    const userName = auth.getUserName()
     return messages.map(message => (
-      <div key={message.id} className={"messages" + ('ben' === message.author ? '-owner' : '')}>
+      <div key={message.id} className={"messages" + (this.state.currentUser === message.author ? '-owner' : '')}>
         <div className="message-flex">
-          <Avatar alt="avatar" src="https://ca.slack-edge.com/T0351JZQ0-URKKHET55-ffb227b3fadb-512" />
+          <Avatar src={`http://localhost:4000${message.author.image}`} /> 
           <div className="message-content">{message.content}</div>
         </div>
       </div>
@@ -101,9 +99,10 @@ class Chat extends React.Component {
       message: ''
     })
     this.setState({ oldMessages: this.state.messages })
-    // setTimeout(() => {
-    //   this.setState({ messages: WebSocketInstance.fetchMessages(this.state.currentUser, this.state.currentChat) })
-    // }, 50)
+  }
+
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   // eslint-disable-next-line camelcase
@@ -111,6 +110,16 @@ class Chat extends React.Component {
     this.initialiseChat()
   }
 
+  componentDidMount(){
+    const chatBar = document.getElementById('chat-input-bar')
+    chatBar.focus()
+    this.scrollToBottom()
+  }
+
+  componentDidUpdate(){
+    this.scrollToBottom()
+  }
+  
   render() {
 
     const { messages, currentChat, currentUser, closeHandler } = this.state
@@ -120,22 +129,28 @@ class Chat extends React.Component {
       <div className="chat">
         {messages && this.renderMessages(messages)}
       </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          onChange={(event) => this.messageChangeHandler(event)}
-          value={this.state.message}
-        />
-        <Button
-          onClick={(e) => this.sendMessageHandler(e)}
-          variant="contained"
-          color="primary"
-          className="button"
-          endIcon={<Icon>send</Icon>}
-        >
-          Send
-        </Button>
-      </div>
+      <form 
+        onSubmit={(e) => this.sendMessageHandler(e)}
+        ref={el => this.messagesEnd = el}
+      >
+        <div className="chat-input">
+          <input
+            type="text"
+            id="chat-input-bar"
+            onChange={(event) => this.messageChangeHandler(event)}
+            value={this.state.message}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className="button"
+            endIcon={<Icon>send</Icon>}
+          >
+            Send
+          </Button>
+        </div>
+      </form>
     </>
   }
 }

@@ -33,7 +33,7 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 
 const DrawerMenu = () => {
   const drawerWidth = 240
-  // Styling
+  // styling - move to scss
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
@@ -108,10 +108,11 @@ const DrawerMenu = () => {
   // State for the left-hand side drawer menu
   const [openDrawer, setOpenDrawer] = useState(false)
   // State for the right-hand side icon menu
-  const [anchorMenu, setAnchorMenu] = useState(false)
+  const [anchorMenu, setAnchorMenu] = useState(null)
   const openMenu = Boolean(anchorMenu)
+  // const [auth, setAuth] = useState(true)
   // State for the logged in user profile menu
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
   const openIcon = Boolean(anchorEl)
 
   // Handler functions
@@ -302,15 +303,17 @@ const DrawerMenu = () => {
           ))}
         </List>
         <Divider />
-        {/* {isLoggedIn && } ?? */}
-        <List>
+        {isLoggedIn && 
+        <List
+          onClick={handleLogout}
+        >
           {[<Link to={'/'} onClick={handleDrawerClose}>Log Out</Link>].map((text, i) => (
             <ListItem button key={i}>
               <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
-        </List>
+        </List>}
       </Drawer>
       <main
         className={clsx(classes.content, {

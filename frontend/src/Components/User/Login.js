@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 import auth from '../../lib/auth'
@@ -19,6 +20,7 @@ const Login = () => {
   const [form, setForm] = useState({ showPassword: false, error: '' })
 
   const handleChange = (prop) => (event) => {
+    console.log(prop, 'handle change prop')
     setForm({ ...form, [prop]: event.target.value })
   }
 
@@ -30,26 +32,29 @@ const Login = () => {
     event.preventDefault()
   }
 
+  const history = useHistory()
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    // console.log(props)
-
-    console.log(form)
     axios.post('/api/auth/login/',
       form)
       .then(resp => {
-        console.log(resp.data.token)
         const token = resp.data.token
         auth.setToken(token)
-        // prop.history.push('/myprofile')
+        history.push('/myprofile')   
       })
       .catch(err => setForm({ error: err.response.data.message }))
   }
 
   // styling - move to scss?
+  const inputWidth = 225
+
   const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1)
+    },
+    inputField: {
+      width: inputWidth
     }
   }))
 
@@ -66,6 +71,7 @@ const Login = () => {
             </Grid>
             <Grid item>
               <Input
+                className={classes.inputField}
                 name='username'
                 type='text'
                 onChange={handleChange('form.data.username')}

@@ -8,7 +8,6 @@ import NavbarDrawer from './Components/Common/NavbarDrawer'
 import Register from './Components/User/Register'
 import Login from './Components/User/Login'
 import Chat from './Components/Chat/Chat'
-import PreChat from './Components/Chat/PreChat'
 import Home from './Components/Common/Home'
 import MyProfile from './Components/User/MyProfile'
 import NewChat from './Components/User/NewChat'
@@ -25,7 +24,6 @@ const App = () => {
       <Route path={'/myprofile'} component={MyProfile} />
       <Route path={'/newchat'} component={NewChat} />
       <Route path={'/mychats'} component={MyChats} />
-      <Route path={'/prechat'} component={PreChat} />
       <Route path={'/chat'} component={Chat} />
       <Route path={'/'} component={Home} />
     </Switch>

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
+// import { useHistory } from 'react-router-dom'
+
 import axios from 'axios'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -14,26 +17,47 @@ import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded'
 import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import FormHelperText from '@material-ui/core/FormHelperText'
-import Button from '@material-ui/core/Button'
 
 let selectedLangs = []
 let displayLangs = []
 
-const Register = () => {
-  const [data, setData] = useState({ email: '', username: '', password: '', password_confirmation: '', timezone: '', languages: [], error: '' })
+const Register = (props) => {
+  const [data, setData] = useState({ email: '', username: '', password: '', password_confirmation: '', timezone: '', languages: [], image: '' })
+  // , error: '' 
   const [password, setPassword] = useState({ showPassword: false, showPassConfirm: false })
-  const [langData, setLangData] = useState({ languageDb: [] })
+  const [langData, setLangData] = useState({ languagesDb: [] })
 
   useEffect(() => {
+    console.log('hello')
     axios.get('/api/languages/')
-      .then(resp => setLangData({ languageDb: resp.data }))
+      .then(resp => setLangData({ languagesDb: resp.data }))
+      // .catch(err => setData({ error: err.response.data }))
   }, [])
+
+  // const history = useHistory()
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    axios.post('/api/auth/register/', data)
-      .then(resp => setData({ data: resp.data }))
-      .catch(err => setData({ error: err.response.data }))
+    const imageInput = document.querySelector('.input-image')
+    // console.log(imageInput)
+    const image = imageInput.files
+    console.log(image)
+    const form = new FormData()
+    console.log(image[0])
+    form.append('username', data.username)
+    form.append('email', data.email)
+    form.append('password', data.password)
+    form.append('password_confirmation', data.password_confirmation)
+    form.append('timezone', data.timezone)
+    form.append('languages', data.languages)
+    form.append('image', image[0], image[0].name)
+
+    axios.post('/api/auth/register/', form)
+      .then(resp => {
+        setData({ data: resp.data })
+        props.history.push('/login')
+      })
+      // .catch(err => setData({ error: err.response.data }))
   }
 
   const handleChange = (prop) => (event) => {
@@ -74,12 +98,14 @@ const Register = () => {
     }
   }
 
+  const inputWidth = 225
+
   const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1)
     },
-    input: {
-      width: 'fullwidth'
+    inputField: {
+      width: inputWidth
     }
   }))
 
@@ -91,6 +117,7 @@ const Register = () => {
       <form
         className='classes.form'
         onSubmit={() => handleSubmit(event)}
+        encType='multipart/form-data'
       >
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -99,7 +126,7 @@ const Register = () => {
             </Grid>
             <Grid item>
               <Input
-                className='classes.input'
+                className={classes.inputField}
                 type='text'
                 value={data.username}
                 onChange={handleChange('username')}
@@ -117,7 +144,7 @@ const Register = () => {
             </Grid>
             <Grid item>
               <Input
-                className='classes.input'
+                className={classes.inputField}
                 type='text'
                 value={data.email}
                 onChange={handleChange('email')}
@@ -125,9 +152,9 @@ const Register = () => {
               />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
-            {data.error.email[0]}
-          </FormHelperText>} */}
+          {data.error && <FormHelperText error>
+            {data.error.email}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -167,8 +194,6 @@ const Register = () => {
             </Grid>
             <Grid item>
               <Input
-                className='classes.input'
-
                 type={password.showPassConfirm ? 'text' : 'password'}
                 value={data.password_confirmation}
                 onChange={handleChange('password_confirmation')}
@@ -198,7 +223,7 @@ const Register = () => {
             </Grid>
             <Grid item>
               <Input
-                className='classes.input'
+                className={classes.inputField}
                 type='text'
                 value={data.timezone}
                 onChange={handleChange('timezone')}
@@ -212,11 +237,12 @@ const Register = () => {
         <div className={classes.margin}>
           <ComputerRoundedIcon />
           <ButtonGroup
+            className='buttons-languages'
             variant='text'
             color='primary'
             aria-label='text primary button group'
           >
-            {langData.languageDb.map((language, id) => {
+            {langData.languagesDb.map((language, id) => {
               return <button
                 className='language'
                 key={id}
@@ -231,13 +257,11 @@ const Register = () => {
           <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
 
         </div>
-        {/* <Input
-          accept='image/*'
-          className={classes.margin}
+        <input
+          accept='image/png, image/jpeg'
+          className='input-image'
           type='file'
-          // value={data.image}
-          // startIcon={<CloudUploadIcon />}
-        /> */}
+        />
         <div className='button-register'>
           <button
             type='submit'
