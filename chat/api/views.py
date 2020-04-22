@@ -12,7 +12,6 @@ from rest_framework.generics import (
 from chat.models import Chat, Message
 from .serializers import ChatSerializer, MessageSerializer, UserSerializer, PopulateChatSerializer
 from django.contrib.auth import get_user_model
-
 User = get_user_model()
 
 

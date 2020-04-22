@@ -169,6 +169,7 @@ CHANNEL_LAYERS = {
     },
 }
 
+
 AUTH_USER_MODEL = 'backend.User'
 
 MEDIA_URL = '/media/'
