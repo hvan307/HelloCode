@@ -22,12 +22,12 @@ class RegisterView(ListCreateAPIView):
         return Response(serializer.data)
 
     def post(self, request):
-        print(request)
+        print(request.data)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({'message': 'Registration successful', "user":serializer.data})
-        # print(serializer)
+        print(serializer.errors)
         return Response(serializer.errors, status=422)
 
 

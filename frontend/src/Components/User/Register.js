@@ -48,7 +48,9 @@ const Register = (props) => {
     form.append('password', data.password)
     form.append('password_confirmation', data.password_confirmation)
     form.append('timezone', data.timezone)
-    form.append('languages', data.languages)
+    data.languages.forEach(language => {
+      form.append('languages', language)
+    })
     form.append('image', image[0], image[0].name)
 
     axios.post('/api/auth/register/', form)

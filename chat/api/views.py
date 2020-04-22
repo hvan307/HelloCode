@@ -40,16 +40,10 @@ class ChatCreateViewWithPk(CreateAPIView):
     permission_classes = (permissions.AllowAny, )
 
 
-class ChatCreateViewWithUsername(CreateAPIView):
+class ChatCreateView(CreateAPIView):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
     permission_classes = (permissions.AllowAny, )
-
-    def post(self, request):
-        user1pk = get_pk(request.data['user1'])
-        user2pk = get_pk(request.data['user2'])
-        participants = [user1pk, user2pk]
-        return Response(requests.post('http://localhost:4000/api/chat/newchat/', {'participants': participants}))
 
 
 class ChatListViewByUser(ListAPIView):

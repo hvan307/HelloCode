@@ -43,6 +43,7 @@ const NewChat = () => {
   const classes = useStyles()
   const [languages, setLanguages] = useState([])
   const [users, setUsers] = useState([])
+  const [openChats, setOpenChats] = useState([])
 
   useEffect(() => {
     Axios.get('/api/languages/')
@@ -53,7 +54,22 @@ const NewChat = () => {
         setUsers(res.data)
       })
       .catch(err => console.log(err))
-    console.log(users)
+    Axios.get(`api/chat/user/${auth.getUserName()}/`)
+      .then(res => {
+        //this code gets a list of chats, get the participants of all the chats
+        //removes the current user from all the participants then converts to set and back
+        //to remove duplicates
+        let array = []
+        res.data.forEach(e => array.push(e.participants.filter(elem => {
+          if (elem.username !== auth.getUserName()) return elem.username
+        })))
+        array = array.flat(Infinity)
+        array = array.map(elem => elem.username)
+        const uniqueSet = new Set(array)
+        array = [...uniqueSet]
+        setOpenChats(array)
+      })
+      .catch(err => console.log(err))
   }, [])
 
   const handleCreateChat = (event, id) => {
@@ -74,8 +90,10 @@ const NewChat = () => {
         })}
       </ButtonGroup>
       <List>
-        {users.map(user => {
-          return <ListItem key={user.id} className={classes.root}>
+        {users.map(user => (
+          !openChats.includes(user.username) && user.username !== auth.getUserName() &&
+          <ListItem key={user.id} className={classes.root}>
+            {console.log(user.username)}
             <ListItemText className="list-item">
               <Link
                 to={{
@@ -90,7 +108,7 @@ const NewChat = () => {
               </Link>
             </ListItemText>
           </ListItem>
-        })}
+        ))}
       </List>
     </div>
   )
