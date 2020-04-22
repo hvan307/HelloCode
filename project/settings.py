@@ -160,6 +160,14 @@ CACHES = {
          "LOCATION": os.environ.get('REDIS_URL'),
     }
 }
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'CONFIG': {
+            "hosts": [os.environ.get('REDIS_URL')],
+        },
+    },
+}
 
 AUTH_USER_MODEL = 'backend.User'
 
