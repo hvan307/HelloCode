@@ -27,7 +27,7 @@ class RegisterView(ListCreateAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response({'message': 'Registration successful', "user":serializer.data})
-        # print(serializer)
+        print(serializer.errors)
         return Response(serializer.errors, status=422)
 
 
