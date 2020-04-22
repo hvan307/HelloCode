@@ -4,7 +4,7 @@ a {
 }
 
 h3 {
-  font-family: 'Cutive Mono', monospace;
+  font-family: "Cutive Mono", monospace;
   text-align: center;
   margin: 5px 15%;
 }
@@ -14,31 +14,31 @@ h3 {
 
   .messages-owner {
     margin: 10px;
-    color:white;
+    color: white;
 
     .message-flex {
       display: flex;
       flex-direction: row-reverse;
       justify-content: flex-start;
-    
+
       .message-content {
         background-color: #3f51b5;
         border-radius: 10px;
         padding: 5px;
         margin: 10px;
       }
-    } 
+    }
   }
-  
+
   .messages {
     margin: 10px;
-    color:#3f51b5;
+    color: #3f51b5;
 
     .message-flex {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-    
+
       .message-content {
         background-color: white;
         border-radius: 10px;
@@ -79,33 +79,65 @@ h3 {
   justify-content: center;
 }
 
-
 // NavbarDrawer
+
 #app-title {
   // font-family: 'Source Code Pro', monospace;
   // font-family: 'VT323', monospace;
-  font-family: 'Cutive Mono', monospace;
+  font-family: "Cutive Mono", monospace;
   text-align: center;
 }
 
 // Register
-.register, 
+
+.register,
 .login {
   display: flex;
   flex-direction: column;
   align-items: center;
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-    .input-login {
-      width: 100%;
-    }
+  .input-login {
+    width: 100%;
+  }
+
+  .input-image {
+    margin: 10px;
+    padding: 10px;
+    text-align: right;
+  }
+
+  .input-image::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+
+  .input-image::before {
+    content: "Upload photo";
+    display: inline-block;
+    position: relative;
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding: 5px 8px;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 600;
+    font-size: 1em;
+  }
+  .input-image:hover::before {
+    border-color: rgba(0, 0, 0, 0.63)
+  }
 }
 
-
 // Buttons
+
+.buttons-languages {
+  margin-bottom: 20px;
+}
 button.language {
   font-family: Arial;
   border: none;
@@ -128,9 +160,9 @@ button.register {
 .button.register:hover {
   background-color: white;
   text-decoration: none;
-  box-shadow:0px 5px 5px rgba(0,0,0,0.2);
-  transform : translateY(-1px);
-} 
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
 
 .lang-selected {
   color: red;

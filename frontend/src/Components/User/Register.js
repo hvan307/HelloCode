@@ -17,7 +17,6 @@ import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded'
 import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import FormHelperText from '@material-ui/core/FormHelperText'
-// import Button from '@material-ui/core/Button'
 
 let selectedLangs = []
 let displayLangs = []
@@ -32,13 +31,14 @@ const Register = (props) => {
     console.log('hello')
     axios.get('/api/languages/')
       .then(resp => setLangData({ languagesDb: resp.data }))
+      // .catch(err => setData({ error: err.response.data }))
   }, [])
 
   // const history = useHistory()
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const imageInput = document.querySelector('.image-input')
+    const imageInput = document.querySelector('.input-image')
     // console.log(imageInput)
     const image = imageInput.files
     const form = new FormData()
@@ -56,7 +56,7 @@ const Register = (props) => {
         setData({ data: resp.data })
         props.history.push('/login')
       })
-    //   .catch(err => setData({ error: err.response.data }))
+      // .catch(err => setData({ error: err.response.data }))
   }
 
   const handleChange = (prop) => (event) => {
@@ -110,7 +110,6 @@ const Register = (props) => {
 
   const classes = useStyles()
 
-  // console.log(langData)
   return <>
     <div className='section register'>
       <h2>Register</h2>
@@ -133,9 +132,9 @@ const Register = (props) => {
                 placeholder='Username' />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
+          {data.error && <FormHelperText error>
             {data.error.username[0]}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -152,9 +151,9 @@ const Register = (props) => {
               />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
+          {data.error && <FormHelperText error>
             {data.error.email}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -183,9 +182,9 @@ const Register = (props) => {
               />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
+          {data.error && <FormHelperText error>
             {data.error.password[0]}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -212,9 +211,9 @@ const Register = (props) => {
               />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
+          {data.error && <FormHelperText error>
             {data.error.password_confirmation[0]}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -230,13 +229,14 @@ const Register = (props) => {
                 placeholder='Your timezone (GMT)' />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
+          {data.error && <FormHelperText error>
             {data.error.timezone[0]}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <ComputerRoundedIcon />
           <ButtonGroup
+            className='buttons-languages'
             variant='text'
             color='primary'
             aria-label='text primary button group'
@@ -258,11 +258,8 @@ const Register = (props) => {
         </div>
         <input
           accept='image/png, image/jpeg'
-          // onChange={(image) => handleImageChange(image)}
-          className='image-input'
+          className='input-image'
           type='file'
-          // value={data.image}
-          // startIcon={<CloudUploadIcon />}
         />
         <div className='button-register'>
           <button
