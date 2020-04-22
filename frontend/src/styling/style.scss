@@ -100,39 +100,41 @@ h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 15px auto;
+
   form {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .input-login {
-    width: 100%;
+
+  .inputField {
+    margin: 5px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  
+  svg.MuiSvgIcon-root,
+  path {
+    margin-top: 5px;
   }
 
   .input-image {
-    margin: 10px;
-    padding: 10px;
-    text-align: right;
-  }
-
-  .input-image::-webkit-file-upload-button {
+    width: 10px;
     visibility: hidden;
   }
 
-  .input-image::before {
-    content: "Upload photo";
-    display: inline-block;
-    position: relative;
+  .input-image-button {
     border: 1px solid #999;
     border-radius: 5px;
     padding: 5px 8px;
-    white-space: nowrap;
-    -webkit-user-select: none;
     cursor: pointer;
-    text-shadow: 1px 1px #fff;
     font-weight: 600;
     font-size: 1em;
+    margin-top: -5px;
   }
+  
   .input-image:hover::before {
     border-color: rgba(0, 0, 0, 0.63)
   }
@@ -141,7 +143,7 @@ h3 {
 // Buttons
 
 .buttons-languages {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 button.language {
   font-family: Arial;

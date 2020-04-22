@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-// import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import axios from 'axios'
 
@@ -17,6 +17,7 @@ import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded'
 import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import FormHelperText from '@material-ui/core/FormHelperText'
+import PhotoLibraryRoundedIcon from '@material-ui/icons/PhotoLibraryRounded'
 
 let selectedLangs = []
 let displayLangs = []
@@ -31,10 +32,8 @@ const Register = (props) => {
     console.log('hello')
     axios.get('/api/languages/')
       .then(resp => setLangData({ languagesDb: resp.data }))
-      // .catch(err => setData({ error: err.response.data }))
+    // .catch(err => setData({ error: err.response.data }))
   }, [])
-
-  // const history = useHistory()
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -48,7 +47,9 @@ const Register = (props) => {
     form.append('password', data.password)
     form.append('password_confirmation', data.password_confirmation)
     form.append('timezone', data.timezone)
-    form.append('languages', data.languages)
+    data.languages.forEach(language => {
+      form.append('languages', language)
+    })
     form.append('image', image[0], image[0].name)
 
     axios.post('/api/auth/register/', form)
@@ -56,7 +57,7 @@ const Register = (props) => {
         setData({ data: resp.data })
         props.history.push('/login')
       })
-      // .catch(err => setData({ error: err.response.data }))
+    // .catch(err => setData({ error: err.response.data }))
   }
 
   const handleChange = (prop) => (event) => {
@@ -109,6 +110,12 @@ const Register = (props) => {
   }))
 
   const classes = useStyles()
+
+  const inputEl = useRef(null)
+  const onButtonClick = () => {
+    inputEl.current.click()
+  }
+
 
   return <>
     <div className='section register'>
@@ -163,7 +170,6 @@ const Register = (props) => {
             <Grid item>
               <Input
                 className='classes.input'
-
                 type={password.showPassword ? 'text' : 'password'}
                 value={password.password}
                 onChange={handleChange('password')}
@@ -256,11 +262,22 @@ const Register = (props) => {
           <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
 
         </div>
-        <input
-          accept='image/png, image/jpeg'
-          className='input-image'
-          type='file'
-        />
+        <div className='classes.inputField'>
+          <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon /></label>
+          <input
+            ref={inputEl}
+            accept='image/png, image/jpeg'
+            className='input-image'
+            type='file'
+          />
+          <button 
+            className='input-image-button'
+            type='button' 
+            onClick={onButtonClick}>
+            Upload photo
+          </button>
+        </div>
+
         <div className='button-register'>
           <button
             type='submit'
@@ -276,4 +293,4 @@ const Register = (props) => {
   </>
 }
 
-export default Register
+export default withRouter(Register)
