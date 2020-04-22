@@ -22,7 +22,7 @@ const NewChat = () => {
     avatar: {
       display: 'flex',
       '& > *': {
-        margin: theme.spacing(1),
+        margin: theme.spacing(1)
       },
     },
     contactUsername: {

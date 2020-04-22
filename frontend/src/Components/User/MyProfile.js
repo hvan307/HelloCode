@@ -11,6 +11,9 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import FaceIcon from '@material-ui/icons/Face'
+import PublicIcon from '@material-ui/icons/Public'
+import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
 
 const MyProfile = () => {
 
@@ -29,12 +32,19 @@ const MyProfile = () => {
       maxWidth: 800
     },
     media: {
-      height: 300,
-      width: 250
+      height: 150,
+      width: 150
     }
   })
 
   const classes = useStyles()
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    axios.put(`/api/user/${id}`, data)
+      .then(resp => setData({ data: resp.data }))
+      .catch(err => setData({ error: err.response.data }))
+  }
 
   return (
     <div className="profile-main">
@@ -42,27 +52,27 @@ const MyProfile = () => {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image={data.image}
-            // image="#"
+            image={data.image ? `http://localhost:4000${data.image}` : 'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg'}
+            // image={`http://localhost:4000${data.image}`}
             title="User Profile Picture"
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              Username: {data.username}
-          </Typography>
+              <FaceIcon className="face-icon"/> <span>Username: {data.username}</span> <button>Edit</button>
+            </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Timezone: {data.timezone}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-              Languages: {data.languages.map((language) => (<p key={language.id}>{language.name}</p>))}
-          </Typography>
+              <PublicIcon className="world-icon"/> <span>Timezone: {data.timezone}</span> <button>Edit</button>
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <ComputerRoundedIcon className="computer-icon"/> <span className="languages-after-icon">Languages: {data.languages.map((language) => (<p key={language.id}>{language.name}</p>))}</span> <button>Edit</button>
+            </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
           <Link to={'/newchat'}>
             <Button size="small" color="primary">
               Start new chat!
-          </Button>
+            </Button>
           </Link>
           {/* <Button size="small" color="primary">
           Something else?
