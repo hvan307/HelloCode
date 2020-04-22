@@ -156,8 +156,5 @@ CHANNEL_LAYERS = {
 
 AUTH_USER_MODEL = 'backend.User'
 
-MEDIA_URL =  '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "image")
-
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# MEDIA_URL = '/media/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'PROJECT-4')

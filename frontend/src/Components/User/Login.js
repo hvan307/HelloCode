@@ -47,13 +47,15 @@ const Login = () => {
   }
 
   // styling - move to scss?
+  const inputWidth = 225
+
   const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1)
+    },
+    inputField: {
+      width: inputWidth
     }
-    // MuiInputBase-input: {
-    //   width: 'fullwidth'
-    // }
   }))
 
   const classes = useStyles()
@@ -69,7 +71,7 @@ const Login = () => {
             </Grid>
             <Grid item>
               <Input
-                className='classes.MuiInputBase-input'
+                className={classes.inputField}
                 name='username'
                 type='text'
                 onChange={handleChange('form.data.username')}

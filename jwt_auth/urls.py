@@ -9,4 +9,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('register/', RegisterView.as_view()), # sending requests to  '/register' to the register view(controller)
     path('login/', LoginView.as_view()), # and the same for login
+    #  url(r'^upload/$', FileView.as_view(), name='file-upload')
 ]
