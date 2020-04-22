@@ -50,6 +50,11 @@ h3 {
   }
 }
 
+.fixed {
+  position: fixed;
+  bottom: 20px;
+}
+
 .chat-input {
   display: flex;
   justify-content: center;

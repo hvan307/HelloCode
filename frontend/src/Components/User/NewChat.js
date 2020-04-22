@@ -55,11 +55,9 @@ const NewChat = () => {
     console.log(users)
   }, [])
 
-  const handleCreateChat = (event, username) => {
-    console.log(username)
+  const handleCreateChat = (event, id) => {
     const form = {
-      'user1': auth.getUserName(),
-      'user2': username
+      'participants': [auth.getUserId(), id]
     }
     Axios.post('/api/chat/create/', form)
   }
@@ -86,7 +84,7 @@ const NewChat = () => {
                     openChat: true
                   }
                 }}
-                onClick={(event) => handleCreateChat(event, user.username)}
+                onClick={(event) => handleCreateChat(event, user.id)}
               >
                 {user.username}
               </Link>
