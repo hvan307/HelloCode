@@ -39,8 +39,9 @@ const Register = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     const imageInput = document.querySelector('.image-input')
-    // console.log(imageInput)
+    console.log(image)
     const image = imageInput.files
+    console.log(image)
     const form = new FormData()
     console.log(image[0])
     form.append('username', data.username)
@@ -110,7 +111,7 @@ const Register = (props) => {
 
   const classes = useStyles()
 
-  // console.log(langData)
+  console.log(data.languages)
   return <>
     <div className='section register'>
       <h2>Register</h2>

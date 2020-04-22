@@ -66,7 +66,7 @@ class Chat extends React.Component {
     return messages.map(message => (
       <div key={message.id} className={"messages" + (this.state.currentUser === message.author ? '-owner' : '')}>
         <div className="message-flex">
-          <Avatar src="/broken-image.jpg" /> 
+          <Avatar src={`http://localhost:4000${message.author.image}`} /> 
           <div className="message-content">{message.content}</div>
         </div>
       </div>
