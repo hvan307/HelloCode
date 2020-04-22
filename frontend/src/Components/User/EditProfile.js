@@ -176,7 +176,7 @@ const EditProfile = (props) => {
             variant='contained'
             color='primary'
           >
-            Register
+            Confirm
           </button>
         </div>
       </form>

@@ -107,8 +107,9 @@ const Register = (props) => {
   }))
 
   const classes = useStyles()
-  
+
   const inputEl = useRef(null)
+
   const onButtonClick = () => {
     inputEl.current.click()
   }
