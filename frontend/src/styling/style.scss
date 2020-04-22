@@ -105,12 +105,14 @@ h3 {
     flex-direction: column;
     align-items: center;
   }
+
   .input-image {
     margin: 5px auto;
     // padding: 10px;
     text-align: right;
     visibility: hidden;
   }
+
   .input-button {
     content: "Upload photo";
     display: inline-block;
@@ -119,6 +121,7 @@ h3 {
     border-radius: 5px;
     padding: 5px 8px;
     // white-space: nowrap;
+  }
 
   .inputField {
     margin: 5px auto;
@@ -151,7 +154,6 @@ h3 {
     border-color: rgba(0, 0, 0, 0.63)
   }
 }
-
 
 
 // Buttons
