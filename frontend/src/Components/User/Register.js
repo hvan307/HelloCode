@@ -39,11 +39,8 @@ const Register = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     const imageInput = document.querySelector('.input-image')
-    // console.log(imageInput)
     const image = imageInput.files
-    console.log(image)
     const form = new FormData()
-    console.log(image[0])
     form.append('username', data.username)
     form.append('email', data.email)
     form.append('password', data.password)
@@ -58,6 +55,7 @@ const Register = (props) => {
       .then(resp => {
         setData({ data: resp.data })
         props.history.push('/login')
+
       })
       // .catch(err => setData({ error: err.response.data }))
   }
@@ -112,7 +110,6 @@ const Register = (props) => {
   }))
 
   const classes = useStyles()
-
   return <>
     <div className='section register'>
       <h2>Register</h2>
