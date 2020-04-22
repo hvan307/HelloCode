@@ -4,9 +4,9 @@ a {
 }
 
 h3 {
-  font-family: "Cutive Mono", monospace;
-  text-align: center;
-  margin: 5px 15%;
+  font-family: 'Cutive Mono', monospace;
+  text-align: justify;
+  margin: 20px;
 }
 
 .chat {
@@ -50,6 +50,11 @@ h3 {
   }
 }
 
+.fixed {
+  position: fixed;
+  bottom: 20px;
+}
+
 .chat-input {
   display: flex;
   justify-content: center;
@@ -73,9 +78,9 @@ h3 {
   margin: 15px;
 }
 
-.new-chat {
+.button-group {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
