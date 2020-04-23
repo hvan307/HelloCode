@@ -18,6 +18,7 @@ const NewChat = () => {
       flexDirection: 'row',
       flexWrap: 'wrap',
       alignItems: 'center',
+      width: '80vw',
       backgroundColor: theme.palette.background.paper
     },
     avatar: {
@@ -92,7 +93,7 @@ const NewChat = () => {
       return lang.id
     })
     if (!filter) return true
-    return (userLang.includes(filter) ? true : false) 
+    return (userLang.includes(filter) ? true : false)
   }
 
   return (
@@ -112,24 +113,27 @@ const NewChat = () => {
       </ButtonGroup>
       <List>
         {users.map(user => (
-          !openChats.includes(user.username) && 
+          !openChats.includes(user.username) &&
           user.username !== auth.getUserName() &&
           checkLang(user) &&
           <ListItem key={user.id} className={classes.root}>
-            <Avatar className={classes.avatar} src={user.image}/>
+            <Avatar className={classes.avatar} src={user.image} />
             <ListItemText className={'list-item ' + classes.contactUsername}>
-              <Link
-                to={{
-                  pathname: '/mychats',
-                  state: {
-                    openChat: true
-                  }
-                }}
-                onClick={(event) => handleCreateChat(event, user.id)}
-              >
-                {user.username}
-              </Link>
+              {user.username}
             </ListItemText>
+            <Link
+              to={{
+                pathname: '/mychats',
+                state: {
+                  openChat: true
+                }
+              }}
+              onClick={(event) => handleCreateChat(event, user.id)}
+            >
+              <Button>
+                Start Chat
+              </Button>
+            </Link>
           </ListItem>
         ))}
       </List>
