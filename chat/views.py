@@ -9,19 +9,15 @@ from .models import Chat
 
 User = get_user_model()
 
-@database_sync_to_async
 def get_last_10_messages(chatId):
-  chat = get_object_or_404(Chat, id=chatId)
   # this will get all messages from the chat db with id chatId
   # then order them by date and return the last 10
-  return chat.messages.order_by('-timestamp').all()[:10]
+  # return chat.messages.order_by('-timestamp').all()[:10]
+  return database_sync_to_async(Chat.objects.get(id=chatId)).messages.order_by('-timestamp').all()[:10]
 # Create your views here.
 
-@database_sync_to_async
 def get_user_contact(username):
-  user = get_object_or_404(User, username=username)
-  return user
+  return database_sync_to_async(User.objects.get(username=username))
 
-@database_sync_to_async
 def get_current_chat(chatId):
-  return get_object_or_404(Chat, id=chatId)
+  return database_sync_to_async(Chat.objects.get(id=chatId))
