@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import auth from '../../lib/auth'
 import axios from 'axios'
 import { Link, withRouter } from 'react-router-dom'
@@ -55,7 +55,7 @@ const MyChats = () => {
   const [openChat, setOpenChat] = useState(false)
   const [currentChat, setCurrentChat] = useState(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTimeout(() => {
       axios.get(`api/chat/user/${user}/`)
         .then(res => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
@@ -47,7 +47,7 @@ const NewChat = () => {
   const [openChats, setOpenChats] = useState([])
   const [filter, setFilter] = useState(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     Axios.get('/api/languages/')
       .then(res => setLanguages(res.data))
       .catch(err => console.log(err.response.data))
