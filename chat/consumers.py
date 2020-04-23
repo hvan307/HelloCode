@@ -6,7 +6,7 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from .models import Message, Chat
 from .views import get_last_10_messages, get_current_chat
-from django.db import close_old_connections
+from channels.db import database_sync_to_async
 
 User = get_user_model()
 # a channel is a mailbox where messages can be sent to.
@@ -30,7 +30,6 @@ class ChatConsumer(WebsocketConsumer):
         'messages': self.messages_to_json(messages)
       }
       # print(f'CONTENT {content}')
-      close_old_connections()
       self.send_chat_message(content)
 
     def new_message(self, data):
@@ -51,7 +50,6 @@ class ChatConsumer(WebsocketConsumer):
         'command':'new_message',
         'message': self.message_to_json(message)
       }
-      close_old_connections()
       return self.send_chat_message(content)
 
     def messages_to_json(self, messages):
