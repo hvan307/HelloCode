@@ -51,12 +51,12 @@ const NewChat = () => {
     Axios.get('/api/languages/')
       .then(res => setLanguages(res.data))
       .catch(err => console.log(err.response.data))
-    Axios.get('/api')
+    Axios.get('/api/')
       .then(res => {
         setUsers(res.data)
       })
       .catch(err => console.log(err))
-    Axios.get(`api/chat/user/${auth.getUserName()}/`)
+    Axios.get(`/api/chat/user/${auth.getUserName()}/`)
       .then(res => {
         //this code gets a list of chats, get the participants of all the chats
         //removes the current user from all the participants then converts to set and back

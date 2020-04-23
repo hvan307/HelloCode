@@ -237,26 +237,27 @@ const Register = (props) => {
           </FormHelperText>}
         </div>
         <div className={classes.margin}>
-          <ComputerRoundedIcon />
-          <ButtonGroup
-            className='buttons-languages'
-            variant='text'
-            color='primary'
-            aria-label='text primary button group'
-          >
-            {langData.languagesDb.map((language, id) => {
-              return <button
-                className='language'
-                key={id}
-                onClick={(event) => handleSelectLang(event)}
-                value={language.id}
-              >
-                {language.name}
-              </button>
-            }
-            )}
-          </ButtonGroup>
-          <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
+          <div className="flex-button">
+            <ComputerRoundedIcon />
+            <ButtonGroup
+              className='buttons-languages'
+              variant='text'
+              color='primary'
+              aria-label='text primary button group'
+            >
+              {langData.languagesDb.map((language, id) => {
+                return <button
+                  className='language'
+                  key={id}
+                  onClick={(event) => handleSelectLang(event)}
+                  value={language.id}
+                >
+                  {language.name}
+                </button>
+              }
+              )}
+            </ButtonGroup>
+          </div>
         </div>
         <div className='classes.inputField'>
           <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon className="photos-icon"/></label>
@@ -266,9 +267,9 @@ const Register = (props) => {
             className='input-image'
             type='file'
           />
-          <button 
+          <button
             className='input-image-button'
-            type='button' 
+            type='button'
             onClick={onButtonClick}>
             Upload photo
           </button>
