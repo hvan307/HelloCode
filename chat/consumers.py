@@ -109,9 +109,9 @@ class ChatConsumer(WebsocketConsumer):
         # on the command input by the front end.
         self.commands[data['command']](self, data)
     
-    def send_chat_message(self, message):
+    async def send_chat_message(self, message):
         # Send message to room group
-        self.channel_layer.group_send(
+        await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'chat_message',
@@ -120,9 +120,9 @@ class ChatConsumer(WebsocketConsumer):
         )
         
     # Receive message from room group
-    def chat_message(self, event):
+    async def chat_message(self, event):
         message = event['message']
 
         print(f'CHAT MESSAGE {message}')
         # Send message to WebSocket
-        self.send(text_data=json.dumps(message))
+        await elf.send(text_data=json.dumps(message))
