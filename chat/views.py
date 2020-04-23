@@ -13,7 +13,7 @@ def get_last_10_messages(chatId):
   # this will get all messages from the chat db with id chatId
   # then order them by date and return the last 10
   # return chat.messages.order_by('-timestamp').all()[:10]
-  return database_sync_to_async(Chat.objects.get(id=chatId)).messages.order_by('-timestamp')().all()[:10]
+  return database_sync_to_async(Chat.objects.get(id=chatId).messages.order_by('-timestamp')().all()[:10])()
 # Create your views here.
 
 def get_user_contact(username):
