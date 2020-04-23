@@ -5,40 +5,41 @@ a {
 
 h3 {
   font-family: 'Cutive Mono', monospace;
-  text-align: center;
-  margin: 5px 15%;
+  text-align: justify;
+  margin: 20px;
 }
 
 .chat {
   padding: 20px;
+  margin-bottom: 100px;
 
   .messages-owner {
     margin: 10px;
-    color:white;
+    color: white;
 
     .message-flex {
       display: flex;
       flex-direction: row-reverse;
       justify-content: flex-start;
-    
+
       .message-content {
         background-color: #3f51b5;
         border-radius: 10px;
         padding: 5px;
         margin: 10px;
       }
-    } 
+    }
   }
-  
+
   .messages {
     margin: 10px;
-    color:#3f51b5;
+    color: #3f51b5;
 
     .message-flex {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-    
+
       .message-content {
         background-color: white;
         border-radius: 10px;
@@ -50,10 +51,21 @@ h3 {
   }
 }
 
+.fixed {
+  position: fixed;
+  bottom: 20px;
+}
+
 .chat-input {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  margin: 0 10px 0 10px;
+  position: fixed !important;
+  bottom: 5px;
+  width: 100%;
+  background-color: white;
+  padding: 30px;
+
 
   input {
     width: 70%;
@@ -73,39 +85,96 @@ h3 {
   margin: 15px;
 }
 
-.new-chat {
+.button-group {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
-
 // NavbarDrawer
+
 #app-title {
   // font-family: 'Source Code Pro', monospace;
   // font-family: 'VT323', monospace;
-  font-family: 'Cutive Mono', monospace;
+  font-family: "Cutive Mono", monospace;
   text-align: center;
 }
 
 // Register
-.register, 
-.login {
+.register,
+.login,
+.edit-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+  margin: 15px auto;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-    .input-login {
-      width: 100%;
-    }
+
+  .input-image {
+    margin: 5px auto;
+    // padding: 10px;
+    text-align: right;
+    visibility: hidden;
+  }
+
+  .input-button {
+    content: "Upload photo";
+    display: inline-block;
+    position: relative;
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding: 5px 8px;
+    // white-space: nowrap;
+  }
+  .inputField {
+    margin: 5px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  
+  svg.MuiSvgIcon-root,
+  path {
+    margin-top: 5px;
+  }
+
+  .input-image {
+    width: 10px;
+    visibility: hidden;
+  }
+
+  .input-image-button {
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1em;
+    margin-top: -5px;
+  }
+  
+  .input-image:hover::before {
+    border-color: rgba(0, 0, 0, 0.63)
+  }
+}
+
+.register {
+
+  .photos-icon {
+    padding-top: 7px;
+  }
 }
 
 
 // Buttons
+
+.buttons-languages {
+  margin-bottom: 10px;
+}
 button.language {
   font-family: Arial;
   border: none;
@@ -128,12 +197,12 @@ button.register {
 .button.register:hover {
   background-color: white;
   text-decoration: none;
-  box-shadow:0px 5px 5px rgba(0,0,0,0.2);
-  transform : translateY(-1px);
-} 
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
 
 .lang-selected {
-  color: red;
+  color: red !important;
 }
 
 // Home
@@ -160,4 +229,28 @@ button.register {
   display: flex;
   justify-content: center;
   margin-top: 40px;
+}
+
+.face-icon {
+  padding-top: 6px;
+}
+
+.world-icon {
+  padding-top: 12px;
+}
+
+.computer-icon {
+  padding-top: 13px;
+}
+
+.makeStyles-media-164 {
+  border-radius: 1000px;
+  margin: 40px 70px;
+}
+
+.edit-profile {
+
+  .photos-icon {
+    padding-top: 7px;
+  }
 }

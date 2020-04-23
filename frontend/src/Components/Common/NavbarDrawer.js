@@ -25,15 +25,16 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 // import MenuItem from '@material-ui/core/MenuItem'
 // import Menu from '@material-ui/core/Menu'
 import Badge from '@material-ui/core/Badge'
-import NotificationsIcon from '@material-ui/icons/Notifications'
+// import NotificationsIcon from '@material-ui/icons/Notifications'
 // import MoreVertIcon from '@material-ui/icons/MoreVert'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddBoxIcon from '@material-ui/icons/AddBox'
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded'
 
 
 const DrawerMenu = () => {
   const drawerWidth = 240
-  // Styling
+  // styling - move to scss
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
@@ -108,10 +109,11 @@ const DrawerMenu = () => {
   // State for the left-hand side drawer menu
   const [openDrawer, setOpenDrawer] = useState(false)
   // State for the right-hand side icon menu
-  const [anchorMenu, setAnchorMenu] = useState(false)
+  const [anchorMenu, setAnchorMenu] = useState(null)
   const openMenu = Boolean(anchorMenu)
+  // const [auth, setAuth] = useState(true)
   // State for the logged in user profile menu
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
   const openIcon = Boolean(anchorEl)
 
   // Handler functions
@@ -293,6 +295,30 @@ const DrawerMenu = () => {
           </IconButton>
         </div>
         <Divider />
+
+        {/* Visitor's view */}
+        {!isLoggedIn && 
+        <List>
+      {[<Link to={'/register'} onClick={handleDrawerClose}>Register</Link>, <Link to={'/login'} onClick={handleDrawerClose}>Login</Link>].map((text, i) => (
+            <ListItem button key={i}>
+              <ListItemIcon>{<AccountCircle />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>}
+        <Divider />
+        {!isLoggedIn && 
+        <List>
+          {[<Link to={'/'} onClick={handleDrawerClose}>Home</Link>].map((text, i) => (
+            <ListItem button key={i}>
+              <ListItemIcon>{<HomeRoundedIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>}
+
+        {/* LoggedIn User View */}
+        {isLoggedIn && 
         <List>
           {[<Link to={'/myprofile'} onClick={handleDrawerClose}>My Profile</Link>, <Link to={'/mychats'} onClick={handleDrawerClose}>My Chats</Link>, <Link to={'/newchat'} onClick={handleDrawerClose}>New Chat</Link>].map((text, i) => (
             <ListItem button key={i}>
@@ -300,17 +326,19 @@ const DrawerMenu = () => {
               <ListItemText primary={text} />
             </ListItem>
           ))}
-        </List>
+        </List>}
         <Divider />
-        {/* {isLoggedIn && } ?? */}
-        <List>
+        {isLoggedIn && 
+        <List
+          onClick={handleLogout}
+        >
           {[<Link to={'/'} onClick={handleDrawerClose}>Log Out</Link>].map((text, i) => (
             <ListItem button key={i}>
               <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
-        </List>
+        </List>}
       </Drawer>
       <main
         className={clsx(classes.content, {

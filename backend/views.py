@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView
+from django.shortcuts import get_object_or_404
 
 from .models import Language
 from django.contrib.auth import get_user_model
@@ -99,3 +100,11 @@ class DetailViewForLanguage(RetrieveUpdateDestroyAPIView):
         language.delete()
         return Response(status=HTTP_204_NO_CONTENT)
 
+class UserByUsernameListView(ListView):
+
+  serializer_class = PopulateUserSerializer
+  
+  def get(self, _request, username):
+    user = get_object_or_404(User, username=username)
+    serializer = PopulateUserSerializer(user)
+    return Response(serializer.data)

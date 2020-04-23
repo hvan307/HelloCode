@@ -12,8 +12,10 @@ import Home from './Components/Common/Home'
 import MyProfile from './Components/User/MyProfile'
 import NewChat from './Components/User/NewChat'
 import MyChats from './Components/User/MyChats'
+import EditProfile from './Components/User/EditProfile'
 
 import './styling/style.scss'
+
 
 const App = () => {
   return <HashRouter>
@@ -22,6 +24,7 @@ const App = () => {
       <Route path={'/register'} component={Register} />
       <Route path={'/login'} component={Login} />
       <Route path={'/myprofile'} component={MyProfile} />
+      <Route path={'/edit-profile'} component={EditProfile} />
       <Route path={'/newchat'} component={NewChat} />
       <Route path={'/mychats'} component={MyChats} />
       <Route path={'/chat'} component={Chat} />

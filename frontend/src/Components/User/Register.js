@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
-// import { useHistory } from 'react-router-dom'
-
+import React, { useState, useEffect, useRef } from 'react'
+import { withRouter } from 'react-router-dom'
 import axios from 'axios'
-
 import { makeStyles } from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -17,12 +15,13 @@ import LanguageRoundedIcon from '@material-ui/icons/LanguageRounded'
 import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import FormHelperText from '@material-ui/core/FormHelperText'
-// import Button from '@material-ui/core/Button'
+import PhotoLibraryRoundedIcon from '@material-ui/icons/PhotoLibraryRounded'
 
 let selectedLangs = []
 let displayLangs = []
 
 const Register = (props) => {
+
   const [data, setData] = useState({ email: '', username: '', password: '', password_confirmation: '', timezone: '', languages: [], image: '' })
   // , error: '' 
   const [password, setPassword] = useState({ showPassword: false, showPassConfirm: false })
@@ -32,31 +31,30 @@ const Register = (props) => {
     console.log('hello')
     axios.get('/api/languages/')
       .then(resp => setLangData({ languagesDb: resp.data }))
+    // .catch(err => setData({ error: err.response.data }))
   }, [])
-
-  // const history = useHistory()
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const imageInput = document.querySelector('.image-input')
-    // console.log(imageInput)
+    const imageInput = document.querySelector('.input-image')
     const image = imageInput.files
     const form = new FormData()
-    console.log(image[0])
     form.append('username', data.username)
     form.append('email', data.email)
     form.append('password', data.password)
     form.append('password_confirmation', data.password_confirmation)
     form.append('timezone', data.timezone)
-    form.append('languages', data.languages)
+    data.languages.forEach(language => {
+      form.append('languages', language)
+    })
     form.append('image', image[0], image[0].name)
-
     axios.post('/api/auth/register/', form)
       .then(resp => {
         setData({ data: resp.data })
         props.history.push('/login')
+
       })
-    //   .catch(err => setData({ error: err.response.data }))
+    // .catch(err => setData({ error: err.response.data }))
   }
 
   const handleChange = (prop) => (event) => {
@@ -110,7 +108,12 @@ const Register = (props) => {
 
   const classes = useStyles()
 
-  // console.log(langData)
+  const inputEl = useRef(null)
+
+  const onButtonClick = () => {
+    inputEl.current.click()
+  }
+
   return <>
     <div className='section register'>
       <h2>Register</h2>
@@ -133,9 +136,9 @@ const Register = (props) => {
                 placeholder='Username' />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
+          {data.error && <FormHelperText error>
             {data.error.username[0]}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -152,9 +155,9 @@ const Register = (props) => {
               />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
+          {data.error && <FormHelperText error>
             {data.error.email}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -164,7 +167,6 @@ const Register = (props) => {
             <Grid item>
               <Input
                 className='classes.input'
-
                 type={password.showPassword ? 'text' : 'password'}
                 value={password.password}
                 onChange={handleChange('password')}
@@ -183,9 +185,9 @@ const Register = (props) => {
               />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
+          {data.error && <FormHelperText error>
             {data.error.password[0]}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -212,9 +214,9 @@ const Register = (props) => {
               />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
+          {data.error && <FormHelperText error>
             {data.error.password_confirmation[0]}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <Grid container spacing={1} alignItems='flex-end'>
@@ -230,13 +232,14 @@ const Register = (props) => {
                 placeholder='Your timezone (GMT)' />
             </Grid>
           </Grid>
-          {/* {data.error && <FormHelperText error>
+          {data.error && <FormHelperText error>
             {data.error.timezone[0]}
-          </FormHelperText>} */}
+          </FormHelperText>}
         </div>
         <div className={classes.margin}>
           <ComputerRoundedIcon />
           <ButtonGroup
+            className='buttons-languages'
             variant='text'
             color='primary'
             aria-label='text primary button group'
@@ -254,16 +257,23 @@ const Register = (props) => {
             )}
           </ButtonGroup>
           <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
-
         </div>
-        <input
-          accept='image/png, image/jpeg'
-          // onChange={(image) => handleImageChange(image)}
-          className='image-input'
-          type='file'
-          // value={data.image}
-          // startIcon={<CloudUploadIcon />}
-        />
+        <div className='classes.inputField'>
+          <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon className="photos-icon"/></label>
+          <input
+            ref={inputEl}
+            accept='image/png, image/jpeg'
+            className='input-image'
+            type='file'
+          />
+          <button 
+            className='input-image-button'
+            type='button' 
+            onClick={onButtonClick}>
+            Upload photo
+          </button>
+        </div>
+
         <div className='button-register'>
           <button
             type='submit'
@@ -278,5 +288,9 @@ const Register = (props) => {
     </div>
   </>
 }
+export default withRouter(Register)
 
-export default Register
+
+
+
+
