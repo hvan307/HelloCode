@@ -17,7 +17,7 @@ h3 {
 }
 
 .home-titles {
-  margin: 5px;
+  padding: 20px 40px;
 }
 
 .chat {
@@ -108,7 +108,7 @@ h3 {
   // font-family: 'Source Code Pro', monospace;
   // font-family: 'VT323', monospace;
   font-family: "Cutive Mono", monospace;
-  text-align: center;
+  // text-align: center;
 }
 
 #drawer-title {
@@ -247,6 +247,7 @@ button.register {
     background-color: rgba(19, 17, 17, 0.8);
     .home-hello-code {
       color: #3f51b5;
+      text-shadow: 1px 1px #6e7fe2;
     }
   }
 }
