@@ -38,7 +38,8 @@ const DrawerMenu = () => {
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
-      flexGrow: 1
+      flexGrow: 1,
+      width: '100vw'
     },
     title: {
       flexGrow: 1

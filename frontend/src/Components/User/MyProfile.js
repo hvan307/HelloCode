@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import auth from '../../lib/auth'
@@ -21,7 +21,7 @@ const MyProfile = (props) => {
 
   const id = auth.getUserId()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log(id)
     axios.get(`/api/user/${id}/`)
       .then(resp => setData(resp.data))

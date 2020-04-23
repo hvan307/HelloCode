@@ -32,13 +32,14 @@ const testLink = (username, chatId) => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '100vw',
     backgroundColor: theme.palette.background.paper,
   },
   avatar: {
     display: 'flex',
     '& > *': {
       margin: theme.spacing(1)
+      
     }
   },
   contactUsername: {
