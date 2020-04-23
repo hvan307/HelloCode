@@ -1,38 +1,38 @@
 class WebSocketService {
-  static instance = null;
-  callbacks = {};
+  static instance = null
+  callbacks = {}
 
   static getInstance() {
     if (!WebSocketService.instance) {
-      WebSocketService.instance = new WebSocketService();
+      WebSocketService.instance = new WebSocketService()
     }
-    return WebSocketService.instance;
+    return WebSocketService.instance
   }
 
   constructor() {
-    this.socketRef = null;
+    this.socketRef = null
   }
 
   connect(chatUrl) {
-    const path = `ws://127.0.0.1:4000/ws/chat/${chatUrl}`;
-    this.socketRef = new WebSocket(path);
+    const path = `ws://127.0.0.1:4000/ws/chat/${chatUrl}`
+    this.socketRef = new WebSocket(path)
     this.socketRef.onopen = () => {
-      console.log('WebSocket open');
-    };
+      console.log('WebSocket open')
+    }
     this.socketNewMessage(JSON.stringify({
       command: 'fetch_messages'
-    }));
+    }))
     this.socketRef.onmessage = e => {
       console.log(e.data)
-      this.socketNewMessage(e.data);
-    };
+      this.socketNewMessage(e.data)
+    }
     this.socketRef.onerror = e => {
-      console.log(e.message);
-    };
+      console.log(e.message)
+    }
     this.socketRef.onclose = () => {
-      console.log("WebSocket closed let's reopen");
+      console.log("WebSocket closed let's reopen")
       this.connect()
-    };
+    }
   }
 
   disconnect(){
