@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import auth from '../../lib/auth'
 
@@ -22,7 +22,7 @@ const EditProfile = (props) => {
 
   const id = auth.getUserId()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     console.log('hello')
     axios.get('/api/languages/')
       .then(resp => setLangData({ languagesDb: resp.data }))
@@ -32,7 +32,6 @@ const EditProfile = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     const imageInput = document.querySelector('.input-image')
-    // console.log(imageInput)
     const image = imageInput.files
     const form = new FormData()
     form.append('image', image[0], image[0].name)
@@ -73,8 +72,8 @@ const EditProfile = (props) => {
     }
   }
 
+  // Styling
   const inputWidth = 225
-
   const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1)

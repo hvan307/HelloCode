@@ -41,7 +41,6 @@ const NewChat = () => {
     }
   }))
 
-
   const classes = useStyles()
   const [languages, setLanguages] = useState([])
   const [users, setUsers] = useState([])
