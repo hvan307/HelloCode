@@ -24,9 +24,10 @@ const Home = () => {
   return <>
     <div className="home-main-container">
       <div className="home-main">
-        <h1>Welcome to HelloCode!</h1>
-        <h2>Join millions of coders helping each other!</h2>
-        <h3>We'll match you with someone so you can start chatting!</h3>
+        <div className="home-titles">
+          <h1>Welcome to HelloCode</h1>
+          <h2>Join millions of coders helping each other</h2>
+        </div>
         <Link to={'/login'}>
           <Button
             variant="contained"
