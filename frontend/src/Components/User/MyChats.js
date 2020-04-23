@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import auth from '../../lib/auth'
 import axios from 'axios'
 import { Link, withRouter } from 'react-router-dom'
@@ -13,9 +13,9 @@ import Avatar from '@material-ui/core/Avatar'
 import ImageIcon from '@material-ui/icons/Image'
 import WorkIcon from '@material-ui/icons/Work'
 import BeachAccessIcon from '@material-ui/icons/BeachAccess'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 import Chat from '../Chat/Chat'
+import { Divider } from '@material-ui/core'
 
 
 const testLink = (username, chatId) => {
@@ -55,12 +55,14 @@ const MyChats = () => {
   const [openChat, setOpenChat] = useState(false)
   const [currentChat, setCurrentChat] = useState(null)
 
-  useEffect(() => {
-    axios.get(`api/chat/user/${user}/`)
-      .then(res => {
-        setChats(res.data)
-      })
-      .catch(err => console.log(err))
+  useLayoutEffect(() => {
+    setTimeout(() => {
+      axios.get(`api/chat/user/${user}/`)
+        .then(res => {
+          setChats(res.data)
+          console.log('HELLO')
+        })
+    }, 50)
   }, [])
 
   const openChatHandler = (event, chat) => {
@@ -83,39 +85,45 @@ const MyChats = () => {
     return participantUserName
   }
 
-  return <div className={classes.root}>
-    {!openChat && <List className={classes.root}>
-      {chats.map(chat => {
-        console.log(`User ${user} chatId ${chat.id}`)
-        return <a key={chat.id}
-          onClick={(event) => openChatHandler(event, chat)}
-        >
-          <ListItem>
-            <Avatar className={classes.avatar} />
+
+  return chats.length !== 0 &&
+    <div className={classes.root}>
+      <List className={classes.root}>
+        {chats.map(chat => {
+          return <a key={chat.id}
+          >
             {chat.participants.map((participant, key) => {
               if (participant.username !== user) {
-                return <ListItemText
-                  key={key}
-                  className={classes.contactUsername}
-                >
-                  {participant.username}
-                </ListItemText>
+                return <>
+                  <ListItem>
+                    <Avatar className={classes.avatar} src={participant.image} />
+                    <ListItemText
+                      key={key}
+                      className={classes.contactUsername}
+                    >
+                      <Link
+                        to={{
+                          pathname: '/chat',
+                          state: {
+                            chatChoice: chat.id,
+                            userChoice: user,
+                            participant: getParticipant(chat.participants)
+                          }
+                        }}
+                      >
+                        {participant.username}
+                      </Link>
+                    </ListItemText>
+                    <small>{(chat.messages.length !== 0) && chat.messages.reverse()[0].author.username + ': ' + chat.messages.reverse()[0].content}</small>
+                  </ListItem>
+                  <Divider />
+                </>
               }
             })}
-          </ListItem>
-        </a>
-      })}
-    </List>}
-    {openChat && 
-    <div>
-      <ArrowBackIcon
-        className="arrow-back" 
-        onClick={() => closeChatHandler()} 
-      />
-      <Chat chatChoice={currentChat.id} userChoice={user} participant={getParticipant(currentChat.participants)} />
-    </div>
-    }
-  </div >
+          </a>
+        })}
+      </List>
+    </div >
 }
 
 export default withRouter(MyChats)
