@@ -17,13 +17,13 @@ User = get_user_model()
 #the channel name is added when the socket connects below
 class ChatConsumer(WebsocketConsumer):
 
-    def fetch_messages(self, data):
+    async def fetch_messages(self, data):
       #data contains data from the front end request and will contain the chatId to load
       #gets messages from the database and turns them into json
       #using helper functions below
       #then uses the send chat message function below to output
       # print(f'DATA {data}')
-      messages = get_last_10_messages(data['chatId'])
+      messages = await get_last_10_messages(data['chatId'])
       # print(f'MESSAGES TEST {messages}')
       content = {
         'command':'messages',
@@ -32,7 +32,7 @@ class ChatConsumer(WebsocketConsumer):
       # print(f'CONTENT {content}')
       self.send_chat_message(content)
 
-    def new_message(self, data):
+    async def new_message(self, data):
       #we are passing through the user to the backend through the from field
       author = data['from']
       author_user = User.objects.filter(username=author)[0]
@@ -43,7 +43,7 @@ class ChatConsumer(WebsocketConsumer):
       #current_chat is imported at the top from the views.py
       #it finds the current chat based on the ID sent by the frontend
       #and will add the message to the chat
-      current_chat = get_current_chat(data['chatId'])
+      current_chat = await get_current_chat(data['chatId'])
       current_chat.messages.add(message)
       current_chat.save()
       content = {
