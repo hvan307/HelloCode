@@ -30,7 +30,7 @@ class ChatConsumer(WebsocketConsumer):
         'messages': self.messages_to_json(messages)
       }
       # print(f'CONTENT {content}')
-      self.send_chat_message(content)
+      return await self.send_chat_message(content)
 
     async def new_message(self, data):
       #we are passing through the user to the backend through the from field
@@ -50,7 +50,7 @@ class ChatConsumer(WebsocketConsumer):
         'command':'new_message',
         'message': self.message_to_json(message)
       }
-      return self.send_chat_message(content)
+      return await self.send_chat_message(content)
 
     def messages_to_json(self, messages):
       #turns the messages from the db to json
