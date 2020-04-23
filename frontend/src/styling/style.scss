@@ -100,6 +100,11 @@ h3 {
   text-align: center;
 }
 
+#drawer-title {
+  margin: 25px;
+  color: #3f51b5;
+}
+
 // Register
 .register,
 .login,
@@ -220,6 +225,9 @@ button.register {
     }
     height: 100vh;
     background-color: rgba(19, 17, 17, 0.8);
+    .home-hello-code {
+      color: #3f51b5;
+    }
   }
 }
 
