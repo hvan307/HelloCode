@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 import Axios from 'axios'
 import auth from '../../lib/auth'
+import { Avatar } from '@material-ui/core'
 
 const NewChat = () => {
   const useStyles = makeStyles((theme) => ({
@@ -82,18 +83,15 @@ const NewChat = () => {
 
   const handleFilter = (event, id) => {
     event.preventDefault()
-    console.log(id)
     if (filter === id) return setFilter(null)
     setFilter(id)
   }
 
   const checkLang = (user) => {
-    console.log(user.languages)
     const userLang = user.languages.map(lang => {
       return lang.id
     })
     if (!filter) return true
-    console.log(user.username, ' HALP ')
     return (userLang.includes(filter) ? true : false) 
   }
 
@@ -118,8 +116,8 @@ const NewChat = () => {
           user.username !== auth.getUserName() &&
           checkLang(user) &&
           <ListItem key={user.id} className={classes.root}>
-            {console.log(user)}
-            <ListItemText className="list-item">
+            <Avatar className={classes.avatar} src={user.image}/>
+            <ListItemText className={'list-item ' + classes.contactUsername}>
               <Link
                 to={{
                   pathname: '/mychats',

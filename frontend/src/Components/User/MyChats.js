@@ -16,6 +16,7 @@ import BeachAccessIcon from '@material-ui/icons/BeachAccess'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 import Chat from '../Chat/Chat'
+import { Divider } from '@material-ui/core'
 
 
 const testLink = (username, chatId) => {
@@ -56,11 +57,14 @@ const MyChats = () => {
   const [currentChat, setCurrentChat] = useState(null)
 
   useEffect(() => {
-    axios.get(`api/chat/user/${user}/`)
-      .then(res => {
-        setChats(res.data)
-      })
-      .catch(err => console.log(err))
+    setTimeout(() => {
+      axios.get(`api/chat/user/${user}/`)
+        .then(res => {
+          setChats(res.data)
+          console.log(res.data)
+        })
+        .catch(err => console.log(err))
+    }, 100)
   }, [])
 
   const openChatHandler = (event, chat) => {
@@ -83,37 +87,41 @@ const MyChats = () => {
     return participantUserName
   }
 
-  return <div className={classes.root}>
+
+  return chats.length !== 0 && <div className={classes.root}>
     {!openChat && <List className={classes.root}>
       {chats.map(chat => {
-        console.log(`User ${user} chatId ${chat.id}`)
         return <a key={chat.id}
           onClick={(event) => openChatHandler(event, chat)}
         >
-          <ListItem>
-            <Avatar className={classes.avatar} />
-            {chat.participants.map((participant, key) => {
-              if (participant.username !== user) {
-                return <ListItemText
-                  key={key}
-                  className={classes.contactUsername}
-                >
-                  {participant.username}
-                </ListItemText>
-              }
-            })}
-          </ListItem>
+          {chat.participants.map((participant, key) => {
+            if (participant.username !== user) {
+              return <>
+                <ListItem>
+                  <Avatar className={classes.avatar} src={participant.image} />
+                  <ListItemText
+                    key={key}
+                    className={classes.contactUsername}
+                  >
+                    {participant.username}
+                  </ListItemText>
+                  <small>{(chat.messages.length !== 0) && chat.messages.reverse()[0].author.username + ': ' + chat.messages.reverse()[0].content}</small>
+                </ListItem>
+                <Divider />
+              </>
+            }
+          })}
         </a>
       })}
     </List>}
-    {openChat && 
-    <div>
-      <ArrowBackIcon
-        className="arrow-back" 
-        onClick={() => closeChatHandler()} 
-      />
-      <Chat chatChoice={currentChat.id} userChoice={user} participant={getParticipant(currentChat.participants)} />
-    </div>
+    {openChat &&
+      <div>
+        <ArrowBackIcon
+          className="arrow-back"
+          onClick={() => closeChatHandler()}
+        />
+        <Chat chatChoice={currentChat.id} userChoice={user} participant={getParticipant(currentChat.participants)} />
+      </div>
     }
   </div >
 }

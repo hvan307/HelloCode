@@ -8,7 +8,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('id', 'username', 'image')
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -31,7 +31,8 @@ class ChatSerializer(serializers.ModelSerializer):
 
 class PopulateChatSerializer(serializers.ModelSerializer):
     participants = UserSerializer(many=True)
+    messages = PopulateMessageSerializer(many=True)
 
     class Meta:
         model = Chat
-        fields = ('id', 'participants', )
+        fields = ('id', 'participants', 'messages', )
