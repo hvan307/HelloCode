@@ -43,9 +43,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
       user = await self.get_username(author)
       author_user = user
       # print(f'AUTHOR {author_user}')
-      message = database_sync_to_async(Message.objects.create(
+      message = Message.objects.create(
         author=author_user, 
-        content=data['message']))
+        content=data['message'])
       #current_chat is imported at the top from the views.py
       #it finds the current chat based on the ID sent by the frontend
       #and will add the message to the chat
