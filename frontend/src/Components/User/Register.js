@@ -259,7 +259,7 @@ const Register = (props) => {
           <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
         </div>
         <div className='classes.inputField'>
-          <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon /></label>
+          <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon className="photos-icon"/></label>
           <input
             ref={inputEl}
             accept='image/png, image/jpeg'

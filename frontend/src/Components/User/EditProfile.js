@@ -40,7 +40,7 @@ const EditProfile = (props) => {
     form.append('timezone', data.timezone)
     form.append('languages', data.languages)
 
-    axios.put(`/api/user/${id}`, form)
+    axios.put(`/api/user/${id}/`, form)
       .then(resp => {
         setData({ data: resp.data })
         props.history.push('/myprofile')
@@ -92,7 +92,7 @@ const EditProfile = (props) => {
   }
 
   return <>
-    <div className='section register'>
+    <div className='edit-profile'>
       <h2>Edit Profile</h2>
       <form
         className='classes.form'
@@ -158,15 +158,18 @@ const EditProfile = (props) => {
           <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
         </div>
         <div className='classes.inputField'>
-          <label htmlFor="input-image" className="input-form-custom"><PhotoLibraryRoundedIcon /></label>
+          <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon className="photos-icon"/></label>
           <input
             ref={inputEl}
             accept='image/png, image/jpeg'
             className='input-image'
             type='file'
           />
-          <button type='input-button' onClick={onButtonClick}>
-            Upload
+          <button 
+            className='input-image-button'
+            type='button' 
+            onClick={onButtonClick}>
+            Upload photo
           </button>
         </div>
         <div className='button-register'>
