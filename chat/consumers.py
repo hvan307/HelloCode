@@ -3,7 +3,7 @@
 import json
 from django.contrib.auth import get_user_model
 from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
 from .models import Message, Chat
 from .views import get_last_10_messages, get_current_chat
 from channels.db import database_sync_to_async
@@ -15,7 +15,7 @@ User = get_user_model()
 #everything has access to self.channel_layer because
 #this is extending the websocketconsumer
 #the channel name is added when the socket connects below
-class ChatConsumer(WebsocketConsumer):
+class ChatConsumer(AsyncWebsocketConsumer):
 
     async def fetch_messages(self, data):
       #data contains data from the front end request and will contain the chatId to load
