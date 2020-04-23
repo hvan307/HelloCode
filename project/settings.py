@@ -146,25 +146,12 @@ REST_FRAMEWORK = {
     ],
 }
 
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             "hosts": [('localhost', 6379)],
-#         },
-#     },
-# }
-CACHES = {
-    "default": {
-         "BACKEND": "redis_cache.RedisCache",
-         "LOCATION": os.environ.get('REDIS_URL'),
-    }
-}
+
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'redis_cache.RedisCache',
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [os.environ.get('REDIS_URL')],
+            "hosts": ['redis://h:p9f786065bc9cec9c4ecbe9dd883a36fb8f31e4bb59a08193900b6fa18c968eaa@ec2-63-35-150-77.eu-west-1.compute.amazonaws.com:8479'],
         },
     },
 }
