@@ -22,6 +22,7 @@ h3 {
 
 .chat {
   padding: 20px;
+  margin-bottom: 100px;
 
   .messages-owner {
     margin: 10px;
@@ -69,7 +70,13 @@ h3 {
 .chat-input {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  margin: 0 10px 0 10px;
+  position: fixed !important;
+  bottom: 5px;
+  width: 100%;
+  background-color: white;
+  padding: 30px;
+
 
   input {
     width: 70%;
@@ -106,7 +113,8 @@ h3 {
 
 // Register
 .register,
-.login {
+.login,
+.edit-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -162,6 +170,13 @@ h3 {
   
   .input-image:hover::before {
     border-color: rgba(0, 0, 0, 0.63)
+  }
+}
+
+.register {
+
+  .photos-icon {
+    padding-top: 7px;
   }
 }
 
@@ -253,3 +268,9 @@ button.register {
   margin: 40px 70px;
 }
 
+.edit-profile {
+
+  .photos-icon {
+    padding-top: 7px;
+  }
+}

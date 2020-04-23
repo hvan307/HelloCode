@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useLayoutEffect, useRef } from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles'
@@ -27,7 +27,7 @@ const Register = (props) => {
   const [password, setPassword] = useState({ showPassword: false, showPassConfirm: false })
   const [langData, setLangData] = useState({ languagesDb: [] })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log('hello')
     axios.get('/api/languages/')
       .then(resp => setLangData({ languagesDb: resp.data }))
@@ -260,7 +260,7 @@ const Register = (props) => {
           </div>
         </div>
         <div className='classes.inputField'>
-          <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon /></label>
+          <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon className="photos-icon"/></label>
           <input
             ref={inputEl}
             accept='image/png, image/jpeg'
