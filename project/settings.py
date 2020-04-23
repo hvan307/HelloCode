@@ -162,6 +162,4 @@ AUTH_USER_MODEL = 'backend.User'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'PROJECT-4')
 
-DJANGO_SETTINGS_MODULE=project.settings
-
 django_heroku.settings(locals())
