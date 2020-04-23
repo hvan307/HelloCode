@@ -49,6 +49,7 @@ const MyProfile = (props) => {
         <CardActionArea>
           <CardMedia
             className={classes.media}
+            id="card-media-pic"
             image={data.image ? `http://localhost:4000${data.image}` : 'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg'}
             // image={`http://localhost:4000${data.image}`}
             title="User Profile Picture"
@@ -67,13 +68,13 @@ const MyProfile = (props) => {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
+        <CardActions id="profile-links-container">
           <Link to={'/newchat'}>
             <Button size="small" color="primary">
               Start new chat!
             </Button>
           </Link>
-          <Button size="small" color="primary" onClick={handleEdit}>
+          <Button size="small" color="primary" onClick={handleEdit} id="edit-profile-button">
           Edit Profile
           </Button>
         </CardActions>
