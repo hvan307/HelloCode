@@ -32,7 +32,6 @@ const EditProfile = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     const imageInput = document.querySelector('.input-image')
-    // console.log(imageInput)
     const image = imageInput.files
     const form = new FormData()
     form.append('image', image[0], image[0].name)
@@ -73,8 +72,8 @@ const EditProfile = (props) => {
     }
   }
 
+  // Styling
   const inputWidth = 225
-
   const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1)

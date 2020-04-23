@@ -49,11 +49,10 @@ const MyProfile = (props) => {
         <CardActionArea>
           <CardMedia
             className={classes.media}
+            id='card-media-pic'
             image={data.image ? `http://localhost:4000${data.image}` : 'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg'}
-            // image={`http://localhost:4000${data.image}`}
             title="User Profile Picture"
           />
-          
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
               <FaceIcon className="face-icon"/> <span>Username: {data.username}</span>
