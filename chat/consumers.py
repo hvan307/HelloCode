@@ -17,6 +17,10 @@ User = get_user_model()
 #the channel name is added when the socket connects below
 class ChatConsumer(AsyncWebsocketConsumer):
 
+    @database_sync_to_async
+    def get_username(self, username):
+      User.objects.get(username=username)
+
     async def fetch_messages(self, data):
       #data contains data from the front end request and will contain the chatId to load
       #gets messages from the database and turns them into json
@@ -36,7 +40,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def new_message(self, data):
       #we are passing through the user to the backend through the from field
       author = data['from']
-      user = await database_sync_to_async(User.objects.filter(username=author)[0])()
+      user = await self.get_username(author)
       author_user = user
       # print(f'AUTHOR {author_user}')
       message = database_sync_to_async(Message.objects.create(
