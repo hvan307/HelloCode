@@ -5,6 +5,7 @@ import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
 import Avatar from '@material-ui/core/Avatar'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 
 
@@ -16,11 +17,11 @@ class Chat extends React.Component {
     this.waitForSocketConnection(() => {
       WebSocketInstance.addCallbacks(this.setMessages.bind(this), this.addMessage.bind(this))
       WebSocketInstance.fetchMessages(
-        this.props.userChoice,
-        this.props.chatChoice
+        this.props.location.state.userChoice,
+        this.props.location.state.chatChoice
       )
     })
-    WebSocketInstance.connect(this.props.chatChoice)
+    WebSocketInstance.connect(this.props.location.state.chatChoice)
     //the 1 in connect(1) is the chatId for the backend. 
     //this will be changed to be the chatId of the chat the user clicked on
     //and the chat list will have been gotten from an api call
@@ -29,9 +30,10 @@ class Chat extends React.Component {
 
   constructor(props) {
     super(props)
+    if (!this.props.location.state) return this.props.history.push('/mychats')
     this.state = {
-      currentUser: this.props.userChoice,
-      currentChat: this.props.chatChoice,
+      currentUser: this.props.location.state.userChoice,
+      currentChat: this.props.location.state.chatChoice,
       userOwner: [],
       userRecipient: []
     }
@@ -87,11 +89,11 @@ class Chat extends React.Component {
   }
 
   renderMessages = (messages) => {
-    return messages.map(message => (  
+    return messages.map(message => (
       <div key={message.id} className={"messages" + (this.state.currentUser === message.author ? '-owner' : '')}>
         {console.log(message.timestamp)}
         <div className="message-flex">
-          <Avatar src={this.state.currentUser === message.author ? this.state.userOwner.image : this.state.userRecipient.image}/> 
+          <Avatar src={this.state.currentUser === message.author ? this.state.userOwner.image : this.state.userRecipient.image} />
           <div className="message-content">{message.content} <br />
             <small>{this.renderTimestamp(message.timestamp)}</small>
           </div>
@@ -114,6 +116,7 @@ class Chat extends React.Component {
 
   sendMessageHandler(e) {
     e.preventDefault()
+    console.log('sendmessage called', this.state.message)
     const messageObject = {
       from: this.state.currentUser, //this will be changed to be the user from the current token
       content: this.state.message,
@@ -123,7 +126,6 @@ class Chat extends React.Component {
     this.setState({
       message: ''
     })
-    this.setState({ oldMessages: this.state.messages })
   }
 
   scrollToBottom() {
@@ -135,34 +137,46 @@ class Chat extends React.Component {
     this.initialiseChat()
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const chatBar = document.getElementById('chat-input-bar')
     chatBar.focus()
     this.scrollToBottom()
     axios.get(`/api/user/username/${auth.getUserName()}`)
       .then(resp => this.setState({ userOwner: resp.data }))
-    axios.get(`/api/user/username/${this.props.participant}`)
+    axios.get(`/api/user/username/${this.props.location.state.participant}`)
       .then(resp => {
         this.setState({ userRecipient: resp.data })
         console.log(resp.data)
       })
-      .catch(err => console.log(err)) 
+      .catch(err => console.log(err))
   }
 
-  componentDidUpdate(){ 
+  componentDidUpdate() {
     this.scrollToBottom()
   }
-  
+
+  closeChatHandler() {
+    this.props.history.push('/mychats')
+  }
+
+  componentWillUnmount(){
+    WebSocketInstance.disconnect()
+  }
+
   render() {
 
     const { messages, currentChat, currentUser, closeHandler } = this.state
 
     return <>
-      <h3>Chatroom: {currentChat}, User: {currentUser}</h3>
+      <ArrowBackIcon
+        className="arrow-back"
+        onClick={() => this.closeChatHandler()}
+      />
+      <h3>Chatting with: {this.props.location.state.participant}</h3>
       <div className="chat">
         {messages && this.renderMessages(messages)}
       </div>
-      <form 
+      <form
         onSubmit={(e) => this.sendMessageHandler(e)}
         ref={el => this.messagesEnd = el}
       >
