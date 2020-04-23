@@ -24,7 +24,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
       #then uses the send chat message function below to output
       # print(f'DATA {data}')
       # messages = get_last_10_messages(data['chatId'])
-      messages = await database_sync_to_async(Chat.objects.get(id=data['chatId']).messages.order_by('-timestamp').all()[:10])
+      messages = database_sync_to_async(Chat.objects.get(id=data['chatId']).messages.order_by('-timestamp').all()[:10])
       # print(f'MESSAGES TEST {messages}')
       content = {
         'command':'messages',
@@ -36,17 +36,17 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def new_message(self, data):
       #we are passing through the user to the backend through the from field
       author = data['from']
-      author_user = await database_sync_to_async(User.objects.filter(username=author)[0])
+      author_user = database_sync_to_async(User.objects.filter(username=author)[0])
       # print(f'AUTHOR {author_user}')
-      message = await database_sync_to_async(Message.objects.create(
+      message = database_sync_to_async(Message.objects.create(
         author=author_user, 
         content=data['message']))
       #current_chat is imported at the top from the views.py
       #it finds the current chat based on the ID sent by the frontend
       #and will add the message to the chat
-      current_chat = await database_sync_to_async(Chat.objects.get(id=data['chatId']))
+      current_chat = database_sync_to_async(Chat.objects.get(id=data['chatId']))
       current_chat.messages.add(message)
-      await database_sync_to_async(current_chat.save())
+      database_sync_to_async(current_chat.save())
       content = {
         'command':'new_message',
         'message': self.message_to_json(message)
