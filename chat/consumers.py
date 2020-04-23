@@ -36,7 +36,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def new_message(self, data):
       #we are passing through the user to the backend through the from field
       author = data['from']
-      author_user = database_sync_to_async(User.objects.filter(username=author)[0])
+      user = database_sync_to_async(User.objects.filter(username=author)[0])()
+      author_user = user
       # print(f'AUTHOR {author_user}')
       message = database_sync_to_async(Message.objects.create(
         author=author_user, 
