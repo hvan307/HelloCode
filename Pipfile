@@ -18,6 +18,7 @@ requests = "*"
 django-cors-headers = "*"
 django-heroku = "*"
 django-redis-cache = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
