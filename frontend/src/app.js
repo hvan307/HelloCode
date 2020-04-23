@@ -14,9 +14,6 @@ import NewChat from './Components/User/NewChat'
 import MyChats from './Components/User/MyChats'
 import EditProfile from './Components/User/EditProfile'
 
-import './styling/style.scss'
-
-
 const App = () => {
   return <HashRouter>
     <NavbarDrawer />
@@ -32,7 +29,6 @@ const App = () => {
     </Switch>
   </HashRouter>
 }
-
 
 ReactDOM.render(
   <App />,

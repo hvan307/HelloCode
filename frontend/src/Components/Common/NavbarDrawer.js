@@ -18,23 +18,18 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-// import InboxIcon from '@material-ui/icons/MoveToInbox'
 import SmsRoundedIcon from '@material-ui/icons/SmsRounded'
 import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-// import MenuItem from '@material-ui/core/MenuItem'
-// import Menu from '@material-ui/core/Menu'
 import Badge from '@material-ui/core/Badge'
-// import NotificationsIcon from '@material-ui/icons/Notifications'
-// import MoreVertIcon from '@material-ui/icons/MoreVert'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded'
 
 
 const DrawerMenu = () => {
+  // Styling
   const drawerWidth = 240
-  // styling - move to scss
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',

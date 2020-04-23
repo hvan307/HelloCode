@@ -272,9 +272,14 @@ button.register {
   padding-top: 13px;
 }
 
-.makeStyles-media-164 {
+#card-media-pic {
   border-radius: 1000px;
   margin: 40px 70px;
+}
+
+#profile-links-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .edit-profile {

@@ -46,7 +46,7 @@ const Login = () => {
       .catch(err => setForm({ error: err.response.data.message }))
   }
 
-  // styling - move to scss?
+  // Styling
   const inputWidth = 225
 
   const useStyles = makeStyles((theme) => ({
