@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
@@ -18,6 +18,7 @@ const NewChat = () => {
       flexDirection: 'row',
       flexWrap: 'wrap',
       alignItems: 'center',
+      width: '80vw',
       backgroundColor: theme.palette.background.paper
     },
     avatar: {
@@ -40,14 +41,13 @@ const NewChat = () => {
     }
   }))
 
-
   const classes = useStyles()
   const [languages, setLanguages] = useState([])
   const [users, setUsers] = useState([])
   const [openChats, setOpenChats] = useState([])
   const [filter, setFilter] = useState(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     Axios.get('/api/languages/')
       .then(res => setLanguages(res.data))
       .catch(err => console.log(err.response.data))
@@ -56,7 +56,7 @@ const NewChat = () => {
         setUsers(res.data)
       })
       .catch(err => console.log(err))
-    Axios.get(`api/chat/user/${auth.getUserName()}/`)
+    Axios.get(`/api/chat/user/${auth.getUserName()}/`)
       .then(res => {
         //this code gets a list of chats, get the participants of all the chats
         //removes the current user from all the participants then converts to set and back
@@ -93,7 +93,7 @@ const NewChat = () => {
       return lang.id
     })
     if (!filter) return true
-    return (userLang.includes(filter) ? true : false) 
+    return (userLang.includes(filter) ? true : false)
   }
 
   return (
@@ -113,24 +113,27 @@ const NewChat = () => {
       </ButtonGroup>
       <List>
         {users.map(user => (
-          !openChats.includes(user.username) && 
+          !openChats.includes(user.username) &&
           user.username !== auth.getUserName() &&
           checkLang(user) &&
           <ListItem key={user.id} className={classes.root}>
-            <Avatar className={classes.avatar} src={user.image}/>
+            <Avatar className={classes.avatar} src={user.image} />
             <ListItemText className={'list-item ' + classes.contactUsername}>
-              <Link
-                to={{
-                  pathname: '/mychats',
-                  state: {
-                    openChat: true
-                  }
-                }}
-                onClick={(event) => handleCreateChat(event, user.id)}
-              >
-                {user.username}
-              </Link>
+              {user.username}
             </ListItemText>
+            <Link
+              to={{
+                pathname: '/mychats',
+                state: {
+                  openChat: true
+                }
+              }}
+              onClick={(event) => handleCreateChat(event, user.id)}
+            >
+              <Button>
+                Start Chat
+              </Button>
+            </Link>
           </ListItem>
         ))}
       </List>

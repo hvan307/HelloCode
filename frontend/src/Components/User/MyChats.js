@@ -5,18 +5,11 @@ import axios from 'axios'
 import { Link, withRouter } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
+import { Divider } from '@material-ui/core'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
-import ImageIcon from '@material-ui/icons/Image'
-import WorkIcon from '@material-ui/icons/Work'
-import BeachAccessIcon from '@material-ui/icons/BeachAccess'
-
-import Chat from '../Chat/Chat'
-import { Divider } from '@material-ui/core'
-
 
 const testLink = (username, chatId) => {
   return <Link
@@ -29,16 +22,16 @@ const testLink = (username, chatId) => {
     }} />
 }
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '100vw',
     backgroundColor: theme.palette.background.paper,
   },
   avatar: {
     display: 'flex',
     '& > *': {
       margin: theme.spacing(1)
+      
     }
   },
   contactUsername: {
@@ -48,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const MyChats = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   const [user, setUser] = useState(auth.getUserName())
   const [chats, setChats] = useState([])

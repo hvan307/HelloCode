@@ -26,13 +26,12 @@ const EditProfile = (props) => {
     console.log('hello')
     axios.get('/api/languages/')
       .then(resp => setLangData({ languagesDb: resp.data }))
-      // .catch(err => setData({ error: err.response.data }))
+    // .catch(err => setData({ error: err.response.data }))
   }, [])
 
   const handleSubmit = (event) => {
     event.preventDefault()
     const imageInput = document.querySelector('.input-image')
-    // console.log(imageInput)
     const image = imageInput.files
     const form = new FormData()
     form.append('image', image[0], image[0].name)
@@ -73,8 +72,8 @@ const EditProfile = (props) => {
     }
   }
 
+  // Styling
   const inputWidth = 225
-
   const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1)
@@ -136,26 +135,27 @@ const EditProfile = (props) => {
           </FormHelperText>}
         </div>
         <div className={classes.margin}>
-          <ComputerRoundedIcon />
-          <ButtonGroup
-            className='buttons-languages'
-            variant='text'
-            color='primary'
-            aria-label='text primary button group'
-          >
-            {langData.languagesDb.map((language, id) => {
-              return <button
-                className='language'
-                key={id}
-                onClick={(event) => handleSelectLang(event)}
-                value={language.id}
-              >
-                {language.name}
-              </button>
-            }
-            )}
-          </ButtonGroup>
-          <FormHelperText id='component-helper-text'>{`You code in ${displayLangs}`}</FormHelperText>
+          <div className="flex-button">
+            <ComputerRoundedIcon />
+            <ButtonGroup
+              className='buttons-languages'
+              variant='text'
+              color='primary'
+              aria-label='text primary button group'
+            >
+              {langData.languagesDb.map((language, id) => {
+                return <button
+                  className='language'
+                  key={id}
+                  onClick={(event) => handleSelectLang(event)}
+                  value={language.id}
+                >
+                  {language.name}
+                </button>
+              }
+              )}
+            </ButtonGroup>
+          </div>
         </div>
         <div className='classes.inputField'>
           <label htmlFor="input-image" className="input-form-icon"><PhotoLibraryRoundedIcon className="photos-icon"/></label>
