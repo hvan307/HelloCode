@@ -99,7 +99,7 @@ class ChatConsumer(WebsocketConsumer):
         )
 
     # Receive message from WebSocket
-    def receive(self, text_data):
+    async def receive(self, text_data):
         data = json.loads(text_data)
         print(data)
         # at the top of the class we added a dictionary which
@@ -107,7 +107,7 @@ class ChatConsumer(WebsocketConsumer):
         # the code below reads in a command from the user data which is automatically
         # filtered into the receive method by channels and will call either function based
         # on the command input by the front end.
-        self.commands[data['command']](self, data)
+        await self.commands[data['command']](self, data)
     
     async def send_chat_message(self, message):
         # Send message to room group
@@ -125,4 +125,4 @@ class ChatConsumer(WebsocketConsumer):
 
         print(f'CHAT MESSAGE {message}')
         # Send message to WebSocket
-        await elf.send(text_data=json.dumps(message))
+        await self.send(text_data=json.dumps(message))
