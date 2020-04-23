@@ -33,7 +33,7 @@ import HomeRoundedIcon from '@material-ui/icons/HomeRounded'
 
 
 const DrawerMenu = () => {
-  const drawerWidth = '100vw'
+  const drawerWidth = 240
   // styling - move to scss
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -172,14 +172,6 @@ const DrawerMenu = () => {
           paper: classes.drawerPaper
         }}
       >
-<<<<<<< HEAD
-        <Typography
-          variant='h6'
-          id='drawer-title'
-        >
-          Welcome, {<span className='username'> {auth.getUserName()} </span>} !
-            </Typography>
-=======
         {isLoggedIn &&
           <Typography
             variant='h6'
@@ -187,7 +179,6 @@ const DrawerMenu = () => {
           >
             Welcome, {<span className='username'> {auth.getUserName()} </span>} !
           </Typography>}
->>>>>>> development
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
