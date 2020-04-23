@@ -3,10 +3,21 @@ a {
   color: inherit;
 }
 
+h1 {
+  text-transform: capitalize;
+}
+
+h2 {
+  font-size: 18px;
+}
+
 h3 {
-  font-family: 'Cutive Mono', monospace;
   text-align: justify;
-  margin: 20px;
+  margin: 30px;
+}
+
+.home-titles {
+  margin: 5px;
 }
 
 .chat {
@@ -172,8 +183,17 @@ h3 {
 
 // Buttons
 
+.flex-button {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .buttons-languages {
   margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 button.language {
   font-family: Arial;
