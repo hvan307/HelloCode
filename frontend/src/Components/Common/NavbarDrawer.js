@@ -172,12 +172,22 @@ const DrawerMenu = () => {
           paper: classes.drawerPaper
         }}
       >
+<<<<<<< HEAD
         <Typography
           variant='h6'
           id='drawer-title'
         >
           Welcome, {<span className='username'> {auth.getUserName()} </span>} !
             </Typography>
+=======
+        {isLoggedIn &&
+          <Typography
+            variant='h6'
+            id='drawer-title'
+          >
+            Welcome, {<span className='username'> {auth.getUserName()} </span>} !
+          </Typography>}
+>>>>>>> development
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

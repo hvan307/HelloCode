@@ -25,7 +25,7 @@ const Home = () => {
     <div className="home-main-container">
       <div className="home-main">
         <div className="home-titles">
-          <h1>Welcome to HelloCode</h1>
+          <h1>Welcome to <span className="home-hello-code">HelloCode!</span></h1>
           <h2>Join millions of coders helping each other</h2>
         </div>
         <Link to={'/login'}>
