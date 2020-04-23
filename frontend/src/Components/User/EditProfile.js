@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useLayoutEffect, useRef } from 'react'
 import axios from 'axios'
 import auth from '../../lib/auth'
 
@@ -22,7 +22,7 @@ const EditProfile = (props) => {
 
   const id = auth.getUserId()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log('hello')
     axios.get('/api/languages/')
       .then(resp => setLangData({ languagesDb: resp.data }))
