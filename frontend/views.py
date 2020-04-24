@@ -1,6 +1,15 @@
 import os
 from django.views.generic import View
 from django.http import HttpResponse, HttpResponseNotFound
+from django.db import connection
+from threading import Thread
+
+class TestThread(Thread):
+
+    def run(self):
+        super().run()
+
+        connection.close()
 
 class Home(View):
 
