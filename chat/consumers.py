@@ -7,6 +7,7 @@ from channels.generic.websocket import WebsocketConsumer
 from .models import Message, Chat
 from .views import get_last_10_messages, get_current_chat
 
+
 User = get_user_model()
 # a channel is a mailbox where messages can be sent to.
 # a group is a group of related channels.
