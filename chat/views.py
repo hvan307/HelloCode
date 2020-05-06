@@ -17,10 +17,7 @@ def get_last_10_messages(chatId):
 
 def get_user_contact(username):
   user = get_object_or_404(User, username=username)
-  if user:
-    return user
-  else:
-    print('BORKED')
+  return user
 
 def get_current_chat(chatId):
   return get_object_or_404(Chat, id=chatId)

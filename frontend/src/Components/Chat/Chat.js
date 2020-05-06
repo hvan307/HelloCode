@@ -14,13 +14,16 @@ class Chat extends React.Component {
   initialiseChat() {
     //starts websocket connection and gets the chat id from the url in order to connect to the right chat
     //the chat id will come from the list of chats that is received from an API call
-    this.waitForSocketConnection(() => {
-      WebSocketInstance.addCallbacks(this.setMessages.bind(this), this.addMessage.bind(this))
-      WebSocketInstance.fetchMessages(
-        this.props.location.state.userChoice,
-        this.props.location.state.chatChoice
-      )
-    })
+    this.waitForSocketConnection(
+      () => {
+        // this is a callback()
+        WebSocketInstance.addCallbacks(this.setMessages.bind(this), this.addMessage.bind(this))
+        WebSocketInstance.fetchMessages(
+          this.props.location.state.userChoice,
+          this.props.location.state.chatChoice
+        )
+      }
+    )
     WebSocketInstance.connect(this.props.location.state.chatChoice)
     //the 1 in connect(1) is the chatId for the backend. 
     //this will be changed to be the chatId of the chat the user clicked on
@@ -159,7 +162,7 @@ class Chat extends React.Component {
     this.props.history.push('/mychats')
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     WebSocketInstance.disconnect()
   }
 
