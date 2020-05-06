@@ -7,42 +7,54 @@
 1. [Overview](#Overview)
 2. [Brief](#Brief)
 3. [Technologies Used](#Technologies-Used)
-4. [Backend](#Backend)
-    - [Approach](#Approach)
+4. [Django Channels](#Django-Channels-(Chat-App))
+    - [Backend](#Backend)
+    - [Frontend](#Frontend)
+5. [HelloCode App](#HelloCode-App)
     - [Models](#Models)
-      - [User Model](#1.-User-Model)
-      - [Recipe Model](#2.-Recipe-Model)
-    - [Controllers](#Controllers)
-      - [User Controller](#1.-User-Controller)
-      - [Recipe Controller](#2.-Recipe-Controller)
-    - [Security](#Security)
-      - [Secure Routes](#Secure-Routes)
-      - [Bcrypt](#Bcrypt)
-      - [Token](#Token)
-5. [Frontend](#Frontend)
-    - [Display Recipes](#Display-Recipes)
-      - [Tags](#Tags)
-      - [Rendering Recipes](#Rendering-Recipes)
-      - [My Recipes](#My-Recipes-(creating-your-own))
-      - [Single Recipe](#Single-Recipe)
-6. [Navbar](#Navbar)
-7. [Ingredient Search](#Ingredient-Search)
-8. [Shopping List](#Shopping-List)
-9. [Screenshots](#Screenshots)
-    - [Public Visitor Endpoints](#Public-Visitor-Endpoints)
-    - [Secure User Endpoint](#Secure-User-Endpoints)
-10. [Potential Future Features](#Potential-Future-Features)
-11. [Lessons Learned](#Lessons-Learned)
+6. [JWT Auth App](#JWT-Auth-App)
+7. [Screenshots](#Screenshots)
+8. [Challenges](#Challenges)
+9. [Potential Future Features](#Potential-Future-Features)
+10. [Lessons Learned](#Lessons-Learned)
 
 
 # Overview
-# Brief
-# Technologies Used
+This was a week-long group project at General Assembly London by [Fortuny Carrega](https://github.com/IAmNini) , [Alexandra Galitzine](https://github.com/bili-bu), [Ben Harris](https://github.com/benharris8) and [Hanna Truong Thi](https://github.com/hvan307).
 
-# Django Channels
+We wanted to create a chat app with a mobile-first design that allows programmers to connect with each other based on a language, or a framework they're interested in. 
+
+.....
+
+# Brief
+- Build a full-stack application
+- Use a Python Django API (using Django REST Framework to serve your data from a Postgres database)
+- Consume your API with a separate front-end (built with React)
+- Be a complete product which most likely means multiple relationships and CRUD functionality for at least a couple of models
+- Implement thoughtful user stories/wireframes
+
+# Technologies Used
+- Python
+- Django
+- Redis(??)
+- PostgreSQL
+- MySQL
+- JavaScript (ES6)
+- React
+- CSS and SASS
+- HTML
+- Git and GitHub
+- Heroku
+- Insomnia
+- Material-UI
+- Google Fonts
+- Material Icons
+- Trello
+
+# Django Channels (Chat App)
 
 ## Backend
-The websocket request comes into the django backend and gets directed to the project routing&#46;py.
+The websocket request comes into the django backend and gets directed to the project routing.py.
 From there if it is a websocket it gets directed to the chat app routing.py where the url is checked for the room name and is then directed to the ChatConsumer where the socket requests will be dealt with.
 
 In ChatConsumer there are various helper functions in order to make handling the different requests easier. 
@@ -280,7 +292,28 @@ waitForSocketConnection(callback) {
       }, 100)
   }
 ```
+# HelloCode App
+## Models
+![ERD](image/ERD-whiteboard.png)
 
+# JWT Auth App
+
+# Screenshots
+![HelloCode](image/hellocode-mobile.png)
+![Home-desktop](image/home-desktop.png)
+![Login](image/login.png)
+![Register](image/register.png)
+
+# Challenges
+- Deployment with Postgres and Heroku
+- encrypted upload 
+
+# Potential Future Features
+- Group chat
+- Push notifications
+
+# Lessons Learned
+- HOOKS DO NOT WORK WELL WITH CLASS COMPONENTS. Period. 
 
 
 
