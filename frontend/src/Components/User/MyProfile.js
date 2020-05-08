@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography'
 import FaceIcon from '@material-ui/icons/Face'
 import PublicIcon from '@material-ui/icons/Public'
 import ComputerRoundedIcon from '@material-ui/icons/ComputerRounded'
+import { FormHelperText } from '@material-ui/core'
 
 const MyProfile = (props) => {
 
@@ -53,7 +54,7 @@ const MyProfile = (props) => {
             image={data.image ? `http://localhost:4000${data.image}` : 'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg'}
             title="User Profile Picture"
           />
-          <CardContent>
+          <CardContent className='my-profile-content'>
             <Typography gutterBottom variant="h5" component="h2">
               <FaceIcon className="face-icon"/> <span>Username: {data.username}</span>
             </Typography>
@@ -62,7 +63,7 @@ const MyProfile = (props) => {
               <PublicIcon className="world-icon"/> <span>Timezone: {data.timezone}</span>
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              <ComputerRoundedIcon className="computer-icon"/> <span className="languages-after-icon">Languages: {data.languages.map((language) => (<p key={language.id}>{language.name}</p>))}</span>
+              <ComputerRoundedIcon className="computer-icon"/> <span className="languages-after-icon">Languages: {data.languages.map((language) => (<li className='my-profile-language'  key={language.id}>{language.name}</li>))}</span>
             </Typography>
           </CardContent>
         </CardActionArea>

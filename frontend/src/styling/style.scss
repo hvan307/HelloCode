@@ -281,6 +281,12 @@ button.register {
   display: flex;
   justify-content: space-between;
 }
+.my-profile-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: paleturquoise;
+}
 
 .edit-profile {
 
