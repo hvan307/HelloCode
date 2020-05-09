@@ -12,7 +12,6 @@ class User(AbstractUser):
     contacts = models.ManyToManyField('self', blank=True)
     languages = models.ManyToManyField(Language, related_name='users', blank=True)
     image = models.ImageField(upload_to='image')
-
-
+    
     def __str__(self):
         return self.username

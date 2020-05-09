@@ -22,9 +22,10 @@
 # Overview
 This was a week-long group project at General Assembly London by [Fortuny Carrega](https://github.com/IAmNini) , [Alexandra Galitzine](https://github.com/bili-bu), [Ben Harris](https://github.com/benharris8) and [Hanna Truong Thi](https://github.com/hvan307).
 
-We wanted to create a chat app with a mobile-first design that allows programmers to connect with each other based on a language, or a framework they're interested in. 
+We wanted to create a chat app with a mobile-first design that allows programmers to connect with each other based on a language, or a framework they're interested to explore and exchange information on.
 
-.....
+This is a full-stack application using Python Django (Django REST Framework, Channels) and React.js with Material-UI framework.
+
 
 # Brief
 - Build a full-stack application
@@ -36,11 +37,12 @@ We wanted to create a chat app with a mobile-first design that allows programmer
 # Technologies Used
 - Python
 - Django
-- Redis(??)
+- Django Channels
+- Redis
 - PostgreSQL
 - MySQL
 - JavaScript (ES6)
-- React
+- React.js
 - CSS and SASS
 - HTML
 - Git and GitHub
@@ -48,13 +50,12 @@ We wanted to create a chat app with a mobile-first design that allows programmer
 - Insomnia
 - Material-UI
 - Google Fonts
-- Material Icons
 - Trello
 
 # Django Channels (Chat App)
 
 ## Backend
-The websocket request comes into the django backend and gets directed to the project routing.py.
+The websocket request comes into the Django backend and gets directed to the project routing.py.
 From there if it is a websocket it gets directed to the chat app routing.py where the url is checked for the room name and is then directed to the ChatConsumer where the socket requests will be dealt with.
 
 In ChatConsumer there are various helper functions in order to make handling the different requests easier. 
@@ -140,7 +141,22 @@ def new_message(self, data):
   }
   return self.send_chat_message(content)
 ```
+### Api views.py
 
+For the `ChatListViewByUser`, we used a ListAPIView and added a `get_queryset()` function to display all the user's chats. We used a custom field lookup `participants__in` to filter through all chats and identify the ones where the user is participating. 
+For `user` field, we used `get_object_or_404` which is a shortcut.
+
+```py
+class ChatListViewByUser(ListAPIView):
+    serializer_class = PopulateChatSerializer
+    permission_classes = (permissions.AllowAny, )
+
+    def get_queryset(self):
+        username = self.kwargs.get('username')
+        user = get_object_or_404(User, username=username)
+        queryset = Chat.objects.filter(participants__in=[user.pk])
+        return queryset
+```
 ## Frontend
 
 A websocket needs to be created on the frontend to connect to the backend socket.
@@ -294,27 +310,98 @@ waitForSocketConnection(callback) {
 ```
 # HelloCode App
 ## Models
-![ERD](image/ERD-whiteboard.png)
+![ERD](image/ERD.png)
+
+To visualise the Entity Relationship Diagram for our database, we used MySQL workbench. 
+
+We have two models, Language and User. The former consists of one character field 'name', and the latter extends the Django User model adding customised fields.
+
+Initially, to store the user's uploaded images from the frontend, we opted for ImageField. However, because of Heroku deployment limitations, our upload functionality was compromised and we decided to change the 'image' field to a models.charField instead.
+
+```py
+class User(AbstractUser):
+    timezone = models.CharField(max_length=50)
+    contacts = models.ManyToManyField('self', blank=True)
+    languages = models.ManyToManyField(Language, related_name='users', blank=True)
+    image = models.ImageField(upload_to='image')
+    
+    def __str__(self):
+        return self.username
+```
 
 # JWT Auth App
+### authentication.py
 
+To authenticate a token, we used Django `BasicAuthentication` where we match the tokens that a user receives once logged in.
+```py
+class JWTAuthentication(BasicAuthentication):
+
+    def authenticate(self, request):
+        header = request.headers.get('Authorization')
+
+        if not header: 
+            return None
+
+        if not header.startswith('Bearer'):
+            raise PermissionDenied({'message': 'Invalid Authorization header'})
+        
+        token = header.replace('Bearer ', '')
+
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+            user = User.objects.get(pk=payload.get('sub'))
+        except jwt.exceptions.InvalidTokenError:
+            raise PermissionDenied({'message': 'Invalid token'})
+        except User.DoesNotExist:
+            raise PermissionDenied({'message': 'No such subject'})
+
+        return (user, token)
+```
+### serializers.py
+
+For class `UserSerializer` we use `validate()` function firstly, to verify if the `password` matches the `password_confirmation`. Then, we use Django `validations` to set the validated password.
+
+```py
+def validate(self, data):
+
+        password = data.pop('password')
+        password_confirmation = data.pop('password_confirmation')
+        
+        if password != password_confirmation:
+            raise serializers.ValidationError({'password_confirmation': 'Passwords do not match'})
+
+        try:
+            validations.validate_password(password=password)
+        except ValidationError as err:
+            raise serializers.ValidationError({'password': err.messages})
+
+        data['password'] = make_password(password)
+        return data
+```
 # Screenshots
 ![HelloCode](image/hellocode-mobile.png)
 ![Home-desktop](image/home-desktop.png)
-![Login](image/login.png)
-![Register](image/register.png)
+![Register](image/register2.png)
+![MyProfile](image/Ben2profile.png)
+![NewChat](image/new-chat.png)
+![CSSUsers](image/CSSusers.png)
+![MyChats](image/mychats2.png)
+![Chat](image/chat2.png)
 
 # Challenges
-- Deployment with Postgres and Heroku
-- encrypted upload 
+One of the challenges we faced was that we used too many unfamiliar technologies. The time required for both research and bug-fixing put a strain on our deadline. 
+
+However, our main challenges arose after deployment. For unknown reasons on Heroku, Django does not close database connections. This means when using the app, the database connection limit will be reached very quickly, and the app will stop working until the database connections are manually closed. 
+
+Moreover, the image upload functionality is compromised, as the frontend file uploads are not stored correctly in our backend. 
 
 # Potential Future Features
 - Group chat
 - Push notifications
+- Chat invites
 
 # Lessons Learned
-- HOOKS DO NOT WORK WELL WITH CLASS COMPONENTS. Period. 
-
+Be realistic about the number of new technologies you use in relation to the time limit that you have. 
 
 
 

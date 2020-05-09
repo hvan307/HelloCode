@@ -20,7 +20,6 @@ class UserSerializer(serializers.ModelSerializer):
         password = data.pop('password')
         password_confirmation = data.pop('password_confirmation')
         
-
         if password != password_confirmation:
             raise serializers.ValidationError({'password_confirmation': 'Passwords do not match'})
 
@@ -36,7 +35,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'email', 'password', 'password_confirmation', 'timezone', 'languages', 'image')
 
-    
 class PopulateUserSerializer(serializers.ModelSerializer):
     languages = LanguageSerializer(many=True)
 
