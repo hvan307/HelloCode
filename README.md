@@ -26,6 +26,15 @@ We wanted to create a chat app with a mobile-first design that allows programmer
 
 This is a full-stack application using Python Django (Django REST Framework, Channels) and React.js with Material-UI framework.
 
+### My contributions
+- Backend:
+    * Profile picture functionality
+- Front-end components:
+    * Register.js
+    * Login.js
+    * auth.js
+    * NavbarDrawer.js (jointly)
+    * app.js (jointly)
 
 # Brief
 - Build a full-stack application
@@ -399,6 +408,11 @@ Moreover, the image upload functionality is compromised, as the frontend file up
 - Group chat
 - Push notifications
 - Chat invites
+
+# Wins
+- Successful implementation of new technologies, such as Django Channels and Material-UI.
+- Image upload functionality for the user profile picture that allows users to add a file (rather than a link) from the frontend, and stores the encrypted version in the HelloCode's backend. 
+- Successful debugging (specifically, implementing useLayoutEffect in place of useEffect for Hook components that were not rendering the axios requests correctly).
 
 # Lessons Learned
 Be realistic about the number of new technologies you use in relation to the time limit that you have. 
