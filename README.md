@@ -38,8 +38,8 @@ This is a full-stack application using Python Django (Django REST Framework, Cha
 
 # Brief
 - Build a full-stack application
-- Use a Python Django API (using Django REST Framework to serve your data from a Postgres database)
-- Consume your API with a separate front-end (built with React)
+- Use a Python Django API (using Django REST Framework to serve data from a Postgres database)
+- Consume an API with a separate front-end (built with React)
 - Be a complete product which most likely means multiple relationships and CRUD functionality for at least a couple of models
 - Implement thoughtful user stories/wireframes
 
